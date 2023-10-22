@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - BillBoard
+  - puzzlePices
+  - Grid
+  - cookie1AR
+  - cookie2AR
+  - cookie3AR
+  - pice
+  - cookieClue
+  - door
+  - doorClue
+  - musicClue
+  - musicAltar
+  - colorMirror
+  - colorPlane
+  - colorMirrorRotate1
+  - colorMirrorRotate2
+  - colorMirrorRotate3
+  - colorFiliter
+  - crystalBall
+  - stair
+  - water
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - sectionMask
+  - DialogueMask
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Puzzle
+    uniqueID: 3535057447
+    locked: 0
