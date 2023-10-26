@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class doorSlider : MonoBehaviour
 {
     //滑動指定區塊->讓上方箭頭轉動->當密碼正確後開啟大門
@@ -20,6 +20,12 @@ public class doorSlider : MonoBehaviour
 
     [Header("滑動區跨判斷")]
     public RectTransform key;
+
+    [Header("大門線索圖片")]
+    public Image AImage;
+    public Image BImage;
+    public Image CImage;
+    public Image DImage;
 
     //初始觸控位置紀錄
     private Vector2 touchStartPos;
@@ -102,6 +108,7 @@ public class doorSlider : MonoBehaviour
         if (secretRotation <= 185 && secretRotation >= 175 && !onScreen || secret1)
         {
             secret1 = true;
+            DImage.color = Color.red;
             
         }
         else
@@ -114,6 +121,7 @@ public class doorSlider : MonoBehaviour
         {
             
             secret2 = true;
+            BImage.color = Color.red;
         }
         else
         {
@@ -123,6 +131,7 @@ public class doorSlider : MonoBehaviour
         if (secretRotation <= 95 && secretRotation >= 85 && !onScreen && secret2 || secret3)
         {
             secret3 = true;
+            AImage.color = Color.red;
         }
 
         else
@@ -133,6 +142,7 @@ public class doorSlider : MonoBehaviour
         if (secretRotation <= 275 && secretRotation >= 265 && !onScreen && secret3 || secret4)
         {
             secret4 = true;
+            CImage.color = Color.red;
         }
         else
         {

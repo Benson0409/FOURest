@@ -13,16 +13,19 @@ public class InventoryController : MonoBehaviour
     public GameObject item1;
     public Image item1Image;
     public Text item1Text;
+    public Text informationText1;
 
     [Header("Item2")]
     public GameObject item2;
     public Image item2Image;
     public Text item2Text;
+    public Text informationText2;
 
     [Header("Item3")]
     public GameObject item3;
     public Image item3Image;
     public Text item3Text;
+    public Text informationText3;
 
     [Header("圖片樣式")]
     public Sprite puzzleSprite;
@@ -54,10 +57,12 @@ public class InventoryController : MonoBehaviour
             item2.SetActive(true);
             item2Image.sprite = crystalBallSprite;
             item2Text.text = "1";
+            informationText1.text = "水晶球";
 
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "1";
+            informationText1.text = "音樂樂譜";
             return;
         }
 
@@ -69,10 +74,12 @@ public class InventoryController : MonoBehaviour
             item2.SetActive(true);
             item2Image.sprite = crystalBallSprite;
             item2Text.text = "0";
+            informationText2.text = "根據線索找到水晶球";
 
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "1";
+            informationText1.text = "音樂樂譜";
             return;
         }
 
@@ -85,10 +92,12 @@ public class InventoryController : MonoBehaviour
             item2.SetActive(true);
             item2Image.sprite = mirrorSprite;
             item2Text.text = "1";
+            informationText2.text = "三稜鏡，用來開啟調色盤";
 
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "1";
+            informationText1.text = "音樂樂譜";
             return;
         }
 
@@ -100,11 +109,12 @@ public class InventoryController : MonoBehaviour
             item2.SetActive(true);
             item2Image.sprite = mirrorSprite;
             item2Text.text = "0";
+            informationText2.text = "找到三稜鏡，修理色彩分析器";
 
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "1";
-
+            informationText1.text = "音樂樂譜";
             return;
         }
 
@@ -114,6 +124,7 @@ public class InventoryController : MonoBehaviour
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "1";
+            informationText1.text = "音樂樂譜";
             return;
         }
 
@@ -124,6 +135,7 @@ public class InventoryController : MonoBehaviour
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
             item1Text.text = "0";
+            informationText1.text = "尋找音樂樂譜，完成莉莉絲任務";
             return;
         }
 
@@ -142,6 +154,7 @@ public class InventoryController : MonoBehaviour
             item1.SetActive(true);
             item1Image.sprite = cookieSprite;
             item1Text.text = cookieGameController.findCookieCount.ToString();
+            informationText1.text = "找尋不同餅乾碎片";
             return;
         }
 
@@ -159,6 +172,7 @@ public class InventoryController : MonoBehaviour
             item1.SetActive(true);
             item1Image.sprite = puzzleSprite;
             item1Text.text = puzzleGameController.puzzleCount.ToString();
+            informationText1.text = "收集告示牌碎片，修補告示牌";
             return;
         }
 

@@ -15,8 +15,11 @@ public class SummerGameController : MonoBehaviour
 
     [Header("玩家初始位置")]
     public GameObject player;
-    public Transform initialLocate;
+    public Transform initialPlayerLocate;
 
+    [Header("莉莉絲初始位置")]
+    public GameObject Lili;
+    public Transform initialLiliLocate;
     //在遊戲一開始得時候啟動旁白
     private void Start()
     {
@@ -51,8 +54,13 @@ public class SummerGameController : MonoBehaviour
     public void clearGameInformation()
     {
         PlayerPrefs.DeleteAll();
-        player.transform.position = initialLocate.position;
-        player.transform.rotation = initialLocate.rotation;
+        player.transform.position = initialPlayerLocate.position;
+        player.transform.rotation = initialPlayerLocate.rotation;
+
+        Lili.transform.position = initialLiliLocate.position;
+        Lili.transform.rotation = initialLiliLocate.rotation;
+        Lili.SetActive(false);
+
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
         print("資料重開");

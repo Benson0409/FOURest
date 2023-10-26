@@ -304,6 +304,7 @@ public class ARController : MonoBehaviour
         //旋轉Y軸
         //要把個個物體的角度判斷寫進來
 
+        colorRotateDetect();
         if (correctRotate1 && correctRotate2 && correctRotate3)
         {
             //三色鏡尋找完成
@@ -314,12 +315,7 @@ public class ARController : MonoBehaviour
             PlayerPrefs.SetInt("finishRotate", 1);
             PlayerPrefs.Save();
             print("完成三色鏡裝置設置");
-
-            hintText.text = "恭喜完成色彩分析器";
-            hintPanel.SetActive(true);
             hintCanvasGroup.alpha = 1;
-            StartCoroutine(Countdown(3));
-
             backToWorld();
             return;
         }
@@ -371,13 +367,11 @@ public class ARController : MonoBehaviour
                         {
                             //位置正確 紀錄狀況
                             correctRotate1 = true;
-                            rotate1Image.color = Color.green;
                         }
                         else
                         {
                             //位置錯誤 紀錄消除
                             correctRotate1 = false;
-                            rotate1Image.color = Color.red;
                         }
                     }
 
@@ -412,14 +406,12 @@ public class ARController : MonoBehaviour
                         if (hit.transform.eulerAngles.y < 222 && hit.transform.eulerAngles.y > 220)
                         {
                             //位置正確 紀錄狀況
-                            correctRotate2 = true;
-                            rotate2Image.color = Color.green;
+                            correctRotate2 = true;                         
                         }
                         else
                         {
                             //位置錯誤 紀錄消除
                             correctRotate2 = false;
-                            rotate2Image.color = Color.red;
                         }
                     }
 
@@ -455,13 +447,11 @@ public class ARController : MonoBehaviour
                         {
                             //位置正確 紀錄狀況
                             correctRotate3 = true;
-                            rotate3Image.color = Color.green;
                         }
                         else
                         {
                             //位置錯誤 紀錄消除
                             correctRotate3 = false;
-                            rotate2Image.color = Color.red;
                         }
                     }
                 }
@@ -471,6 +461,8 @@ public class ARController : MonoBehaviour
         //有生成物體後就不在進行下面的指示物判斷
         if (spawnObject != null)
         {
+            //生成物體後再將提示關閉
+            StartCoroutine(FadeIn(fadeInDuration));
             hintPanel.SetActive(false);
             placementIndicator.SetActive(false);
             return;
@@ -485,8 +477,7 @@ public class ARController : MonoBehaviour
     {
         if (spawnObject == null && placementPoseValid)
         {
-            StartCoroutine(FadeIn(fadeInDuration));
-            
+            hintText.text = "點擊螢幕生成物體";
 
             placementIndicator.SetActive(true);
             var cameraBearing = new Vector3(mCamera.transform.forward.x, 0, mCamera.transform.forward.z).normalized;
@@ -596,20 +587,6 @@ public class ARController : MonoBehaviour
             hintCanvasGroup.alpha -= Time.deltaTime / time;
             yield return null;
         }
-        //float elapsedTime = 0f;
-        //float startAlpha = hintCanvasGroup.alpha;
-
-        //yield return new WaitForSeconds(1f);
-
-        //while (elapsedTime < time)
-        //{
-        //    hintCanvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / time);
-        //    elapsedTime += Time.deltaTime;
-        //    yield return null;
-        //}
-
-        //hintCanvasGroup.alpha = 0f; // 确保alpha值准确为0
-        //hintPanel.SetActive(false);
     }
 
     private IEnumerator Countdown(int seconds)
@@ -623,6 +600,37 @@ public class ARController : MonoBehaviour
 
             // 減少計時器的秒數
             timer--;
+        }
+    }
+
+    public void colorRotateDetect()
+    {
+        if (correctRotate1)
+        {
+            rotate1Image.color = Color.green;
+        }
+        else
+        {
+            rotate1Image.color = Color.red;
+        }
+
+
+        if (correctRotate2)
+        {
+            rotate2Image.color = Color.green;
+        }
+        else
+        {
+            rotate2Image.color = Color.red;
+        }
+
+        if (correctRotate3)
+        {
+            rotate3Image.color = Color.green;
+        }
+        else
+        {
+            rotate3Image.color = Color.red;
         }
     }
 }
