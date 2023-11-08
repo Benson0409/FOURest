@@ -11384,7 +11384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670585893}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14291671, y: 0.058538675, z: -0.008468062, w: 0.98796576}
+  m_LocalRotation: {x: 0.14291671, y: 0.05853863, z: -0.008468054, w: 0.98796576}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16588,6 +16588,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395485869178251212, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}
+      propertyPath: climbStairForce
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1395485869178251212, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
       propertyPath: dialogueManager
       value: 
       objectReference: {fileID: 2065461250}
@@ -16675,6 +16680,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673466831303335369, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8673466831303335369, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9072199722507718190, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}

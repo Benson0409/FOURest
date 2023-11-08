@@ -13,13 +13,14 @@ public class PlayerController : MonoBehaviour
     public narrationSystem narrationSystem;
     private float speed;
 
-    
+
     //----------Input system---------
     //input system 的利用
     private Player playerInput;
 
     //----------變數-------------
     private Rigidbody rb;
+    private Vector3 movementInput;
 
     private Vector3 playerVelocity;
 
@@ -27,13 +28,16 @@ public class PlayerController : MonoBehaviour
     private Transform cameraMain;
 
     //----------操作設定------------
-
+    [Header("變量設定")]
     //人物移動速度
     [SerializeField] private float playerSpeed = 2.0f;
 
 
     //人物旋轉速度
     [SerializeField] private float rotationSpeed = 4;
+
+    //爬樓梯力量
+    public float climbStairForce;
 
     //人物跳躍高度
     //[SerializeField] private float jumpHeight = 1.0f;
@@ -53,6 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = new Player();
         rb = GetComponent<Rigidbody>();
+
     }
 
     //腳本啟用的時候，接受玩家的輸入
@@ -77,15 +82,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(stairsDetect())
+        movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
+        if (stairsDetect() && movementInput.magnitude > 0.1f)
         {
+            print("爬樓梯");
+            rb.AddForce(Vector3.up * 20 * climbStairForce, ForceMode.Impulse);
             gravityMultiple = 0;
         }
         else
         {
             gravityMultiple = initGravityMultiple;
         }
-        
+
 
         if (dialogueManager.startDialogue || narrationSystem.startDialogue)
         {
@@ -95,15 +103,12 @@ public class PlayerController : MonoBehaviour
         {
             playerSpeed = speed;
         }
-       
+
     }
 
     void FixedUpdate()
     {
-
-
-        Vector2 movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
-        Vector3 move = (cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x);
+        Vector3 move = cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x;
         move.y = 0;
 
         rb.velocity = move.normalized * playerSpeed * 100 * Time.deltaTime;
@@ -118,7 +123,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
 
-    
+
         //------------跳躍功能-------------
         //Changes the height position of the player.
         //if (playerInput.PlayerMain.Jump.triggered && IsGrounded())
@@ -147,7 +152,7 @@ public class PlayerController : MonoBehaviour
     //爬樓梯判斷
     private bool stairsDetect()
     {
-        
+
         return Physics.Raycast(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f);
     }
 
