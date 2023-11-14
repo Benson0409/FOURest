@@ -22,10 +22,10 @@ public class doorSlider : MonoBehaviour
     public RectTransform key;
 
     [Header("大門線索圖片")]
-    public Image AImage;
-    public Image BImage;
-    public Image CImage;
-    public Image DImage;
+    public GameObject MImage;
+    public GameObject UImage;
+    public GameObject SImage;
+    public GameObject EImage;
 
     //初始觸控位置紀錄
     private Vector2 touchStartPos;
@@ -37,7 +37,7 @@ public class doorSlider : MonoBehaviour
     public bool secret4 = false;
 
     //手指狀態
-    public bool onScreen =false;
+    public bool onScreen = false;
 
     public static bool openDoorGame = false;
 
@@ -58,10 +58,10 @@ public class doorSlider : MonoBehaviour
                     {
                         //物體的旋轉變量紀錄
                         Vector3 rotationIncrement = Vector3.zero;
-                      
+
                         switch (touch.phase)
                         {
-                            
+
                             case TouchPhase.Began:
                                 //記錄手指初始位置
                                 //rotationIncrement = Vector3.zero;
@@ -94,22 +94,24 @@ public class doorSlider : MonoBehaviour
     //判斷大門的密碼
     //可以設定多組密碼
     //用secretImage的rotation.z 來判斷是否指導正確的密碼
-    //先假設密碼為DBAC
-    //A 90
-    //B 0
-    //C 270
-    //D 180
+    //先假設密碼為MUSE 0 270 90 270
+    //D B A C
+    //ADCD
     public void doorSecret()
     {
+        //((secretRotation <= 5 && secretRotation >= 0) || (secretRotation - 360 >= -5 && secretRotation - 360 <= 0)) && !onScreen
         //要在確定每個旋轉值的Ｚ印出來是什麼，畢面判斷錯誤
         //後面可以加入手指是否離開
         float secretRotation = (secretImage.transform.eulerAngles.z + 360) % 360;
 
-        if (secretRotation <= 185 && secretRotation >= 175 && !onScreen || secret1)
+        if (secretRotation <= 95 && secretRotation >= 85 && !onScreen || secret1)
         {
+
+
             secret1 = true;
-            DImage.color = Color.red;
-            
+            MImage.SetActive(true);
+
+
         }
         else
         {
@@ -117,21 +119,21 @@ public class doorSlider : MonoBehaviour
         }
 
         //這邊判斷要在仔細一點，讓他可以０和３６０來判斷
-        if (((secretRotation <= 5 && secretRotation >= 0)||(secretRotation - 360 >= -5 && secretRotation - 360 <=0))&& !onScreen && secret1 || secret2)
+        if (secretRotation <= 185 && secretRotation >= 175 && !onScreen && secret1 || secret2)
         {
-            
+
             secret2 = true;
-            BImage.color = Color.red;
+            UImage.SetActive(true);
         }
         else
         {
             secret2 = false;
         }
 
-        if (secretRotation <= 95 && secretRotation >= 85 && !onScreen && secret2 || secret3)
+        if (secretRotation <= 275 && secretRotation >= 265 && !onScreen && secret2 || secret3)
         {
             secret3 = true;
-            AImage.color = Color.red;
+            SImage.SetActive(true);
         }
 
         else
@@ -139,10 +141,10 @@ public class doorSlider : MonoBehaviour
             secret3 = false;
         }
 
-        if (secretRotation <= 275 && secretRotation >= 265 && !onScreen && secret3 || secret4)
+        if (secretRotation <= 185 && secretRotation >= 175 && !onScreen && secret3 || secret4)
         {
             secret4 = true;
-            CImage.color = Color.red;
+            EImage.SetActive(true);
         }
         else
         {
@@ -152,7 +154,7 @@ public class doorSlider : MonoBehaviour
 
     public void correctSecret()
     {
-        if(secret1 && secret2 && secret3 && secret4)
+        if (secret1 && secret2 && secret3 && secret4)
         {
             //解鎖大門開啟下一階段的遊戲（祭壇控制）
             //後期解鎖成功後播放動畫
