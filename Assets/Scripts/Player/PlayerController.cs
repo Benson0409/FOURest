@@ -50,8 +50,11 @@ public class PlayerController : MonoBehaviour
     //重力加成數值
     [SerializeField] private float gravityMultiple;
     private float initGravityMultiple;
-    public Transform lowDetect;
+
     //爬樓梯時將重力關閉
+    //太高的物品不要觸發爬樓提功能
+    public Transform lowDetect;
+    public Transform highDetect;
 
     private void Awake()
     {
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
         if (stairsDetect() && movementInput.magnitude > 0.1f)
         {
@@ -152,8 +156,15 @@ public class PlayerController : MonoBehaviour
     //爬樓梯判斷
     private bool stairsDetect()
     {
+        if (Physics.Raycast(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f))
+        {
+            if (!Physics.Raycast(highDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f))
+            {
+                return true;
+            }
+        }
+        return false;
 
-        return Physics.Raycast(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f);
     }
 
     //如果偵測到有collider的物體，才判斷在地面

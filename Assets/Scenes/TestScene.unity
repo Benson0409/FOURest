@@ -8121,6 +8121,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127007591}
   m_CullTransparentMesh: 1
+--- !u!1 &1141850076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1141850077}
+  m_Layer: 0
+  m_Name: highDetect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1141850077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141850076}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1799508446}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1170919663
 GameObject:
   m_ObjectHideFlags: 0
@@ -12122,6 +12153,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1799508446 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 436477361043247094, guid: 6d837eb057eb7446ba8c524bc204f98f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7042420174356103309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1804264903
 GameObject:
   m_ObjectHideFlags: 0
@@ -16652,8 +16689,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395485869178251212, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}
+      propertyPath: highDetect
+      value: 
+      objectReference: {fileID: 1141850077}
+    - target: {fileID: 1395485869178251212, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
       propertyPath: climbStairForce
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 1395485869178251212, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}
@@ -16758,11 +16800,17 @@ PrefabInstance:
     - target: {fileID: 9072199722507718190, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.95
+      value: -0.78
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3636427535903770172, guid: 6d837eb057eb7446ba8c524bc204f98f, type: 3}
+    - {fileID: 9051232831380972653, guid: 6d837eb057eb7446ba8c524bc204f98f, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 436477361043247094, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1141850077}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d837eb057eb7446ba8c524bc204f98f, type: 3}
 --- !u!4 &7058280751855222120
