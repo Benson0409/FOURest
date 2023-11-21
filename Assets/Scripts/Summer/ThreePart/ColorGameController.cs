@@ -71,7 +71,7 @@ public class ColorGameController : MonoBehaviour
             return;
         }
 
-        
+
 
         if (PlayerPrefs.GetInt("startColorGame") == 1)
         {
@@ -289,17 +289,17 @@ public class ColorGameController : MonoBehaviour
             //思考如何兩者連動
             DetectObject.SetActive(false);
             SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-            switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARCookieScene"));
+            switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
             return;
         }
     }
 
     public void startGame()
     {
-        
+
         if (PlayerPrefs.GetInt("templeGameFinish") == 1)
         {
-            
+
             startColorGame = true;
             //儲存設定
             saveColorGame();

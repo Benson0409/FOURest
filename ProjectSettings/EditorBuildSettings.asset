@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/TestARCookieScene.unity
+    path: Assets/Scenes/TestARScene.unity
     guid: c70f1ee12998849c5a17d64af1ad1cbc
   m_configObjects:
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: d4d3f8f8b602249e598c138cffbf0c7b,

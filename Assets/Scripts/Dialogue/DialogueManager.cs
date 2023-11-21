@@ -18,8 +18,15 @@ public class DialogueManager : MonoBehaviour
     public Text textLabel;
     public Text nameText;
     public GameObject nameBg;
+
     public Text[] option;
     public GameObject BtnOption;
+
+    [Header("對話名字背景")]
+    public Image nameImage;
+    public Sprite liliSprite;
+    public Sprite seasonSprite;
+    public Sprite waterSprite;
 
     [Header("文本")]
     public TextAsset[] textAsset;
@@ -160,7 +167,7 @@ public class DialogueManager : MonoBehaviour
 
     void Update()
     {
-        
+
         //當文本結束時，將對話框關閉，必將各數值都歸位成初始值
         //這裡需要儲存index的值，並將的值給歸零
         //MissionController.missionFinish 用這個來當作是否完成任務的依據，讓我們決定要怎麼來進行下一步的對話
@@ -397,23 +404,30 @@ public class DialogueManager : MonoBehaviour
             //如果是Ａ就切換到Ａ的圖片，並將index++切換到下一行
             case 'A':
                 nameBg.SetActive(true);
+                nameImage.sprite = waterSprite;
+
                 icon = 1;
                 saveIconResource();
-                nameText.text = "水仙子";
+                nameText.text = "Narcissus";
                 index++;
                 break;
 
             //如果是Ｂ就切換到Ｂ的圖片，並將index++切換到下一行
             case 'B':
                 nameBg.SetActive(true);
+                nameImage.sprite = liliSprite;
+
                 icon = 2;
                 saveIconResource();
                 nameText.text = "Lilium";
                 index++;
                 break;
 
+            //如果是C就切換到C的圖片，並將index++切換到下一行
             case 'C':
                 nameBg.SetActive(true);
+                nameImage.sprite = seasonSprite;
+
                 icon = 3;
                 saveIconResource();
                 nameText.text = "Season";
@@ -525,18 +539,21 @@ public class DialogueManager : MonoBehaviour
         switch (PlayerPrefs.GetInt("Icon"))
         {
             case 1:
-                nameText.text = "水仙子";
+                nameText.text = "Narcissus";
                 nameBg.SetActive(true);
+                nameImage.sprite = waterSprite;
                 break;
 
             case 2:
                 nameText.text = "Lilium";
                 nameBg.SetActive(true);
+                nameImage.sprite = liliSprite;
                 break;
 
             case 3:
                 nameText.text = "Season";
                 nameBg.SetActive(true);
+                nameImage.sprite = seasonSprite;
                 break;
         }
 

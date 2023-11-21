@@ -101,11 +101,11 @@ public class TempleGameController : MonoBehaviour
                 finishAltarGame = true;
             }
 
-            if (PlayerPrefs.GetInt("starMusicAltar")==1)
+            if (PlayerPrefs.GetInt("starMusicAltar") == 1)
             {
                 altarGame = true;
                 TempleMusicAltar.SetActive(true);
-                if (PlayerPrefs.GetInt("canStart")==1)
+                if (PlayerPrefs.GetInt("canStart") == 1)
                 {
                     canStart = true;
                     startAltarGame = true;
@@ -162,7 +162,7 @@ public class TempleGameController : MonoBehaviour
             }
 
             //要讓他講完話在移動過去
-            if(PlayerPrefs.GetInt("currentState")==1 && !dialogueManager.startDialogue)
+            if (PlayerPrefs.GetInt("currentState") == 1 && !dialogueManager.startDialogue)
             {
 
                 //莉莉絲位置更新
@@ -197,9 +197,9 @@ public class TempleGameController : MonoBehaviour
                     TempleMusicAltar.SetActive(true);
                     if (collider.tag == "musicAltar")
                     {
-                        if (!findAltarGame )
+                        if (!findAltarGame)
                         {
-                            
+
                             DetectBtn.text = "調查祭壇";
                             //開啟音樂祭壇線索
                             DetectObject.SetActive(true);
@@ -229,7 +229,7 @@ public class TempleGameController : MonoBehaviour
                         }
                     }
 
-                    
+
                     if (collider.tag == "musicClue")
                     {
                         startAltarGame = false;
@@ -260,12 +260,12 @@ public class TempleGameController : MonoBehaviour
                             DetectObject.SetActive(true);
                             return;
                         }
-                        
+
                         //第一次開啟大門線索
                         //Btn按下提示附近找尋線索，與修理告示牌相同道理
                         if (!doorGame)
                         {
-                            
+
                             DetectBtn.text = "調查";
                             DetectObject.SetActive(true);
                         }
@@ -298,7 +298,7 @@ public class TempleGameController : MonoBehaviour
         if (altarGame)
         {
             //初始調查
-            if(!findAltarGame && !startAltarGame)
+            if (!findAltarGame && !startAltarGame)
             {
                 //跳出旁白
                 summerGameController.openNarrationSystem();
@@ -309,19 +309,19 @@ public class TempleGameController : MonoBehaviour
             }
 
             //調查AR線索
-            if(findAltarGame && !startAltarGame)
+            if (findAltarGame && !startAltarGame)
             {
                 //startAltarGame = true;
                 //調查AR
                 PlayerPrefs.SetInt("findAltarGame", 1);
                 PlayerPrefs.Save();
                 SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-                switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARCookieScene"));
+                switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
                 return;
             }
 
             //調查音樂祭壇
-            if(findAltarGame && startAltarGame)
+            if (findAltarGame && startAltarGame)
             {
                 //開啟祭壇畫面
                 touchCanva.SetActive(false);
@@ -349,13 +349,13 @@ public class TempleGameController : MonoBehaviour
                 //開啟AR
                 //紀錄可開啟大門變數之變化
                 startDoorGame = true;
-                
+
                 PlayerPrefs.SetInt("startDoorGame", 1);
                 PlayerPrefs.Save();
 
                 //切換場景
                 SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-                switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARCookieScene"));
+                switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
                 return;
             }
 
@@ -399,7 +399,7 @@ public class TempleGameController : MonoBehaviour
 
             //調整活動進度
             altarGame = true;
-           
+
             PlayerPrefs.SetInt("starMusicAltar", 1);
             PlayerPrefs.Save();
         }

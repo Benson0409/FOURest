@@ -40,7 +40,7 @@ public class cookieGameController : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerPrefs.GetInt("startCookieGame") == 1 )
+        if (PlayerPrefs.GetInt("startCookieGame") == 1)
         {
             if (PlayerPrefs.GetInt("finishCookieGame") == 1)
             {
@@ -51,13 +51,13 @@ public class cookieGameController : MonoBehaviour
         }
         else
         {
-           startCookieGame = false;
+            startCookieGame = false;
         }
 
         findCookieGameDetect();
         templeGameController = GetComponent<TempleGameController>();
         summerGameController = GetComponent<SummerGameController>();
-        
+
     }
 
     void Update()
@@ -103,9 +103,9 @@ public class cookieGameController : MonoBehaviour
                 return;
             }
 
-            foreach(Collider collider in colliders)
+            foreach (Collider collider in colliders)
             {
-                if(collider.gameObject.tag == "cookie1AR" && !cookie1)
+                if (collider.gameObject.tag == "cookie1AR" && !cookie1)
                 {
                     DetectObject.SetActive(true);
                     DetectBtn.text = "探索區域1";
@@ -131,13 +131,13 @@ public class cookieGameController : MonoBehaviour
 
                 DetectObject.SetActive(false);
             }
-            
+
         }
 
-      
-        
 
-      
+
+
+
     }
 
     public void startGame()
@@ -199,7 +199,7 @@ public class cookieGameController : MonoBehaviour
     public void findCookieGameBtn()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARCookieScene"));
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
     }
 
 }
