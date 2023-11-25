@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movementInput;
 
+    [HideInInspector] public Vector3 move;
+
     private Vector3 playerVelocity;
 
     //相機
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 move = cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x;
+        move = cameraMain.forward * movementInput.y + cameraMain.right * movementInput.x;
         move.y = 0;
 
         rb.velocity = move.normalized * playerSpeed * 100 * Time.deltaTime;
