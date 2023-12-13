@@ -31,32 +31,55 @@ public class cookieGameController : MonoBehaviour
     public bool cookie3;
     public int findCookieCount = 0;
 
+
     [Header("按鈕控制")]
     public GameObject DetectObject;
-    public Text DetectBtn;
+    //public Text DetectBtn;
+    public Image btnImage;
+    public Sprite searchImage;
 
     [Header("角色生成")]
     public GameObject lilisi;
+    public Transform liliRotate;
 
     private void Awake()
     {
+        templeGameController = GetComponent<TempleGameController>();
+        summerGameController = GetComponent<SummerGameController>();
+
+        findCookieGameDetect();
+
+        print(PlayerPrefs.GetInt("startCookieGame"));
         if (PlayerPrefs.GetInt("startCookieGame") == 1)
         {
             if (PlayerPrefs.GetInt("finishCookieGame") == 1)
             {
                 finishCookieGame = true;
             }
+
+            //動畫播放完成後與莉莉絲出現後就出現旁白
+            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3)
+            {
+                lilisi.SetActive(true);
+                lilisi.transform.rotation = liliRotate.rotation;
+
+                if (lilisi.activeInHierarchy && !finishCookieGame)
+                {
+                    summerGameController.openNarrationSystem();
+                    PlayerPrefs.SetInt("playAnim", 0);
+                    PlayerPrefs.Save();
+                }
+            }
+
             startCookieGame = true;
             cookieField.SetActive(true);
         }
         else
         {
+            lilisi.SetActive(false);
             startCookieGame = false;
         }
 
-        findCookieGameDetect();
-        templeGameController = GetComponent<TempleGameController>();
-        summerGameController = GetComponent<SummerGameController>();
 
     }
 
@@ -68,21 +91,31 @@ public class cookieGameController : MonoBehaviour
         //要做好數據控管，因為是場景切換
         //以及餅乾的數據控管
 
+        if (startCookieGame != true)
+        {
+            return;
+        }
+
         if (finishCookieGame)
         {
+            lilisi.SetActive(true);
             return;
         }
 
         if (cookie1 && cookie2 && cookie3 && !finishCookieGame)
         {
-            //莉莉絲出現
-            //餅乾遊戲結束，進入下一部分，神殿開啟，找尋樂譜
-            //引導去找莉莉絲對話
-            if (!lilisi.activeInHierarchy)
-            {
-                summerGameController.openNarrationSystem();
-                lilisi.SetActive(true);
-            }
+
+            // 莉莉絲出現
+            // 餅乾遊戲結束，進入下一部分，神殿開啟，找尋樂譜
+            // 引導去找莉莉絲對話
+            // if (!lilisi.activeInHierarchy)
+            // {
+            //     //轉換動畫
+            //     //switchAnimScene();
+
+            //     //summerGameController.openNarrationSystem();
+            //     //lilisi.SetActive(true);
+            // }
             if (dialogueManager.startDialogue)
             {
                 finishCookieGame = true;
@@ -108,7 +141,8 @@ public class cookieGameController : MonoBehaviour
                 if (collider.gameObject.tag == "cookie1AR" && !cookie1)
                 {
                     DetectObject.SetActive(true);
-                    DetectBtn.text = "探索區域1";
+                    //DetectBtn.text = "探索區域1";
+                    btnImage.sprite = searchImage;
                     ARSystem.cookie1Field(collider.gameObject);
                     return;
                 }
@@ -116,7 +150,8 @@ public class cookieGameController : MonoBehaviour
                 if (collider.gameObject.tag == "cookie2AR" && !cookie2)
                 {
                     DetectObject.SetActive(true);
-                    DetectBtn.text = "探索區域2";
+                    btnImage.sprite = searchImage;
+                    //DetectBtn.text = "探索區域2";
                     ARSystem.cookie2Field(collider.gameObject);
                     return;
                 }
@@ -124,7 +159,8 @@ public class cookieGameController : MonoBehaviour
                 if (collider.gameObject.tag == "cookie3AR" && !cookie3)
                 {
                     DetectObject.SetActive(true);
-                    DetectBtn.text = "探索區域3";
+                    btnImage.sprite = searchImage;
+                    //DetectBtn.text = "探索區域3";
                     ARSystem.cookie3Field(collider.gameObject);
                     return;
                 }
@@ -133,10 +169,6 @@ public class cookieGameController : MonoBehaviour
             }
 
         }
-
-
-
-
 
     }
 
@@ -200,6 +232,12 @@ public class cookieGameController : MonoBehaviour
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
+    }
+
+    public void switchAnimScene()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
     }
 
 }

@@ -11,19 +11,22 @@ public class PuzzleGameController : MonoBehaviour
     public GameObject player;
     public float radius;
     public GameObject detectObject;
-    public Text detectBtn;
+    public Sprite searchImage;
+    public Sprite fixImage;
+    public Image btnImage;
+    //public Text detectBtn;
 
     [Header("變量控制")]
     public bool findPuzzle = false;
     public bool collectPuzzleClueMission;
-    
+
     private int finalCount = 6;
     public int puzzleCount = 0;
 
     [Header("拼圖")]
-    public GameObject []puzzleClue;
+    public GameObject[] puzzleClue;
     private GameObject puzzleObject;
-    private bool []puzzleIsFind = new bool[6];
+    private bool[] puzzleIsFind = new bool[6];
 
 
     [Header("拼圖遊戲開啟")]
@@ -32,6 +35,7 @@ public class PuzzleGameController : MonoBehaviour
     public GameObject MainCamera;
     public GameObject Player;
     public GameObject TouchCanves;
+    public GameObject puzzleStarPice;
 
     [Header("遊戲完成判斷")]
     public GridManager gridManager;
@@ -47,7 +51,17 @@ public class PuzzleGameController : MonoBehaviour
 
         if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
         {
+            puzzleStarPice.SetActive(true);
             puzzleGameOver = true;
+
+            //動畫觀看完成在進行對話
+            if (PlayerPrefs.GetInt("playAnim") == 1 && !stopPuzzle)
+            {
+                //引導去調查草叢
+                summerGameController.openNarrationSystem();
+                PlayerPrefs.SetInt("playAnim", 0);
+            }
+
             stopPuzzle = true;
         }
         else
@@ -114,18 +128,18 @@ public class PuzzleGameController : MonoBehaviour
         {
             puzzleGame.SetActive(false);
             takeRange.transform.gameObject.SetActive(false);
+            //puzzleStarPice.SetActive(true);
             MainCamera.SetActive(true);
             player.SetActive(true);
             TouchCanves.SetActive(true);
 
             //引導去調查草叢
-            summerGameController.openNarrationSystem();
+            //summerGameController.openNarrationSystem();
 
             //儲存進度
-            stopPuzzle = true;
+            //stopPuzzle = true;
             cookieGame.startGame();
-            PlayerPrefs.SetInt("puzzleGameOver", 1);
-            PlayerPrefs.Save();
+
             return;
         }
 
@@ -147,6 +161,7 @@ public class PuzzleGameController : MonoBehaviour
             //開啟撿拼圖
             if (collider.gameObject.tag == "puzzlePices")
             {
+
                 if (collectPuzzleClueMission)
                 {
                     foreach (Touch touch in Input.touches)
@@ -163,48 +178,54 @@ public class PuzzleGameController : MonoBehaviour
                                     RaycastHit hit;
 
                                     if (Physics.Raycast(ray, out hit))
-                                    {                          
+                                    {
                                         if (collider.gameObject.tag == "puzzlePices")
                                         {
                                             //根據點擊的物品來判斷哪一個位置已被撿起
-                                            if (collider.gameObject.name == "pices1")
+                                            if (collider.gameObject.name == "star.1")
                                             {
+
                                                 puzzleIsFind[0] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[0]", 1);
                                             }
 
-                                            if (collider.gameObject.name == "pices2")
+                                            if (collider.gameObject.name == "star.2")
                                             {
+
                                                 puzzleIsFind[1] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[1]", 1);
                                             }
 
-                                            if (collider.gameObject.name == "pices3")
+                                            if (collider.gameObject.name == "star.3")
                                             {
+
                                                 puzzleIsFind[2] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[2]", 1);
                                             }
 
-                                            if (collider.gameObject.name == "pices4")
+                                            if (collider.gameObject.name == "star.4")
                                             {
+
                                                 puzzleIsFind[3] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[3]", 1);
                                             }
 
-                                            if (collider.gameObject.name == "pices5")
+                                            if (collider.gameObject.name == "star.5")
                                             {
+
                                                 puzzleIsFind[4] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[4]", 1);
                                             }
 
-                                            if (collider.gameObject.name == "pices6")
+                                            if (collider.gameObject.name == "star.6")
                                             {
+
                                                 puzzleIsFind[5] = true;
                                                 PlayerPrefs.SetInt("puzzleIsFind[5]", 1);
                                             }
 
                                             puzzleObject = collider.gameObject;
-                                            puzzleObject.SetActive(false);                                   
+                                            puzzleObject.SetActive(false);
                                             puzzleCount++;
                                             PlayerPrefs.SetInt("puzzleCount", puzzleCount);
                                             return;
@@ -231,12 +252,13 @@ public class PuzzleGameController : MonoBehaviour
             if (collider.gameObject.tag == "BillBoard")
             {
                 //修改告示牌
-                if(findPuzzle && puzzleCount == finalCount)
+                if (findPuzzle && puzzleCount == finalCount)
                 {
                     //收集完成後靠近告示牌
                     collectPuzzleClueMission = false;
                     detectObject.SetActive(true);
-                    detectBtn.text = "修補告示牌";
+                    btnImage.sprite = fixImage;
+                    //detectBtn.text = "修補告示牌";
                     return;
                 }
 
@@ -244,17 +266,18 @@ public class PuzzleGameController : MonoBehaviour
                 //看是否要可以要重複查看告示牌的任務
                 if (!findPuzzle)
                 {
-                 
+
                     //這邊代表第一次查看要跳出訊息説尋找餅乾
                     detectObject.SetActive(true);
-                    detectBtn.text = "查看";
+                    btnImage.sprite = searchImage;
+                    //detectBtn.text = "查看";
                     return;
                 }
 
             }
         }
-      //如果身邊沒有掃到section的部分，就將調查扭關閉
-       detectObject.SetActive(false);
+        //如果身邊沒有掃到section的部分，就將調查扭關閉
+        detectObject.SetActive(false);
     }
 
 
@@ -264,7 +287,7 @@ public class PuzzleGameController : MonoBehaviour
         //拼圖碎片顯示
         //紀錄狀態避免旁白系統會一直往後進行
         if (!findPuzzle)
-        {    
+        {
             summerGameController.openNarrationSystem();
             //變數控制
             findPuzzle = true;
@@ -272,7 +295,7 @@ public class PuzzleGameController : MonoBehaviour
             PlayerPrefs.SetInt("findPuzzle", 1);
 
             //狀態反應 
-            for(int i = 0; i < puzzleClue.Length; i++)
+            for (int i = 0; i < puzzleClue.Length; i++)
             {
                 puzzleClue[i].SetActive(true);
             }
@@ -284,7 +307,7 @@ public class PuzzleGameController : MonoBehaviour
         ////撿拼圖功能
         //if (collectPuzzleClueMission)
         //{
-            
+
         //    if (puzzleObject != null)
         //    {
         //        puzzleObject.SetActive(false);
@@ -296,7 +319,7 @@ public class PuzzleGameController : MonoBehaviour
         //}
 
         //拼圖遊戲
-        if(findPuzzle && puzzleCount == finalCount)
+        if (findPuzzle && puzzleCount == finalCount)
         {
             openPuzzleGame = true;
 
@@ -309,6 +332,6 @@ public class PuzzleGameController : MonoBehaviour
             detectObject.SetActive(false);
             return;
         }
-     
+
     }
 }

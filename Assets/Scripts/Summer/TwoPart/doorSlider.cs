@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using Unity.Entities.UniversalDelegates;
+using System;
+using System.Runtime.InteropServices;
 public class doorSlider : MonoBehaviour
 {
     //滑動指定區塊->讓上方箭頭轉動->當密碼正確後開啟大門
     //改變這個的Ｚ軸旋轉角度
     public TempleGameController templeGameController;
     public GameObject touchCanva;
+    public Canvas canvas;
 
     //播放旁白
     public SummerGameController summerGameController;
+
+    [Header("動畫轉場")]
+    public SwitchScenes scenesCanvaPrefabs;
 
     [Header("旋轉圖片")]
     public GameObject secretImage;
@@ -41,55 +50,58 @@ public class doorSlider : MonoBehaviour
 
     public static bool openDoorGame = false;
 
-    private void Update()
-    {
-        if (!openDoorGame)
-        {
+    // private void Update()
+    // {
+    //     if (!openDoorGame)
+    //     {
 
-            doorSecret();
+    //         doorSecret();
 
-            if (Input.touchCount > 0)
-            {
+    //         if (Input.touchCount > 0)
+    //         {
 
-                foreach (Touch touch in Input.touches)
-                {
-                    Vector2 touchPosition = touch.position;
-                    if (RectTransformUtility.RectangleContainsScreenPoint(key, touchPosition))
-                    {
-                        //物體的旋轉變量紀錄
-                        Vector3 rotationIncrement = Vector3.zero;
+    //             foreach (Touch touch in Input.touches)
+    //             {
+    //                 Vector2 touchPosition = touch.position;
+    //                 if (RectTransformUtility.RectangleContainsScreenPoint(key, touchPosition))
+    //                 {
+    //                     //物體的旋轉變量紀錄
+    //                     Vector3 rotationIncrement = Vector3.zero;
 
-                        switch (touch.phase)
-                        {
+    //                     switch (touch.phase)
+    //                     {
 
-                            case TouchPhase.Began:
-                                //記錄手指初始位置
-                                //rotationIncrement = Vector3.zero;
+    //                         case TouchPhase.Began:
+    //                             //記錄手指初始位置
+    //                             //rotationIncrement = Vector3.zero;
 
-                                touchStartPos = touch.position;
-                                break;
+    //                             touchStartPos = touch.position;
+    //                             break;
 
-                            case TouchPhase.Moved:
-                                //rotationIncrement += new Vector3(0, 0, touch.deltaPosition.y * rotationSpeed * Time.deltaTime);
-                                Vector2 touchDeltaPos = touch.position - touchStartPos;
-                                float angle = Mathf.Atan2(touchDeltaPos.y, touchDeltaPos.x) * Mathf.Rad2Deg;
-                                Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-                                secretImage.transform.rotation = Quaternion.Slerp(secretImage.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    //                         case TouchPhase.Moved:
+    //                             //rotationIncrement += new Vector3(0, 0, touch.deltaPosition.y * rotationSpeed * Time.deltaTime);
+    //                             Vector2 touchDeltaPos = touch.position - touchStartPos;
 
-                                onScreen = true;
-                                break;
 
-                            case TouchPhase.Ended:
-                                onScreen = false;
-                                break;
 
-                        }
-                        //secretImage.transform.Rotate(rotationIncrement);
-                    }
-                }
-            }
-        }
-    }
+    //                             float angle = Mathf.Atan2(touchDeltaPos.y, touchDeltaPos.x) * Mathf.Rad2Deg;
+    //                             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    //                             secretImage.transform.rotation = Quaternion.Slerp(secretImage.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+    //                             onScreen = true;
+    //                             break;
+
+    //                         case TouchPhase.Ended:
+    //                             onScreen = false;
+    //                             break;
+
+    //                     }
+    //                     //secretImage.transform.Rotate(rotationIncrement);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     //判斷大門的密碼
     //可以設定多組密碼
@@ -110,7 +122,6 @@ public class doorSlider : MonoBehaviour
 
             secret1 = true;
             MImage.SetActive(true);
-
 
         }
         else
@@ -152,6 +163,8 @@ public class doorSlider : MonoBehaviour
         }
     }
 
+    //大門解鎖後 轉場到動畫場景 播放動畫
+    //按鈕觸發
     public void correctSecret()
     {
         if (secret1 && secret2 && secret3 && secret4)
@@ -163,6 +176,34 @@ public class doorSlider : MonoBehaviour
             templeGameController.startMusicAltar();
             summerGameController.openNarrationSystem();
             templeGameController.closeGameCanva();
+            PlayAnim();
         }
+    }
+
+    private void PlayAnim()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+    }
+
+    public void OnDrag()
+    {
+        if (Input.touchCount > 0)
+        {
+            Vector3 touchPos;
+            onScreen = true;
+
+            touchPos = Input.GetTouch(0).position; // 使用第一個觸控點的位置
+            Vector2 dir = touchPos - secretImage.transform.position;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            angle = (angle < 0) ? (angle + 360) : angle;
+            Quaternion r = Quaternion.AngleAxis(angle, Vector3.forward);
+            secretImage.transform.rotation = r;
+        }
+    }
+    public void OnDrop()
+    {
+        onScreen = false;
+        doorSecret();
     }
 }

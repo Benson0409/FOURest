@@ -23,10 +23,10 @@ public class SummerGameController : MonoBehaviour
     //在遊戲一開始得時候啟動旁白
     private void Start()
     {
-        
+
         if (PlayerPrefs.GetInt("narrationFirstSave") == 0)
         {
-            
+
             saveSummerGamestart();
             //開啟對話
             openNarrationSystem();
@@ -38,12 +38,18 @@ public class SummerGameController : MonoBehaviour
         //startNarration = true;
         PlayerPrefs.SetInt("narrationFirstSave", 1);
         PlayerPrefs.Save();
-        
+
     }
 
     //開啟旁白
-    public  void openNarrationSystem()
+    public void openNarrationSystem()
     {
+        //避免有多餘的旁白出現
+        if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
+        {
+            return;
+        }
+
         narration.openNarration = true;
         narration.startDialogue = true;
         narrationSystem.SetActive(true);
@@ -53,7 +59,6 @@ public class SummerGameController : MonoBehaviour
     //將資料清除，並將人物移動到最初始的位置
     public void clearGameInformation()
     {
-        PlayerPrefs.DeleteAll();
         player.transform.position = initialPlayerLocate.position;
         player.transform.rotation = initialPlayerLocate.rotation;
 
@@ -61,9 +66,11 @@ public class SummerGameController : MonoBehaviour
         Lili.transform.rotation = initialLiliLocate.rotation;
         Lili.SetActive(false);
 
+        PlayerPrefs.DeleteAll();
+
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
         print("資料重開");
     }
-   
+
 }

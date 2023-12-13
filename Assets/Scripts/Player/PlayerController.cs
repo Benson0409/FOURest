@@ -89,11 +89,13 @@ public class PlayerController : MonoBehaviour
     {
 
         movementInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
+
         if (stairsDetect() && movementInput.magnitude > 0.1f)
         {
-            print("爬樓梯");
+            //print("爬樓梯");
             rb.AddForce(Vector3.up * 20 * climbStairForce, ForceMode.Impulse);
-            gravityMultiple = 0;
+            //rb.AddForce(Vector3.up * climbStairForce, ForceMode.Impulse);
+            //gravityMultiple = 0;
         }
         else
         {
@@ -156,23 +158,56 @@ public class PlayerController : MonoBehaviour
     }
 
     //爬樓梯判斷
+    //後面需要再修改 目前不知道為什麼有些地方會感測不到
+    //目前要貼牆進行爬樓梯
     private bool stairsDetect()
     {
-        if (Physics.Raycast(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f))
+
+        // // 使用 Physics.RaycastAll 取得所有的碰撞結果
+        // RaycastHit[] hits = Physics.RaycastAll(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.2f);
+
+        // // 檢查是否有碰撞到地板（或其他你想要的物體）
+        // foreach (RaycastHit hit in hits)
+        // {
+        //     // print(hit.transform.name);
+        //     // 排除自身碰撞器的影響
+        //     if (hit.transform.tag == "stair")
+        //     {
+        //         // print(hit.transform.name);
+        //         return true;
+        //     }
+        // }
+        // // 如果沒有碰撞到地板，返回 false
+        // return false;
+
+        RaycastHit hit;
+        if (Physics.Raycast(lowDetect.transform.position, transform.forward, out hit, 1f))
         {
-            if (!Physics.Raycast(highDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.1f))
+            //print(hit.transform.name);
+            if (hit.collider.CompareTag("stair"))
             {
+                gravityMultiple = 0;
                 return true;
             }
         }
         return false;
+
+
+        // if (Physics.Raycast(lowDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.2f))
+        // {
+        //     if (!Physics.Raycast(highDetect.position, Vector3.forward, GetComponent<Collider>().bounds.extents.y + 0.2f))
+        //     {
+        //         return true;
+        //     }
+        // }
+        // return false;
 
     }
 
     //如果偵測到有collider的物體，才判斷在地面
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f);
+        return Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y);
     }
 
 }

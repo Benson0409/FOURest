@@ -10,8 +10,10 @@ public class DetectController : MonoBehaviour
     public float radius;
     public LayerMask sectionMask;
     public GameObject dialogueBtn;
-    public Text dialogueBtnText;
+    //public Sprite talkImage;
+    //public Image dialogueBtnImage;
     public DialogueManager dialogueManager;
+
 
 
     void Update()
@@ -26,11 +28,12 @@ public class DetectController : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 //最後一章,只能跟水仙子對話
-                if(collider != null && PlayerPrefs.GetInt("finishColorGame") == 1 && collider.gameObject.tag == "water")
+                if (collider != null && PlayerPrefs.GetInt("finishColorGame") == 1 && collider.gameObject.tag == "water")
                 {
                     print("可以開啟對話");
                     dialogueBtn.SetActive(true);
-                    dialogueBtnText.text = "對話";
+                    //dialogueBtnText.text = "對話";
+                    //dialogueBtnImage.sprite = talkImage;
                     return;
                 }
 
@@ -38,7 +41,8 @@ public class DetectController : MonoBehaviour
                 {
                     print("可以開啟對話");
                     dialogueBtn.SetActive(true);
-                    dialogueBtnText.text = "對話";
+                    //dialogueBtnText.text = "對話";
+                    //dialogueBtnImage.sprite = talkImage;
                     return;
                 }
             }

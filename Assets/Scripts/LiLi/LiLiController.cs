@@ -8,21 +8,37 @@ public class LiLiController : MonoBehaviour
     //控制莉莉絲的位置以及莉莉絲的存在狀況
 
     public GameObject LiLi;
-
+    public Transform liliInitial;
 
     private void Awake()
     {
+        // //print(PlayerPrefs.GetInt("555"));
+        // if (PlayerPrefs.GetInt("LiLiIsSave") == 1)
+        // {
+        //     // print("123");
+        //     return;
+        // }
+        // LiLi.SetActive(false);
+        // PlayerPrefs.SetInt("LiLiIsSave", 1);
+        // PlayerPrefs.Save();
         if (PlayerPrefs.GetInt("LiLiIsSave") == 1)
         {
             loadLiLiPosition();
             loadLiLiState();
+            return;
         }
+        LiLi.SetActive(false);
+        liliInitial.transform.position = liliInitial.position;
+        liliInitial.transform.rotation = liliInitial.rotation;
     }
 
     private void Update()
     {
-        saveLiLiPosition();
-        saveLiLiState();
+        if (LiLi.activeInHierarchy)
+        {
+            saveLiLiPosition();
+            saveLiLiState();
+        }
     }
 
     //儲存莉莉絲的位置
@@ -58,8 +74,8 @@ public class LiLiController : MonoBehaviour
         //讀取player旋轉角度
         LiLi.transform.rotation = Quaternion.Euler(
             new Vector3(
-               PlayerPrefs.GetFloat("LiLiRotaY"),
                PlayerPrefs.GetFloat("LiLiRotaX"),
+               PlayerPrefs.GetFloat("LiLiRotaY"),
                PlayerPrefs.GetFloat("LiLiRotaZ")
             )
         );
@@ -74,7 +90,7 @@ public class LiLiController : MonoBehaviour
             PlayerPrefs.SetInt("LiLiState", 1);
         }
         //莉莉絲不顯示
-        else if(LiLi.activeInHierarchy!=true)
+        else if (LiLi.activeInHierarchy != true)
         {
             PlayerPrefs.SetInt("LiLiState", 0);
         }
@@ -86,7 +102,7 @@ public class LiLiController : MonoBehaviour
         {
             LiLi.SetActive(true);
         }
-        else if(PlayerPrefs.GetInt("LiLiState") == 0)
+        else if (PlayerPrefs.GetInt("LiLiState") == 0)
         {
             LiLi.SetActive(false);
         }

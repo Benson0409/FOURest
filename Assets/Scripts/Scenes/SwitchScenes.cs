@@ -20,13 +20,29 @@ public class SwitchScenes : MonoBehaviour
     }
 
 
-    public IEnumerator loadFadeOutInScenes(string sceneName)
+    //切換到動畫場景
+    public IEnumerator loadFadeOutInAnimScenes(string sceneName)
     {
         yield return FadeOut(fadeOutDuration);
         yield return loadScenes(sceneName);
         yield return FadeIn(fadeInDuration);
     }
 
+    public IEnumerator loadFadeOutInScenes(string sceneName)
+    {
+        yield return FadeOut(fadeOutDuration);
+        yield return loadScenes(sceneName);
+        yield return FadeIn(fadeInDuration);
+    }
+    public IEnumerator FadeOutInScenes()
+    {
+        yield return FadeOut(fadeOutDuration);
+        yield return FadeIn(fadeInDuration);
+    }
+    //只有淡入淡出
+
+
+    //淡入設定
     public IEnumerator FadeOut(float time)
     {
         while (canvasGroup.alpha < 1)
@@ -36,6 +52,7 @@ public class SwitchScenes : MonoBehaviour
         }
     }
 
+    //淡出設定
     public IEnumerator FadeIn(float time)
     {
         while (canvasGroup.alpha != 0)
@@ -46,11 +63,12 @@ public class SwitchScenes : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //場景加載
     public IEnumerator loadScenes(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
         yield return null;
     }
 
-   
+
 }

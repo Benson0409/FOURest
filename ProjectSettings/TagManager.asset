@@ -29,7 +29,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - OutLine
   - Water
   - UI
   - sectionMask

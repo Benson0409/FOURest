@@ -6,17 +6,20 @@ using UnityEngine.UI;
 public class musicAltar : MonoBehaviour
 {
 
-    //音樂祭壇的初始音樂先設置為 So Re #Do Fa Si
+    //音樂祭壇的初始音樂先設置為 Si So Do Do So Si La
     //如果有一個按鍵按錯的話就重新開始
     public TempleGameController templeGameController;
     public SummerGameController summerGameController;
 
     public Text musicText;
-    private string lastmusicName="";
-    private string currentName = "";
+    public string lastmusicName = "";
+    public string currentName = "";
 
     private int musicInt = 0;
     public string musicName = "";
+
+    [Header("動畫轉場")]
+    public SwitchScenes scenesCanvaPrefabs;
 
     [Header("音符正確順序")]
     public bool music1 = false;
@@ -24,6 +27,9 @@ public class musicAltar : MonoBehaviour
     public bool music3 = false;
     public bool music4 = false;
     public bool music5 = false;
+    public bool music6 = false;
+    public bool music7 = false;
+
 
     [Header("莉莉絲位置")]
     public Transform liliPosition;
@@ -35,7 +41,7 @@ public class musicAltar : MonoBehaviour
         {
             return;
         }
-        print(music1);
+
         musicText.text = lastmusicName;
         musicCorrect();
     }
@@ -43,11 +49,13 @@ public class musicAltar : MonoBehaviour
 
     public void musicCorrect()
     {
-        if (music1 && music2 && music3 && music4 && music5)
+        if (music1 && music2 && music3 && music4 && music5 && music6 && music7)
         {
             //播放影片
             //獲得樂譜
 
+            //寶箱開啟
+            templeGameController.treasure.transform.rotation = Quaternion.Euler(-36.672f, 0, 0);
             //莉莉絲位置移動
             liliPosition.position = targetPosition.position;
             liliPosition.rotation = targetPosition.rotation;
@@ -57,7 +65,7 @@ public class musicAltar : MonoBehaviour
             print("神廟遊戲結束");
 
             templeGameController.finishAltarGame = true;
-           
+
 
             PlayerPrefs.SetInt("finishAltarGame", 1);
             PlayerPrefs.Save();
@@ -65,10 +73,9 @@ public class musicAltar : MonoBehaviour
             //對話任務結束
             DialogueData.saveMissionTextState(true);
 
-            //旁白開啟
-            summerGameController.openNarrationSystem();
             //關閉此頁面
             templeGameController.closeGameCanva();
+            PlayAnim();
             return;
         }
 
@@ -77,8 +84,9 @@ public class musicAltar : MonoBehaviour
     //音符按鈕判斷
     public void playDo()
     {
+
         musicInt++;
-        if (musicInt > 5)
+        if (musicInt > 7)
         {
             musicInt = 1;
             lastmusicName = "";
@@ -96,114 +104,15 @@ public class musicAltar : MonoBehaviour
             lastmusicName = currentName;
         }
 
-        music1 = false;
-        music2 = false;
-        music3 = false;
-        music4 = false;
-        music5 = false;
-
-        //播放Do的聲音
-        musicName = "Do";
-        
-        print("Do");
-    }
-
-    public void playRe()
-    {
-        musicInt++;
-        if (musicInt > 5)
-        {
-            musicInt = 1;
-            lastmusicName = "";
-            musicText.text = "";
-        }
-
-        if (lastmusicName == "")
-        {
-            currentName = "Re";
-            lastmusicName = "Re";
-        }
-        else
-        {
-            currentName = lastmusicName + " Re";
-            lastmusicName =  currentName;
-        }
-
-        if (music1 && !music3)
-        {
-            music2 = true;
-        }
-        else
-        {
-            music1 = false;
-            music2 = false;
-            music3 = false;
-            music4 = false;
-            music5 = false;
-        }
-
-
-        musicName = "Re";
-        //播放Re的聲音
-        print("Re");
-    }
-    public void playMi()
-    {
-        musicInt++;
-        if (musicInt > 5)
-        {
-            musicInt = 1;
-            lastmusicName = "";
-            musicText.text = "";
-        }
-
-        if (lastmusicName == "")
-        {
-            currentName = "Mi";
-            lastmusicName = "Mi";
-        }
-        else
-        {
-            currentName = lastmusicName + " Mi";
-            lastmusicName =  currentName;
-        }
-
-        music1 = false;
-        music2 = false;
-        music3 = false;
-        music4 = false;
-        music5 = false;
-
-        musicName = "Mi";
-        //播放Mi的聲音
-        print("Mi");
-    }
-    public void playFa()
-    {
-
-        musicInt++;
-        if (musicInt > 5)
-        {
-            musicInt = 1;
-            lastmusicName = "";
-            musicText.text = "";
-        }
-
-        if (lastmusicName == "")
-        {
-            currentName = "Fa";
-            lastmusicName = "Fa";
-        }
-        else
-        {
-            currentName = lastmusicName + " Fa";
-            lastmusicName = currentName;
-        }
-
+        /////////
         if (music3 && !music5)
         {
             music4 = true;
         }
+        else if (music2 && !music4)
+        {
+            music3 = true;
+        }
         else
         {
             music1 = false;
@@ -211,16 +120,21 @@ public class musicAltar : MonoBehaviour
             music3 = false;
             music4 = false;
             music5 = false;
+            music6 = false;
+            music7 = false;
         }
 
-        musicName = "Fa";
+        musicName = "Do";
         //播放Fa的聲音
-        print("Fa");
+        print("Do");
+
+
     }
     public void playSo()
     {
+
         musicInt++;
-        if (musicInt > 5)
+        if (musicInt > 7)
         {
             musicInt = 1;
             lastmusicName = "";
@@ -237,10 +151,16 @@ public class musicAltar : MonoBehaviour
             currentName = lastmusicName + " So";
             lastmusicName = currentName;
         }
-
-        if (!music1)
+        ////////////////
+        if (music4 && !music6)
         {
-            music1 = true;
+
+            music5 = true;
+        }
+
+        else if (music1 && !music3)
+        {
+            music2 = true;
         }
         else
         {
@@ -249,16 +169,22 @@ public class musicAltar : MonoBehaviour
             music3 = false;
             music4 = false;
             music5 = false;
+            music6 = false;
+            music7 = false;
         }
 
+
         musicName = "So";
-        //播放Do的聲音
+        //播放Re的聲音
         print("So");
+
     }
     public void playLa()
     {
+
         musicInt++;
-        if (musicInt > 5)
+
+        if (musicInt > 7)
         {
             musicInt = 1;
             lastmusicName = "";
@@ -276,20 +202,30 @@ public class musicAltar : MonoBehaviour
             lastmusicName = currentName;
         }
 
-        music1 = false;
-        music2 = false;
-        music3 = false;
-        music4 = false;
-        music5 = false;
+        if (music6)
+        {
+            music7 = true;
+        }
+        else
+        {
+            music1 = false;
+            music2 = false;
+            music3 = false;
+            music4 = false;
+            music5 = false;
+            music6 = false;
+            music7 = false;
+        }
 
         musicName = "La";
-        //播放La的聲音
+        //播放#Do的聲音
         print("La");
     }
     public void playSi()
     {
+
         musicInt++;
-        if (musicInt > 5)
+        if (musicInt > 7)
         {
             musicInt = 1;
             lastmusicName = "";
@@ -307,10 +243,17 @@ public class musicAltar : MonoBehaviour
             lastmusicName = currentName;
         }
 
-        if (music4 && !music5)
+        ////////////////
+        if (music5 && !music7)
         {
-            music5 = true;
+            music6 = true;
         }
+
+        else if (!music1)
+        {
+            music1 = true;
+        }
+
         else
         {
             music1 = false;
@@ -318,49 +261,20 @@ public class musicAltar : MonoBehaviour
             music3 = false;
             music4 = false;
             music5 = false;
+            music6 = false;
+            music7 = false;
         }
 
         musicName = "Si";
-        //播放Do的聲音
+        //播放Si的聲音
         print("Si");
+
+
     }
-    public void playDoUp()
+
+    private void PlayAnim()
     {
-        musicInt++;
-
-        if (musicInt > 5)
-        {
-            musicInt = 1;
-            lastmusicName = "";
-            musicText.text = "";
-        }
-
-        if (lastmusicName == "")
-        {
-            currentName = "#Do";
-            lastmusicName = "#Do";
-        }
-        else
-        {
-            currentName = lastmusicName + " #Do";
-            lastmusicName = currentName;
-        }
-
-        if (music2 && !music4)
-        {
-            music3 = true;
-        }
-        else
-        {
-            music1 = false;
-            music2 = false;
-            music3 = false;
-            music4 = false;
-            music5 = false;
-        }
-
-        musicName = "#Do";
-        //播放#Do的聲音
-        print("#Do");
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
     }
 }

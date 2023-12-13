@@ -30,6 +30,10 @@ public class ARController : MonoBehaviour
     //餅乾遊戲UI
     public GameObject findClueUI;
     public Text cookieName;
+    public Image cookieImage;
+    public Sprite squareImage;
+    public Sprite circleImage;
+    public Sprite triangleImage;
 
     [Header(" 餅乾遊戲生成物體")]
     public GameObject cookieObject1;
@@ -93,6 +97,7 @@ public class ARController : MonoBehaviour
     private Vector2 previousPosition;
     public float rotataSpeed;
 
+    //[System.Obsolete]
     private void Awake()
     {
         aRRaycastManager = FindObjectOfType<ARRaycastManager>();
@@ -100,11 +105,11 @@ public class ARController : MonoBehaviour
         mCamera = Camera.main;
 
         //顏色遊戲開啟
-        if(PlayerPrefs.GetInt("startColorGame") == 1)
+        if (PlayerPrefs.GetInt("startColorGame") == 1)
         {
             print("平面偵測");
             planeDetect = true;
-            if(PlayerPrefs.GetString("colorMirror")== "colorMirror1")
+            if (PlayerPrefs.GetString("colorMirror") == "colorMirror1")
             {
                 print("生成三色鏡");
                 arTospawnObject = colorMirror1;
@@ -125,7 +130,7 @@ public class ARController : MonoBehaviour
 
             if (PlayerPrefs.GetInt("starMusicAltar") == 1)
             {
-                if (PlayerPrefs.GetString("musicAltarClue")== "musicAltarClue1")
+                if (PlayerPrefs.GetString("musicAltarClue") == "musicAltarClue1")
                 {
                     arTospawnObject = musicAltarClue1;
                     return;
@@ -138,18 +143,18 @@ public class ARController : MonoBehaviour
                     arTospawnObject = doorClueObject1;
                     break;
 
-                //case "doorClue2":
-                //    arTospawnObject = doorClueObject1;
-                //    break;
+                    //case "doorClue2":
+                    //    arTospawnObject = doorClueObject1;
+                    //    break;
 
-                //case "doorClue3":
-                //    arTospawnObject = doorClueObject1;
-                //    break;
+                    //case "doorClue3":
+                    //    arTospawnObject = doorClueObject1;
+                    //    break;
             }
             return;
         }
 
-        if (PlayerPrefs.GetInt("startCookieGame")==1)
+        if (PlayerPrefs.GetInt("startCookieGame") == 1)
         {
             print("平面偵測");
             planeDetect = true;
@@ -157,26 +162,29 @@ public class ARController : MonoBehaviour
             {
                 case "field1":
                     arTospawnObject = cookieObject1;
+                    cookieImage.sprite = squareImage;
                     break;
 
                 case "field2":
                     arTospawnObject = cookieObject2;
+                    cookieImage.sprite = circleImage;
                     break;
 
                 case "field3":
                     arTospawnObject = cookieObject3;
+                    cookieImage.sprite = triangleImage;
                     break;
             }
             return;
         }
-        
+
     }
 
 
 
     void Update()
     {
-        
+
         //如果條件都符合就生成物體
         if (placementPoseValid && spawnObject == null && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
@@ -203,7 +211,7 @@ public class ARController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                   
+
                     //每找到一個餅乾線索任務控制裡面的變數就＋1,等夾到某個數值就代表此次的任務完成 
                     if (hit.transform.gameObject.tag == "cookieClue")
                     {
@@ -316,7 +324,8 @@ public class ARController : MonoBehaviour
             PlayerPrefs.Save();
             print("完成三色鏡裝置設置");
             hintCanvasGroup.alpha = 1;
-            backToWorld();
+            changeToPlayAnimWorld();
+            //backToWorld();
             return;
         }
 
@@ -363,7 +372,7 @@ public class ARController : MonoBehaviour
                         //確認每一個的旋轉角度
                         print("Rotata1 :" + hit.transform.eulerAngles.y);
 
-                        if (hit.transform.eulerAngles.y < 348 && hit.transform.eulerAngles.y > 346) 
+                        if (hit.transform.eulerAngles.y < 348 && hit.transform.eulerAngles.y > 346)
                         {
                             //位置正確 紀錄狀況
                             correctRotate1 = true;
@@ -406,7 +415,7 @@ public class ARController : MonoBehaviour
                         if (hit.transform.eulerAngles.y < 222 && hit.transform.eulerAngles.y > 220)
                         {
                             //位置正確 紀錄狀況
-                            correctRotate2 = true;                         
+                            correctRotate2 = true;
                         }
                         else
                         {
@@ -468,7 +477,7 @@ public class ARController : MonoBehaviour
             return;
         }
         updatePlacementPose();
-        updatePlacementIndicator(); 
+        updatePlacementIndicator();
     }
 
 
@@ -517,7 +526,7 @@ public class ARController : MonoBehaviour
     //那地標生成在新的位置
     private void updatePlacementIndicator()
     {
-        
+
         var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         var hits = new List<ARRaycastHit>();
 
@@ -563,16 +572,33 @@ public class ARController : MonoBehaviour
         spawnObject.transform.localScale /= 10;
     }
 
+    //轉換到動畫場景播放相對應的動畫
+    //有成功完成線索的才轉換去動畫場景
+    //其餘都回到主世界
+    public void changeToPlayAnimWorld()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+    }
+
+    //返回到主世界
     public void backToWorld()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        if (PlayerPrefs.GetInt("finishCookieGame") != 1 && PlayerPrefs.GetInt("findCookie3") == 1 && PlayerPrefs.GetInt("findCookie2") == 1 && PlayerPrefs.GetInt("findCookie1") == 1)
+        {
+
+            switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+            return;
+        }
+
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
     }
 
 
     public IEnumerator FadeOut(float time)
     {
-       
+
         while (hintCanvasGroup.alpha < 1)
         {
             hintCanvasGroup.alpha += Time.deltaTime / time;
@@ -607,7 +633,7 @@ public class ARController : MonoBehaviour
     {
         if (correctRotate1)
         {
-            rotate1Image.color = Color.green;
+            rotate1Image.color = Color.yellow;
         }
         else
         {
@@ -617,7 +643,7 @@ public class ARController : MonoBehaviour
 
         if (correctRotate2)
         {
-            rotate2Image.color = Color.green;
+            rotate2Image.color = Color.yellow;
         }
         else
         {
@@ -626,7 +652,7 @@ public class ARController : MonoBehaviour
 
         if (correctRotate3)
         {
-            rotate3Image.color = Color.green;
+            rotate3Image.color = Color.yellow;
         }
         else
         {

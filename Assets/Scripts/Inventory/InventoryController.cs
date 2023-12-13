@@ -70,7 +70,7 @@ public class InventoryController : MonoBehaviour
         if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
         {
             inventoryPanel.SetActive(true);
-            
+
             item2.SetActive(true);
             item2Image.sprite = crystalBallSprite;
             item2Text.text = "0";
@@ -86,7 +86,7 @@ public class InventoryController : MonoBehaviour
         //色彩分析器完成
         if (PlayerPrefs.GetInt("finishRotate") == 1)
         {
-            
+
             inventoryPanel.SetActive(true);
 
             item2.SetActive(true);
@@ -143,17 +143,24 @@ public class InventoryController : MonoBehaviour
         if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
         {
             //代表餅乾已經找齊，已經用餅乾呼喚出莉莉絲，這時候可以將背包系統關閉
-            if(cookieGameController.findCookieCount == 3)
+            if (cookieGameController.findCookieCount == 3)
             {
                 inventoryPanel.SetActive(false);
                 item1.SetActive(false);
                 return;
             }
-            
+
             inventoryPanel.SetActive(true);
             item1.SetActive(true);
             item1Image.sprite = cookieSprite;
+
             item1Text.text = cookieGameController.findCookieCount.ToString();
+
+            if (cookieGameController.findCookieCount >= 3)
+            {
+                item1Text.text = "3";
+            }
+
             informationText1.text = "找尋不同餅乾碎片";
             return;
         }
@@ -168,7 +175,7 @@ public class InventoryController : MonoBehaviour
             {
                 inventoryPanel.SetActive(false);
             }
-            
+
             item1.SetActive(true);
             item1Image.sprite = puzzleSprite;
             item1Text.text = puzzleGameController.puzzleCount.ToString();
@@ -178,6 +185,6 @@ public class InventoryController : MonoBehaviour
 
 
 
-        
+
     }
 }

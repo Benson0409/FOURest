@@ -39,8 +39,11 @@ public class TempleGameController : MonoBehaviour
     public GameObject MusicAltarCanva;
 
     //開啟神廟線索探索
-    public GameObject TempleDoor;
-    public GameObject TempleMusicAltar;
+    public GameObject templeDoor;
+    public GameObject openTempleDoor;
+    public GameObject treasure;
+    public GameObject openTreasure;
+
 
     [Header("偵測控制")]
     public GameObject player;
@@ -48,8 +51,12 @@ public class TempleGameController : MonoBehaviour
 
     [Header("按鈕控制")]
     public GameObject DetectObject;
-    public Text DetectBtn;
-
+    public Image btnImage;
+    public Sprite searchImage;
+    public Sprite openImage;
+    //public Text DetectBtn;
+    [Header("背包控制")]
+    public GameObject inventoryUI;
 
     [Header("關卡變數")]
     public bool templeGameStart;
@@ -82,6 +89,8 @@ public class TempleGameController : MonoBehaviour
 
         if (PlayerPrefs.GetInt("templeGameFinish") == 1)
         {
+            openTreasure.SetActive(true);
+            treasure.SetActive(false);
             templeGameFinish = true;
         }
 
@@ -93,18 +102,26 @@ public class TempleGameController : MonoBehaviour
         if (PlayerPrefs.GetInt("templeGameStart") == 1)
         {
             templeGameStart = true;
-            TempleDoor.SetActive(true);
 
             //判斷最後對話進程 
             if (PlayerPrefs.GetInt("finishAltarGame") == 1)
             {
                 finishAltarGame = true;
+
+                if (PlayerPrefs.GetInt("playAnim") == 1)
+                {
+                    //旁白開啟
+                    summerGameController.openNarrationSystem();
+                    PlayerPrefs.SetInt("playAnim", 0);
+                    PlayerPrefs.Save();
+                }
             }
 
             if (PlayerPrefs.GetInt("starMusicAltar") == 1)
             {
                 altarGame = true;
-                TempleMusicAltar.SetActive(true);
+                openTempleDoor.SetActive(true);
+                templeDoor.SetActive(false);
                 if (PlayerPrefs.GetInt("canStart") == 1)
                 {
                     canStart = true;
@@ -121,6 +138,7 @@ public class TempleGameController : MonoBehaviour
             if (PlayerPrefs.GetInt("startDoorGame") == 1)
             {
                 startDoorGame = true;
+                doorGame = true;
                 return;
             }
         }
@@ -194,13 +212,15 @@ public class TempleGameController : MonoBehaviour
             {
                 if (altarGame)
                 {
-                    TempleMusicAltar.SetActive(true);
+                    // openTempleDoor.SetActive(true);
+                    // templeDoor.SetActive(false);
                     if (collider.tag == "musicAltar")
                     {
                         if (!findAltarGame)
                         {
 
-                            DetectBtn.text = "調查祭壇";
+                            //DetectBtn.text = "調查祭壇";
+                            btnImage.sprite = searchImage;
                             //開啟音樂祭壇線索
                             DetectObject.SetActive(true);
                             return;
@@ -222,7 +242,8 @@ public class TempleGameController : MonoBehaviour
 
                         if (startAltarGame)
                         {
-                            DetectBtn.text = "開啟祭壇";
+                            //DetectBtn.text = "開啟祭壇";
+                            btnImage.sprite = openImage;
                             //開啟音樂祭壇線索
                             DetectObject.SetActive(true);
                             return;
@@ -237,7 +258,8 @@ public class TempleGameController : MonoBehaviour
                         {
 
                             //準備開啟AR
-                            DetectBtn.text = "調查線索";
+                            //DetectBtn.text = "調查線索";
+                            btnImage.sprite = searchImage;
 
                             //將要生成的物體帶入AR中
                             ARSystem.musicAltarClue(collider.gameObject);
@@ -256,9 +278,10 @@ public class TempleGameController : MonoBehaviour
                         if (startDoorGame)
                         {
                             //開啟大門介面
-                            DetectBtn.text = "開啟大門";
+                            //DetectBtn.text = "開啟大門";
+                            btnImage.sprite = openImage;
                             DetectObject.SetActive(true);
-                            return;
+                            //return;
                         }
 
                         //第一次開啟大門線索
@@ -266,7 +289,8 @@ public class TempleGameController : MonoBehaviour
                         if (!doorGame)
                         {
 
-                            DetectBtn.text = "調查";
+                            //DetectBtn.text = "調查";
+                            btnImage.sprite = searchImage;
                             DetectObject.SetActive(true);
                         }
                         return;
@@ -279,7 +303,8 @@ public class TempleGameController : MonoBehaviour
                         //點擊BTN可以調查線索．開啟ＡＲ調查，openAR = true
                         ARSystem.doorClue(collider.gameObject);
 
-                        DetectBtn.text = "調查線索";
+                        //DetectBtn.text = "調查線索";
+                        btnImage.sprite = searchImage;
                         DetectObject.SetActive(true);
                         return;
                     }
@@ -359,8 +384,9 @@ public class TempleGameController : MonoBehaviour
                 return;
             }
 
-            if (startDoorGame && doorGame)
+            if (startDoorGame)
             {
+                inventoryUI.SetActive(false);
                 DetectObject.SetActive(false);
                 DoorCanva.SetActive(true);
                 touchCanva.SetActive(false);
@@ -375,7 +401,6 @@ public class TempleGameController : MonoBehaviour
         if (cookieGameController.finishCookieGame)
         {
             templeGameStart = true;
-            TempleDoor.SetActive(true);
             saveTempleGame();
         }
         else
@@ -386,6 +411,7 @@ public class TempleGameController : MonoBehaviour
 
     public void closeGameCanva()
     {
+        inventoryUI.SetActive(true);
         touchCanva.SetActive(true);
         DoorCanva.SetActive(false);
         MusicAltarCanva.SetActive(false);
@@ -395,8 +421,9 @@ public class TempleGameController : MonoBehaviour
     {
         if (doorSlider.openDoorGame)
         {
-            //開啟音樂祭壇
-
+            inventoryUI.SetActive(true);
+            //開啟音樂大門
+            //templeDoor.transform.rotation = Quaternion.Euler(0, 90, 0);
             //調整活動進度
             altarGame = true;
 
