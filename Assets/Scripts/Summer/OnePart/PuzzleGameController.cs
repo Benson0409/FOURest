@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,11 @@ public class PuzzleGameController : MonoBehaviour
     //public Text detectBtn;
 
     [Header("變量控制")]
-    public bool findPuzzle = false;
-    public bool collectPuzzleClueMission;
+    public PuzzleGameDataSo puzzleGameData;
+    bool findPuzzle = false;
+    //bool collectPuzzleClueMission;
 
-    private int finalCount = 6;
+    private int targetPuzzleCount = 6;
     public int puzzleCount = 0;
 
     [Header("拼圖")]
@@ -30,6 +32,7 @@ public class PuzzleGameController : MonoBehaviour
 
 
     [Header("拼圖遊戲開啟")]
+    //看我的背包需不需要關閉
     public bool openPuzzleGame;
     public GameObject puzzleGame;
     public GameObject MainCamera;
@@ -40,73 +43,63 @@ public class PuzzleGameController : MonoBehaviour
     [Header("遊戲完成判斷")]
     public GridManager gridManager;
     private cookieGameController cookieGame;
-    public static bool puzzleGameOver;
-    private bool stopPuzzle;
+    [HideInInspector] public static bool puzzleGameOver;
+    private bool overGame;
 
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+
+    void OnEnable()
+    {
+        ResetDataEventSo.OnEventRaised += ResetPuzzleGameData;
+    }
+
+    void OnDisable()
+    {
+        ResetDataEventSo.OnEventRaised -= ResetPuzzleGameData;
+    }
     //每次開啟遊戲都先判斷當前遊戲的狀態來決定要怎麼進行遊戲
     private void Awake()
     {
         summerGameController = GetComponent<SummerGameController>();
         cookieGame = GetComponent<cookieGameController>();
 
-        if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
+        findPuzzle = puzzleGameData.isFindPuzzle;
+        puzzleCount = puzzleGameData.puzzleClipCount;
+        puzzleGameOver = puzzleGameData.puzzleGameOver;
+
+        if (puzzleGameOver)
         {
+            //星星拼圖顯示
             puzzleStarPice.SetActive(true);
-            puzzleGameOver = true;
 
             //動畫觀看完成在進行對話
-            if (PlayerPrefs.GetInt("playAnim") == 1 && !stopPuzzle)
+            if (PlayerPrefs.GetInt("playAnim") == 1 && !overGame)
             {
                 //引導去調查草叢
                 summerGameController.openNarrationSystem();
                 PlayerPrefs.SetInt("playAnim", 0);
             }
 
-            stopPuzzle = true;
+            //儲存進度,開始下一關遊戲
+            cookieGame.startGame();
+            overGame = true;
         }
         else
         {
-            puzzleGameOver = false;
-            stopPuzzle = false;
+            overGame = false;
         }
 
+
         //開啟找拼圖遊戲
-        if (PlayerPrefs.GetInt("findPuzzle") == 1)
+        if (findPuzzle)
         {
-            findPuzzle = true;
-            collectPuzzleClueMission = true;
-            puzzleCount = PlayerPrefs.GetInt("puzzleCount");
-
-            //拼圖遊戲尋找顯示判斷
-            //看哪一個沒有被拿到，把他顯示出來
-            if (PlayerPrefs.GetInt("puzzleIsFind[0]") != 1)
+            for (int i = 0; i < puzzleGameData.puzzleState.Length; i++)
             {
-                puzzleClue[0].SetActive(true);
-            }
-
-            if (PlayerPrefs.GetInt("puzzleIsFind[1]") != 1)
-            {
-                puzzleClue[1].SetActive(true);
-            }
-
-            if (PlayerPrefs.GetInt("puzzleIsFind[2]") != 1)
-            {
-                puzzleClue[2].SetActive(true);
-            }
-
-            if (PlayerPrefs.GetInt("puzzleIsFind[3]") != 1)
-            {
-                puzzleClue[3].SetActive(true);
-            }
-
-            if (PlayerPrefs.GetInt("puzzleIsFind[4]") != 1)
-            {
-                puzzleClue[4].SetActive(true);
-            }
-
-            if (PlayerPrefs.GetInt("puzzleIsFind[5]") != 1)
-            {
-                puzzleClue[5].SetActive(true);
+                if (!puzzleGameData.puzzleState[i])
+                {
+                    puzzleClue[i].SetActive(true);
+                }
             }
         }
 
@@ -119,26 +112,22 @@ public class PuzzleGameController : MonoBehaviour
         //這邊完成之後拼圖就算完成
         //只執行一次
 
-        if (stopPuzzle)
+        if (overGame)
         {
             return;
         }
+
+        puzzleGameData.isFindPuzzle = findPuzzle;
+        puzzleGameData.puzzleClipCount = puzzleCount;
 
         if (puzzleGameOver)
         {
             puzzleGame.SetActive(false);
             takeRange.transform.gameObject.SetActive(false);
-            //puzzleStarPice.SetActive(true);
+
             MainCamera.SetActive(true);
             player.SetActive(true);
             TouchCanves.SetActive(true);
-
-            //引導去調查草叢
-            //summerGameController.openNarrationSystem();
-
-            //儲存進度
-            //stopPuzzle = true;
-            cookieGame.startGame();
 
             return;
         }
@@ -156,14 +145,15 @@ public class PuzzleGameController : MonoBehaviour
             return;
         }
 
+        //要可以找拼圖時在讓她尋找
         foreach (Collider collider in colliders)
         {
             //開啟撿拼圖
             if (collider.gameObject.tag == "puzzlePices")
             {
-
-                if (collectPuzzleClueMission)
+                if (findPuzzle)
                 {
+
                     foreach (Touch touch in Input.touches)
                     {
                         Vector2 touchPosition = touch.position;
@@ -186,48 +176,47 @@ public class PuzzleGameController : MonoBehaviour
                                             {
 
                                                 puzzleIsFind[0] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[0]", 1);
+                                                puzzleGameData.puzzleState[0] = true;
                                             }
 
                                             if (collider.gameObject.name == "star.2")
                                             {
 
                                                 puzzleIsFind[1] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[1]", 1);
+                                                puzzleGameData.puzzleState[1] = true;
                                             }
 
                                             if (collider.gameObject.name == "star.3")
                                             {
 
                                                 puzzleIsFind[2] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[2]", 1);
+                                                puzzleGameData.puzzleState[2] = true;
                                             }
 
                                             if (collider.gameObject.name == "star.4")
                                             {
 
                                                 puzzleIsFind[3] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[3]", 1);
+                                                puzzleGameData.puzzleState[3] = true;
                                             }
 
                                             if (collider.gameObject.name == "star.5")
                                             {
 
                                                 puzzleIsFind[4] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[4]", 1);
+                                                puzzleGameData.puzzleState[4] = true;
                                             }
 
                                             if (collider.gameObject.name == "star.6")
                                             {
 
                                                 puzzleIsFind[5] = true;
-                                                PlayerPrefs.SetInt("puzzleIsFind[5]", 1);
+                                                puzzleGameData.puzzleState[5] = true;
                                             }
 
                                             puzzleObject = collider.gameObject;
                                             puzzleObject.SetActive(false);
                                             puzzleCount++;
-                                            PlayerPrefs.SetInt("puzzleCount", puzzleCount);
                                             return;
                                         }
                                     }
@@ -238,27 +227,16 @@ public class PuzzleGameController : MonoBehaviour
                     }
                 }
 
-                //if (collectPuzzleClueMission)
-                //{
-
-                //    detectObject.SetActive(true);
-                //    puzzleObject = collider.gameObject;
-                //    detectBtn.text = "撿起";
-                //    return;
-                //}
             }
 
             //告示牌偵測
             if (collider.gameObject.tag == "BillBoard")
             {
                 //修改告示牌
-                if (findPuzzle && puzzleCount == finalCount)
+                if (findPuzzle && puzzleCount == targetPuzzleCount)
                 {
-                    //收集完成後靠近告示牌
-                    collectPuzzleClueMission = false;
                     detectObject.SetActive(true);
                     btnImage.sprite = fixImage;
-                    //detectBtn.text = "修補告示牌";
                     return;
                 }
 
@@ -270,7 +248,6 @@ public class PuzzleGameController : MonoBehaviour
                     //這邊代表第一次查看要跳出訊息説尋找餅乾
                     detectObject.SetActive(true);
                     btnImage.sprite = searchImage;
-                    //detectBtn.text = "查看";
                     return;
                 }
 
@@ -280,7 +257,7 @@ public class PuzzleGameController : MonoBehaviour
         detectObject.SetActive(false);
     }
 
-
+    //Btn 使用
     public void PuzzleGame()
     {
 
@@ -291,10 +268,9 @@ public class PuzzleGameController : MonoBehaviour
             summerGameController.openNarrationSystem();
             //變數控制
             findPuzzle = true;
-            collectPuzzleClueMission = true;
-            PlayerPrefs.SetInt("findPuzzle", 1);
 
-            //狀態反應 
+
+            //將拼圖碎片顯示
             for (int i = 0; i < puzzleClue.Length; i++)
             {
                 puzzleClue[i].SetActive(true);
@@ -304,34 +280,31 @@ public class PuzzleGameController : MonoBehaviour
             return;
         }
 
-        ////撿拼圖功能
-        //if (collectPuzzleClueMission)
-        //{
-
-        //    if (puzzleObject != null)
-        //    {
-        //        puzzleObject.SetActive(false);
-        //    }
-        //    puzzleCount++;
-        //    PlayerPrefs.SetInt("puzzleCount", puzzleCount);
-        //    detectObject.SetActive(false);
-        //    return;
-        //}
 
         //拼圖遊戲
-        if (findPuzzle && puzzleCount == finalCount)
+        if (findPuzzle && puzzleCount == targetPuzzleCount)
         {
             openPuzzleGame = true;
 
             puzzleGame.SetActive(true);
+
             MainCamera.SetActive(false);
             player.SetActive(false);
             TouchCanves.SetActive(false);
-
-            //開啟拼圖遊戲
             detectObject.SetActive(false);
+
             return;
         }
 
+    }
+    private void ResetPuzzleGameData()
+    {
+        puzzleGameData.isFindPuzzle = false;
+        puzzleGameData.puzzleClipCount = 0;
+        puzzleGameData.puzzleGameOver = false;
+        for (int i = 0; i < puzzleGameData.puzzleState.Length; i++)
+        {
+            puzzleGameData.puzzleState[i] = false;
+        }
     }
 }

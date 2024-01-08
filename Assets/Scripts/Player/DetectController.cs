@@ -41,8 +41,8 @@ public class DetectController : MonoBehaviour
                 {
                     print("可以開啟對話");
                     dialogueBtn.SetActive(true);
-                    //dialogueBtnText.text = "對話";
-                    //dialogueBtnImage.sprite = talkImage;
+                    DialogueDataSo currentData = collider.GetComponent<DialogueSetting>().dialogueData;
+                    dialogueManager.ReadTextAsset(currentData);
                     return;
                 }
             }

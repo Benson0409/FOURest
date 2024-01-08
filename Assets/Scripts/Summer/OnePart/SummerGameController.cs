@@ -10,6 +10,9 @@ public class SummerGameController : MonoBehaviour
     public GameObject narrationPanel;
     public GameObject narrationSystem;
 
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+
     [Header("場景轉場物體")]
     public SwitchScenes scenesCanvaPrefabs;
 
@@ -17,9 +20,6 @@ public class SummerGameController : MonoBehaviour
     public GameObject player;
     public Transform initialPlayerLocate;
 
-    [Header("莉莉絲初始位置")]
-    public GameObject Lili;
-    public Transform initialLiliLocate;
     //在遊戲一開始得時候啟動旁白
     private void Start()
     {
@@ -59,18 +59,18 @@ public class SummerGameController : MonoBehaviour
     //將資料清除，並將人物移動到最初始的位置
     public void clearGameInformation()
     {
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+
         player.transform.position = initialPlayerLocate.position;
         player.transform.rotation = initialPlayerLocate.rotation;
 
-        Lili.transform.position = initialLiliLocate.position;
-        Lili.transform.rotation = initialLiliLocate.rotation;
-        Lili.SetActive(false);
 
         PlayerPrefs.DeleteAll();
 
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
-        print("資料重開");
+        //print("資料重開");
     }
 
 }

@@ -15,7 +15,7 @@ public class cookieGameController : MonoBehaviour
 
     [Header("餅乾遊戲變量")]
     public static bool finishCookieGame;
-    private bool startCookieGame;
+    public bool startCookieGame;
 
     [Header("餅乾遊戲生成")]
     public GameObject cookieField;
@@ -30,6 +30,8 @@ public class cookieGameController : MonoBehaviour
     public bool cookie2;
     public bool cookie3;
     public int findCookieCount = 0;
+    [Header("遊戲數據")]
+    public PuzzleGameDataSo puzzleGameData;
 
 
     [Header("按鈕控制")]
@@ -39,8 +41,7 @@ public class cookieGameController : MonoBehaviour
     public Sprite searchImage;
 
     [Header("角色生成")]
-    public GameObject lilisi;
-    public Transform liliRotate;
+    public VoidEventSo LiliChangeEventSo;
 
     private void Awake()
     {
@@ -60,15 +61,13 @@ public class cookieGameController : MonoBehaviour
             //動畫播放完成後與莉莉絲出現後就出現旁白
             if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3)
             {
-                lilisi.SetActive(true);
-                lilisi.transform.rotation = liliRotate.rotation;
+                //莉莉絲出現
+                LiliChangeEventSo.RaiseEvent();
 
-                if (lilisi.activeInHierarchy && !finishCookieGame)
-                {
-                    summerGameController.openNarrationSystem();
-                    PlayerPrefs.SetInt("playAnim", 0);
-                    PlayerPrefs.Save();
-                }
+
+                summerGameController.openNarrationSystem();
+                PlayerPrefs.SetInt("playAnim", 0);
+                PlayerPrefs.Save();
             }
 
             startCookieGame = true;
@@ -76,7 +75,6 @@ public class cookieGameController : MonoBehaviour
         }
         else
         {
-            lilisi.SetActive(false);
             startCookieGame = false;
         }
 
@@ -91,14 +89,13 @@ public class cookieGameController : MonoBehaviour
         //要做好數據控管，因為是場景切換
         //以及餅乾的數據控管
 
-        if (startCookieGame != true)
+        if (finishCookieGame)
         {
             return;
         }
 
-        if (finishCookieGame)
+        if (startCookieGame != true)
         {
-            lilisi.SetActive(true);
             return;
         }
 
@@ -174,7 +171,7 @@ public class cookieGameController : MonoBehaviour
 
     public void startGame()
     {
-        if (!PuzzleGameController.puzzleGameOver)
+        if (!puzzleGameData.puzzleGameOver)
         {
             //代表上一關還沒結束
             return;

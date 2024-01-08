@@ -62,7 +62,7 @@ public class TempleGameController : MonoBehaviour
     public bool templeGameStart;
     public static bool templeGameFinish;
     private bool openAR;
-    private bool colorGameStartDialogeState = false;
+
 
     [Header("神廟大門控制變數")]
     //神廟大門控制遊戲
@@ -78,10 +78,6 @@ public class TempleGameController : MonoBehaviour
     public bool startAltarGame;
     public bool finishAltarGame;
 
-    [Header("河邊莉莉絲位置")]
-    public Transform LiLi;
-    public Transform colorLiLiposition;
-
     private void Awake()
     {
         summerGameController = GetComponent<SummerGameController>();
@@ -92,11 +88,6 @@ public class TempleGameController : MonoBehaviour
             openTreasure.SetActive(true);
             treasure.SetActive(false);
             templeGameFinish = true;
-        }
-
-        if (PlayerPrefs.GetInt("colorGameStartDialogeState") == 1)
-        {
-            colorGameStartDialogeState = true;
         }
 
         if (PlayerPrefs.GetInt("templeGameStart") == 1)
@@ -166,36 +157,14 @@ public class TempleGameController : MonoBehaviour
             DetectObject.SetActive(false);
 
             //任務狀態是false開啟顏色關卡
-            if (colorGameStartDialogeState)
-            {
-                if (PlayerPrefs.GetInt("currentState") == 1 && dialogueCanva.activeInHierarchy)
-                {
-                    print("color game Satrt");
-                    PlayerPrefs.SetInt("templeGameFinish", 1);
-                    PlayerPrefs.Save();
-                    colorGameController.startGame();
-                    templeGameFinish = true;
-                    return;
-                }
-            }
 
-            //要讓他講完話在移動過去
-            if (PlayerPrefs.GetInt("currentState") == 1 && !dialogueManager.startDialogue)
-            {
-
-                //莉莉絲位置更新
-                //走到河邊與lili對話,對話完成才能進行最後一關
-                //避免文檔出錯
-                LiLi.position = colorLiLiposition.position;
-                LiLi.rotation = colorLiLiposition.rotation;
-
-                //準備開啟顏色遊戲的行前對話
-                colorGameStartDialogeState = true;
-                PlayerPrefs.SetInt("colorGameStartDialogeState", 1);
-                return;
-
-            }
+            print("color game Satrt");
+            PlayerPrefs.SetInt("templeGameFinish", 1);
+            PlayerPrefs.Save();
+            colorGameController.startGame();
+            templeGameFinish = true;
             return;
+
         }
 
         if (templeGameStart)

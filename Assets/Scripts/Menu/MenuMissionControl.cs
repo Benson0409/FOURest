@@ -9,7 +9,7 @@ public class MenuMissionControl : MonoBehaviour
     [Header("任務文字")]
     public Text misiionText;
     [Header("關卡判斷")]
-    public PuzzleGameController puzzleGameController;
+    public PuzzleGameDataSo puzzleGameData;
     public cookieGameController cookieGameController;
 
 
@@ -97,7 +97,7 @@ public class MenuMissionControl : MonoBehaviour
 
         //開始進行遊戲在開啟
         //並紀錄拼圖碎片數量
-        if (puzzleGameController.findPuzzle)
+        if (puzzleGameData.isFindPuzzle)
         {
             misiionText.text = "收集告示牌拼圖碎片，收集完成回到告示牌進行修復";
         }

@@ -35,6 +35,7 @@ public class InventoryController : MonoBehaviour
     public Sprite crystalBallSprite;
 
     [Header("關卡判斷")]
+    public PuzzleGameDataSo puzzleGameData;
     public PuzzleGameController puzzleGameController;
     public cookieGameController cookieGameController;
 
@@ -140,7 +141,7 @@ public class InventoryController : MonoBehaviour
         }
 
         //拼圖遊戲結束
-        if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
+        if (puzzleGameData.puzzleGameOver)
         {
             //代表餅乾已經找齊，已經用餅乾呼喚出莉莉絲，這時候可以將背包系統關閉
             if (cookieGameController.findCookieCount == 3)
@@ -167,7 +168,7 @@ public class InventoryController : MonoBehaviour
 
         //開始進行遊戲在開啟
         //並紀錄拼圖碎片數量
-        if (puzzleGameController.findPuzzle)
+        if (puzzleGameData.isFindPuzzle)
         {
             inventoryPanel.SetActive(true);
 
@@ -178,7 +179,7 @@ public class InventoryController : MonoBehaviour
 
             item1.SetActive(true);
             item1Image.sprite = puzzleSprite;
-            item1Text.text = puzzleGameController.puzzleCount.ToString();
+            item1Text.text = puzzleGameData.puzzleClipCount.ToString();
             informationText1.text = "收集告示牌碎片，修補告示牌";
             return;
         }

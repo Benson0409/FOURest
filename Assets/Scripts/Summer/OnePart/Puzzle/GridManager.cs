@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    public PuzzleGameDataSo puzzleGameData;
     public static GridManager instance;
     public List<Grids> allGrid;
 
@@ -25,9 +26,8 @@ public class GridManager : MonoBehaviour
         {
             print("拼圖完成");
 
-            PuzzleGameController.puzzleGameOver = true;
-            PlayerPrefs.SetInt("puzzleGameOver", 1);
-            PlayerPrefs.Save();
+            puzzleGameData.puzzleGameOver = true;
+
             PlayAnim();
         }
     }

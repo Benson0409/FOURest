@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveScopeController : MonoBehaviour
 {
     //根據每一關的結束來開啟區域的限制
+    public PuzzleGameDataSo puzzleGameData;
     //讓玩家不會到處亂跑
     [Header("餅乾區域")]
     public GameObject startCookieScope;
@@ -52,7 +53,7 @@ public class MoveScopeController : MonoBehaviour
 
         //拼圖遊戲結束
         //開啟餅乾區域
-        if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
+        if (puzzleGameData.puzzleGameOver)
         {
             startCookieScope.SetActive(false);
         }

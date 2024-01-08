@@ -32,8 +32,7 @@ public class musicAltar : MonoBehaviour
 
 
     [Header("莉莉絲位置")]
-    public Transform liliPosition;
-    public Transform targetPosition;
+    public VoidEventSo LiliChangeEventSo;
 
     private void Update()
     {
@@ -56,22 +55,17 @@ public class musicAltar : MonoBehaviour
 
             //寶箱開啟
             templeGameController.treasure.transform.rotation = Quaternion.Euler(-36.672f, 0, 0);
-            //莉莉絲位置移動
-            liliPosition.position = targetPosition.position;
-            liliPosition.rotation = targetPosition.rotation;
-
 
             //任務結束，判斷設置
             print("神廟遊戲結束");
 
             templeGameController.finishAltarGame = true;
 
+            //lili位置移動
+            LiliChangeEventSo.RaiseEvent();
 
             PlayerPrefs.SetInt("finishAltarGame", 1);
             PlayerPrefs.Save();
-
-            //對話任務結束
-            DialogueData.saveMissionTextState(true);
 
             //關閉此頁面
             templeGameController.closeGameCanva();

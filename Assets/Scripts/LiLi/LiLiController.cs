@@ -2,109 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class LiLiController : MonoBehaviour
 {
-    //控制莉莉絲的位置以及莉莉絲的存在狀況
+    //控制莉莉絲位置
+    public GameObject initialLiLi;
+    public GameObject templeLiLi;
+    public GameObject finalLiLi;
 
-    public GameObject LiLi;
-    public Transform liliInitial;
+    [Header("Data")]
+    public LiLiDataSo liLiData;
+    private int currentPositionIndex;
 
-    private void Awake()
+    [Header("事件監聽")]
+    public VoidEventSo LiliChangeEventSo;
+    public VoidEventSo ResetDataEventSo;
+
+    void Awake()
     {
-        // //print(PlayerPrefs.GetInt("555"));
-        // if (PlayerPrefs.GetInt("LiLiIsSave") == 1)
-        // {
-        //     // print("123");
-        //     return;
-        // }
-        // LiLi.SetActive(false);
-        // PlayerPrefs.SetInt("LiLiIsSave", 1);
-        // PlayerPrefs.Save();
-        if (PlayerPrefs.GetInt("LiLiIsSave") == 1)
-        {
-            loadLiLiPosition();
-            loadLiLiState();
-            return;
-        }
-        LiLi.SetActive(false);
-        liliInitial.transform.position = liliInitial.position;
-        liliInitial.transform.rotation = liliInitial.rotation;
+        currentPositionIndex = liLiData.liliPositionIndex;
+        LiliPos();
     }
 
-    private void Update()
+    void OnEnable()
     {
-        if (LiLi.activeInHierarchy)
-        {
-            saveLiLiPosition();
-            saveLiLiState();
-        }
+        LiliChangeEventSo.OnEventRaised += LiliPositionChange;
+        ResetDataEventSo.OnEventRaised += ResetLiliData;
     }
 
-    //儲存莉莉絲的位置
-    public void saveLiLiPosition()
+
+    void OnDisable()
     {
-        //紀錄移動過後的位置
-        PlayerPrefs.SetFloat("LiLiPosX", LiLi.gameObject.transform.position.x);
-        PlayerPrefs.SetFloat("LiLiPosY", LiLi.gameObject.transform.position.y);
-        PlayerPrefs.SetFloat("LiLiPosZ", LiLi.gameObject.transform.position.z);
-
-        //紀錄旋轉的角度
-        PlayerPrefs.SetFloat("LiLiRotaX", LiLi.gameObject.transform.rotation.x);
-        PlayerPrefs.SetFloat("LiLiRotaY", LiLi.gameObject.transform.rotation.y);
-        PlayerPrefs.SetFloat("LiLiRotaZ", LiLi.gameObject.transform.rotation.z);
-
-
-        //紀錄是否存過檔
-        PlayerPrefs.SetInt("LiLiIsSave", 1);
-
-        PlayerPrefs.Save();
+        LiliChangeEventSo.OnEventRaised -= LiliPositionChange;
+        ResetDataEventSo.OnEventRaised -= ResetLiliData;
     }
 
-    public void loadLiLiPosition()
-    {
-        //讀取player位置
-        LiLi.transform.position =
-            new Vector3(
-                PlayerPrefs.GetFloat("LiLiPosX"),
-                PlayerPrefs.GetFloat("LiLiPosY"),
-                PlayerPrefs.GetFloat("LiLiPosZ")
-            );
 
-        //讀取player旋轉角度
-        LiLi.transform.rotation = Quaternion.Euler(
-            new Vector3(
-               PlayerPrefs.GetFloat("LiLiRotaX"),
-               PlayerPrefs.GetFloat("LiLiRotaY"),
-               PlayerPrefs.GetFloat("LiLiRotaZ")
-            )
-        );
+    private void LiliPositionChange()
+    {
+        currentPositionIndex++;
+        liLiData.liliPositionIndex = currentPositionIndex;
+        LiliPos();
     }
 
-    //儲存莉莉絲的存在狀態
-    public void saveLiLiState()
+    private void LiliPos()
     {
-        //莉莉絲顯示
-        if (LiLi.activeInHierarchy == true)
+        switch (currentPositionIndex)
         {
-            PlayerPrefs.SetInt("LiLiState", 1);
-        }
-        //莉莉絲不顯示
-        else if (LiLi.activeInHierarchy != true)
-        {
-            PlayerPrefs.SetInt("LiLiState", 0);
+            case 1:
+                initialLiLi.SetActive(true);
+                templeLiLi.SetActive(false);
+                finalLiLi.SetActive(false);
+                break;
+            case 2:
+                initialLiLi.SetActive(false);
+                templeLiLi.SetActive(true);
+                finalLiLi.SetActive(false);
+                break;
+            case 3:
+                initialLiLi.SetActive(false);
+                templeLiLi.SetActive(false);
+                finalLiLi.SetActive(true);
+                break;
         }
     }
 
-    public void loadLiLiState()
+    //清除資料
+    private void ResetLiliData()
     {
-        if (PlayerPrefs.GetInt("LiLiState") == 1)
-        {
-            LiLi.SetActive(true);
-        }
-        else if (PlayerPrefs.GetInt("LiLiState") == 0)
-        {
-            LiLi.SetActive(false);
-        }
+        liLiData.liliPositionIndex = 0;
     }
 }

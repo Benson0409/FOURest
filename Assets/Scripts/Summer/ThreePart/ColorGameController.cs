@@ -63,9 +63,8 @@ public class ColorGameController : MonoBehaviour
     public GameObject water;
     public GameObject Castle;
 
-    [Header("水晶球旁莉莉絲位置")]
-    public Transform LiLi;
-    public Transform finalLiLiPosition;
+    [Header("莉莉絲位置")]
+    public VoidEventSo LiliChangeEventSo;
 
     private void Awake()
     {
@@ -209,14 +208,15 @@ public class ColorGameController : MonoBehaviour
                                             if (collider.gameObject.tag == "crystalBall")
                                             {
                                                 //莉莉絲移動過來
-                                                LiLi.position = finalLiLiPosition.position;
-                                                LiLi.rotation = finalLiLiPosition.rotation;
+                                                LiliChangeEventSo.RaiseEvent();
 
                                                 //收集水晶球
                                                 crystalBall.SetActive(false);
                                                 PlayerPrefs.SetInt("collectCrystalBall", 1);
-                                                //任務完成
-                                                DialogueData.saveMissionTextState(true);
+
+                                                // //任務完成
+                                                // DialogueData.saveMissionTextState(true);
+
                                                 collectCrystalBall = true;
                                                 return;
                                             }
@@ -323,7 +323,7 @@ public class ColorGameController : MonoBehaviour
             //colorMirror.SetActive(true);
 
             //重置任務狀態
-            DialogueData.saveMissionTextState(false);
+            // DialogueData.saveMissionTextState(false);
         }
     }
 
