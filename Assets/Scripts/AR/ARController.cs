@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 public class ARController : MonoBehaviour
 {
     private Camera mCamera;
+    [Header("遊戲數據")]
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
 
     [Header("掃描物體提示")]
     public CanvasGroup hintCanvasGroup;
@@ -123,12 +126,12 @@ public class ARController : MonoBehaviour
         //新增一個音符的AR生成
 
         //把後面的關卡放到前面，避免衝突
-        if (PlayerPrefs.GetInt("templeGameStart") == 1)
+        if (templeGameData.startTempleGame)
         {
             print("牆壁偵測");
             wallDetect = true;
 
-            if (PlayerPrefs.GetInt("starMusicAltar") == 1)
+            if (templeGameData.startMusicGame)
             {
                 if (PlayerPrefs.GetString("musicAltarClue") == "musicAltarClue1")
                 {
@@ -136,25 +139,19 @@ public class ARController : MonoBehaviour
                     return;
                 }
             }
-
-            switch (PlayerPrefs.GetString("doorClue"))
+            if (templeGameData.startDoorGame)
             {
-                case "doorClue1":
-                    arTospawnObject = doorClueObject1;
-                    break;
-
-                    //case "doorClue2":
-                    //    arTospawnObject = doorClueObject1;
-                    //    break;
-
-                    //case "doorClue3":
-                    //    arTospawnObject = doorClueObject1;
-                    //    break;
+                switch (PlayerPrefs.GetString("doorClue"))
+                {
+                    case "doorClue1":
+                        arTospawnObject = doorClueObject1;
+                        break;
+                }
             }
             return;
         }
 
-        if (PlayerPrefs.GetInt("startCookieGame") == 1)
+        if (cookieGameData.startCookieGame)
         {
             print("平面偵測");
             planeDetect = true;
@@ -219,20 +216,18 @@ public class ARController : MonoBehaviour
                         switch (PlayerPrefs.GetString("cookie"))
                         {
                             case "field1":
-                                PlayerPrefs.SetInt("findCookie1", 1);
-                                PlayerPrefs.Save();
+                                arTospawnObject = cookieObject1;
+                                cookieGameData.cookie1Field = true;
                                 break;
 
                             case "field2":
                                 arTospawnObject = cookieObject2;
-                                PlayerPrefs.SetInt("findCookie2", 1);
-                                PlayerPrefs.Save();
+                                cookieGameData.cookie2Field = true;
                                 break;
 
                             case "field3":
                                 arTospawnObject = cookieObject3;
-                                PlayerPrefs.SetInt("findCookie3", 1);
-                                PlayerPrefs.Save();
+                                cookieGameData.cookie3Field = true;
                                 break;
                         }
 
@@ -585,7 +580,7 @@ public class ARController : MonoBehaviour
     public void backToWorld()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        if (PlayerPrefs.GetInt("finishCookieGame") != 1 && PlayerPrefs.GetInt("findCookie3") == 1 && PlayerPrefs.GetInt("findCookie2") == 1 && PlayerPrefs.GetInt("findCookie1") == 1)
+        if (!cookieGameData.cookieGameOver && cookieGameData.cookie1Field && cookieGameData.cookie2Field && cookieGameData.cookie3Field)
         {
 
             switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));

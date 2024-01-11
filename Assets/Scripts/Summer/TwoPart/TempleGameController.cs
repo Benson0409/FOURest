@@ -59,45 +59,75 @@ public class TempleGameController : MonoBehaviour
     public GameObject inventoryUI;
 
     [Header("關卡變數")]
-    public bool templeGameStart;
-    public static bool templeGameFinish;
+    public bool startTempleGame;
+    public static bool templeGameOver;
     private bool openAR;
 
 
     [Header("神廟大門控制變數")]
     //神廟大門控制遊戲
-    public static bool doorGame;
     public bool findDoorClue;
     public bool startDoorGame;
 
     [Header("音樂祭壇變數")]
     //音樂祭壇控制變數
-    public bool altarGame;
-    public bool canStart;
-    public bool findAltarGame;
-    public bool startAltarGame;
-    public bool finishAltarGame;
+    public bool findMusicClue;
+    public bool startMusicGame;
+    public bool finishMusicGame;
+
+
+    [Header("遊戲數據")]
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
+    //偵測看有沒有對話
+    public DialogueDataSo liliDialogue;
+
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+
+    //靠近線索的時候用這個來代表
+    private bool isClue;
+
+    void OnEnable()
+    {
+        ResetDataEventSo.OnEventRaised += ResetTempleGameData;
+    }
+
+    void OnDisable()
+    {
+        ResetDataEventSo.OnEventRaised -= ResetTempleGameData;
+    }
+
+
 
     private void Awake()
     {
         summerGameController = GetComponent<SummerGameController>();
         colorGameController = GetComponent<ColorGameController>();
 
-        if (PlayerPrefs.GetInt("templeGameFinish") == 1)
+        //讀取資料
+        startTempleGame = templeGameData.startTempleGame;
+        templeGameOver = templeGameData.templeGameOver;
+        startDoorGame = templeGameData.startDoorGame;
+        findDoorClue = templeGameData.findDoorClue;
+        startMusicGame = templeGameData.startMusicGame;
+        finishMusicGame = templeGameData.finishMusicGame;
+        findMusicClue = templeGameData.findMusicClue;
+
+        if (templeGameOver)
         {
+            //寶箱開啟狀態
             openTreasure.SetActive(true);
             treasure.SetActive(false);
-            templeGameFinish = true;
         }
 
-        if (PlayerPrefs.GetInt("templeGameStart") == 1)
-        {
-            templeGameStart = true;
 
+
+        if (startTempleGame)
+        {
             //判斷最後對話進程 
-            if (PlayerPrefs.GetInt("finishAltarGame") == 1)
+            if (finishMusicGame)
             {
-                finishAltarGame = true;
 
                 if (PlayerPrefs.GetInt("playAnim") == 1)
                 {
@@ -108,67 +138,56 @@ public class TempleGameController : MonoBehaviour
                 }
             }
 
-            if (PlayerPrefs.GetInt("starMusicAltar") == 1)
+            if (startMusicGame)
             {
-                altarGame = true;
+
                 openTempleDoor.SetActive(true);
                 templeDoor.SetActive(false);
-                if (PlayerPrefs.GetInt("canStart") == 1)
-                {
-                    canStart = true;
-                    startAltarGame = true;
-                }
-                if (PlayerPrefs.GetInt("findAltarGame") == 1)
-                {
-                    findAltarGame = true;
-                    //startAltarGame = true;
-                }
-                return;
-            }
-
-            if (PlayerPrefs.GetInt("startDoorGame") == 1)
-            {
-                startDoorGame = true;
-                doorGame = true;
                 return;
             }
         }
         else
         {
-            templeGameStart = false;
+            startTempleGame = false;
         }
     }
 
     private void Update()
     {
-        if (templeGameFinish)
+        if (templeGameOver)
         {
             return;
         }
 
         //餅乾遊戲還未結束，不進行下一關
-        if (!templeGameStart || openAR)
+        if (!startTempleGame || openAR)
         {
             return;
         }
 
-        if (finishAltarGame)
+        //紀錄資料
+        templeGameData.startDoorGame = startDoorGame;
+        templeGameData.findDoorClue = findDoorClue;
+        templeGameData.startMusicGame = startMusicGame;
+        templeGameData.findMusicClue = findMusicClue;
+
+        if (finishMusicGame)
         {
-            DetectObject.SetActive(false);
+            if (liliDialogue.repeatText)
+            {
+                print("123");
+                DetectObject.SetActive(false);
 
-            //任務狀態是false開啟顏色關卡
-
-            print("color game Satrt");
-            PlayerPrefs.SetInt("templeGameFinish", 1);
-            PlayerPrefs.Save();
-            colorGameController.startGame();
-            templeGameFinish = true;
+                templeGameData.templeGameOver = true;
+                colorGameController.startGame();
+            }
             return;
 
         }
 
-        if (templeGameStart)
+        if (startTempleGame)
         {
+
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
             //如果player的狀態屬於 false 就不執行偵測的動作 
@@ -179,13 +198,11 @@ public class TempleGameController : MonoBehaviour
 
             foreach (Collider collider in colliders)
             {
-                if (altarGame)
+                if (startMusicGame)
                 {
-                    // openTempleDoor.SetActive(true);
-                    // templeDoor.SetActive(false);
                     if (collider.tag == "musicAltar")
                     {
-                        if (!findAltarGame)
+                        if (!findMusicClue)
                         {
 
                             //DetectBtn.text = "調查祭壇";
@@ -195,21 +212,7 @@ public class TempleGameController : MonoBehaviour
                             return;
                         }
 
-                        if (!summerGameController.narration.openNarration && !canStart)
-                        {
-                            startAltarGame = true;
-                            canStart = true;
-
-                            PlayerPrefs.SetInt("canStart", 1);
-                            PlayerPrefs.Save();
-                        }
-
-                        if (canStart)
-                        {
-                            startAltarGame = true;
-                        }
-
-                        if (startAltarGame)
+                        if (findMusicClue)
                         {
                             //DetectBtn.text = "開啟祭壇";
                             btnImage.sprite = openImage;
@@ -222,12 +225,11 @@ public class TempleGameController : MonoBehaviour
 
                     if (collider.tag == "musicClue")
                     {
-                        startAltarGame = false;
-                        if (findAltarGame)
+                        isClue = true;
+                        if (findMusicClue)
                         {
 
                             //準備開啟AR
-                            //DetectBtn.text = "調查線索";
                             btnImage.sprite = searchImage;
 
                             //將要生成的物體帶入AR中
@@ -237,25 +239,23 @@ public class TempleGameController : MonoBehaviour
                         }
                     }
                 }
-                if (!altarGame)
+                if (startDoorGame)
                 {
                     //開啟第一部分任務 -> 開啟神廟大門
                     if (collider.transform.tag == "door")
                     {
 
                         //以調查線索
-                        if (startDoorGame)
+                        if (findDoorClue)
                         {
                             //開啟大門介面
-                            //DetectBtn.text = "開啟大門";
                             btnImage.sprite = openImage;
                             DetectObject.SetActive(true);
-                            //return;
+
                         }
 
                         //第一次開啟大門線索
-                        //Btn按下提示附近找尋線索，與修理告示牌相同道理
-                        if (!doorGame)
+                        if (!findDoorClue)
                         {
 
                             //DetectBtn.text = "調查";
@@ -265,57 +265,52 @@ public class TempleGameController : MonoBehaviour
                         return;
                     }
 
-                    if (collider.transform.tag == "doorClue" && doorGame)
+                    if (collider.transform.tag == "doorClue")
                     {
-                        findDoorClue = true;
-
-                        //點擊BTN可以調查線索．開啟ＡＲ調查，openAR = true
-                        ARSystem.doorClue(collider.gameObject);
-
-                        //DetectBtn.text = "調查線索";
-                        btnImage.sprite = searchImage;
-                        DetectObject.SetActive(true);
-                        return;
+                        isClue = true;
+                        if (findDoorClue)
+                        {
+                            //點擊BTN可以調查線索．開啟ＡＲ調查，openAR = true
+                            ARSystem.doorClue(collider.gameObject);
+                            btnImage.sprite = searchImage;
+                            DetectObject.SetActive(true);
+                            return;
+                        }
                     }
                 }
             }
         }
         //遠離調查物後,將他變成false,靠近在變為true
-        startAltarGame = false;
-        findDoorClue = false;
+        isClue = false;
         DetectObject.SetActive(false);
     }
 
     public void templeBtnController()
     {
 
-        if (altarGame)
+        if (startMusicGame)
         {
             //初始調查
-            if (!findAltarGame && !startAltarGame)
+            if (!findMusicClue)
             {
                 //跳出旁白
+                findMusicClue = true;
                 summerGameController.openNarrationSystem();
-                findAltarGame = true;
                 DetectObject.SetActive(false);
                 //顯示線索調查
                 return;
             }
 
             //調查AR線索
-            if (findAltarGame && !startAltarGame)
+            if (findMusicClue && isClue)
             {
-                //startAltarGame = true;
-                //調查AR
-                PlayerPrefs.SetInt("findAltarGame", 1);
-                PlayerPrefs.Save();
                 SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
                 switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
                 return;
             }
 
             //調查音樂祭壇
-            if (findAltarGame && startAltarGame)
+            if (findMusicClue)
             {
                 //開啟祭壇畫面
                 touchCanva.SetActive(false);
@@ -324,36 +319,30 @@ public class TempleGameController : MonoBehaviour
                 return;
             }
         }
-        if (!altarGame)
+        if (startDoorGame)
         {
 
             //根據不同狀況判斷按紐要執行的程序
-            if (!doorGame && !findDoorClue && !startDoorGame)
+            if (!findDoorClue)
             {
                 //開啟提示對話，跟他們説要去尋找線索
                 print("旁白提示");
                 summerGameController.openNarrationSystem();
-                doorGame = true;
+                findDoorClue = true;
                 DetectObject.SetActive(false);
                 return;
             }
 
-            if (doorGame && findDoorClue)
+            if (findDoorClue && isClue)
             {
                 //開啟AR
-                //紀錄可開啟大門變數之變化
-                startDoorGame = true;
-
-                PlayerPrefs.SetInt("startDoorGame", 1);
-                PlayerPrefs.Save();
-
                 //切換場景
                 SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
                 switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestARScene"));
                 return;
             }
 
-            if (startDoorGame)
+            if (findDoorClue)
             {
                 inventoryUI.SetActive(false);
                 DetectObject.SetActive(false);
@@ -367,14 +356,14 @@ public class TempleGameController : MonoBehaviour
 
     public void startGame()
     {
-        if (cookieGameController.finishCookieGame)
+        if (cookieGameData.cookieGameOver)
         {
-            templeGameStart = true;
-            saveTempleGame();
+            templeGameData.startTempleGame = true;
+            templeGameData.startDoorGame = true;
         }
         else
         {
-            templeGameStart = false;
+            startTempleGame = false;
         }
     }
 
@@ -391,19 +380,21 @@ public class TempleGameController : MonoBehaviour
         if (doorSlider.openDoorGame)
         {
             inventoryUI.SetActive(true);
-            //開啟音樂大門
-            //templeDoor.transform.rotation = Quaternion.Euler(0, 90, 0);
             //調整活動進度
-            altarGame = true;
+            startMusicGame = true;
 
-            PlayerPrefs.SetInt("starMusicAltar", 1);
-            PlayerPrefs.Save();
         }
     }
 
-    public void saveTempleGame()
+    private void ResetTempleGameData()
     {
-        PlayerPrefs.SetInt("templeGameStart", 1);
-        PlayerPrefs.Save();
+        //清除資料
+        templeGameData.startTempleGame = false;
+        templeGameData.templeGameOver = false;
+        templeGameData.startDoorGame = false;
+        templeGameData.findDoorClue = false;
+        templeGameData.startMusicGame = false;
+        templeGameData.finishMusicGame = false;
+        templeGameData.findMusicClue = false;
     }
 }

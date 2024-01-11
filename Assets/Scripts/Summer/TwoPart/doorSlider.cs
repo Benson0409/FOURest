@@ -50,58 +50,7 @@ public class doorSlider : MonoBehaviour
 
     public static bool openDoorGame = false;
 
-    // private void Update()
-    // {
-    //     if (!openDoorGame)
-    //     {
 
-    //         doorSecret();
-
-    //         if (Input.touchCount > 0)
-    //         {
-
-    //             foreach (Touch touch in Input.touches)
-    //             {
-    //                 Vector2 touchPosition = touch.position;
-    //                 if (RectTransformUtility.RectangleContainsScreenPoint(key, touchPosition))
-    //                 {
-    //                     //物體的旋轉變量紀錄
-    //                     Vector3 rotationIncrement = Vector3.zero;
-
-    //                     switch (touch.phase)
-    //                     {
-
-    //                         case TouchPhase.Began:
-    //                             //記錄手指初始位置
-    //                             //rotationIncrement = Vector3.zero;
-
-    //                             touchStartPos = touch.position;
-    //                             break;
-
-    //                         case TouchPhase.Moved:
-    //                             //rotationIncrement += new Vector3(0, 0, touch.deltaPosition.y * rotationSpeed * Time.deltaTime);
-    //                             Vector2 touchDeltaPos = touch.position - touchStartPos;
-
-
-
-    //                             float angle = Mathf.Atan2(touchDeltaPos.y, touchDeltaPos.x) * Mathf.Rad2Deg;
-    //                             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-    //                             secretImage.transform.rotation = Quaternion.Slerp(secretImage.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-    //                             onScreen = true;
-    //                             break;
-
-    //                         case TouchPhase.Ended:
-    //                             onScreen = false;
-    //                             break;
-
-    //                     }
-    //                     //secretImage.transform.Rotate(rotationIncrement);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     //判斷大門的密碼
     //可以設定多組密碼

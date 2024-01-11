@@ -36,8 +36,10 @@ public class InventoryController : MonoBehaviour
 
     [Header("關卡判斷")]
     public PuzzleGameDataSo puzzleGameData;
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
     public PuzzleGameController puzzleGameController;
-    public cookieGameController cookieGameController;
+    //public cookieGameController cookieGameController;
 
 
     private void Update()
@@ -119,7 +121,7 @@ public class InventoryController : MonoBehaviour
             return;
         }
 
-        if (PlayerPrefs.GetInt("finishAltarGame") == 1)
+        if (templeGameData.finishMusicGame)
         {
             inventoryPanel.SetActive(true);
             item1.SetActive(true);
@@ -130,7 +132,7 @@ public class InventoryController : MonoBehaviour
         }
 
         //餅乾遊戲結束
-        if (PlayerPrefs.GetInt("finishCookieGame") == 1)
+        if (templeGameData.startTempleGame)
         {
             inventoryPanel.SetActive(true);
             item1.SetActive(true);
@@ -141,10 +143,10 @@ public class InventoryController : MonoBehaviour
         }
 
         //拼圖遊戲結束
-        if (puzzleGameData.puzzleGameOver)
+        if (cookieGameData.startCookieGame)
         {
             //代表餅乾已經找齊，已經用餅乾呼喚出莉莉絲，這時候可以將背包系統關閉
-            if (cookieGameController.findCookieCount == 3)
+            if (cookieGameData.findCookieCount == 3)
             {
                 inventoryPanel.SetActive(false);
                 item1.SetActive(false);
@@ -155,9 +157,9 @@ public class InventoryController : MonoBehaviour
             item1.SetActive(true);
             item1Image.sprite = cookieSprite;
 
-            item1Text.text = cookieGameController.findCookieCount.ToString();
+            item1Text.text = cookieGameData.findCookieCount.ToString();
 
-            if (cookieGameController.findCookieCount >= 3)
+            if (cookieGameData.findCookieCount >= 3)
             {
                 item1Text.text = "3";
             }

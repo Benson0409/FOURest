@@ -6,6 +6,8 @@ public class MoveScopeController : MonoBehaviour
 {
     //根據每一關的結束來開啟區域的限制
     public PuzzleGameDataSo puzzleGameData;
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
     //讓玩家不會到處亂跑
     [Header("餅乾區域")]
     public GameObject startCookieScope;
@@ -37,15 +39,16 @@ public class MoveScopeController : MonoBehaviour
         }
 
         //開啟連通到下一個區域的限制
-        if (PlayerPrefs.GetInt("finishAltarGame") == 1)
+        if (templeGameData.templeGameOver)
         {
             overTempleScope.SetActive(false);
             startTempleScope.SetActive(true);
+            return;
         }
 
         //餅乾遊戲結束
         //開啟神廟區域
-        if (PlayerPrefs.GetInt("finishCookieGame") == 1)
+        if (cookieGameData.cookieGameOver)
         {
             templeScope.SetActive(false);
             overTempleScope.SetActive(true);

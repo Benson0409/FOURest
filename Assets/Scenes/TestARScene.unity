@@ -1037,6 +1037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab451220dae0429db499d845c6ebc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
+  templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
   hintCanvasGroup: {fileID: 1698239313}
   hintPanel: {fileID: 1698239311}
   fadeInDuration: 1.5

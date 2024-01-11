@@ -10,6 +10,8 @@ public class MenuMissionControl : MonoBehaviour
     public Text misiionText;
     [Header("關卡判斷")]
     public PuzzleGameDataSo puzzleGameData;
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
     public cookieGameController cookieGameController;
 
 
@@ -52,41 +54,36 @@ public class MenuMissionControl : MonoBehaviour
             return;
         }
 
-        if (PlayerPrefs.GetInt("templeGameFinish") == 1)
-        {
-            misiionText.text = "繼續往前移動尋找莉莉絲，並完成最後任務";
-            return;
-        }
-        if (PlayerPrefs.GetInt("finishAltarGame") == 1)
+        if (templeGameData.finishMusicGame)
         {
             misiionText.text = "到音樂神殿外尋找莉莉絲";
             return;
         }
 
-        if (PlayerPrefs.GetInt("starMusicAltar") == 1)
+        if (templeGameData.startMusicGame)
         {
             misiionText.text = "找尋牆壁附近線索，開啟音樂寶箱";
             return;
         }
 
-        if (PlayerPrefs.GetInt("startDoorGame") == 1)
+        if (templeGameData.startDoorGame)
         {
             misiionText.text = "找尋附近線索，破解大門密碼";
             return;
         }
 
         //餅乾遊戲結束
-        if (PlayerPrefs.GetInt("finishCookieGame") == 1)
+        if (cookieGameData.cookieGameOver)
         {
             misiionText.text = "走上樓梯到達神廟，找尋音樂樂譜";
             return;
         }
 
         //拼圖遊戲結束
-        if (PlayerPrefs.GetInt("puzzleGameOver") == 1)
+        if (cookieGameData.startCookieGame)
         {
             //代表餅乾已經找齊，已經用餅乾呼喚出莉莉絲，這時候可以將背包系統關閉
-            if (cookieGameController.findCookieCount == 3)
+            if (cookieGameData.findCookieCount == 3)
             {
                 misiionText.text = "找尋莉莉絲，與他進行對話";
                 return;

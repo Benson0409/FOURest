@@ -14,11 +14,8 @@ public class cookieGameController : MonoBehaviour
     private SummerGameController summerGameController;
 
     [Header("餅乾遊戲變量")]
-    public static bool finishCookieGame;
+    public static bool cookieGameOver;
     public bool startCookieGame;
-
-    [Header("餅乾遊戲生成")]
-    public GameObject cookieField;
 
     [Header("偵測物體範圍")]
     public GameObject player;
@@ -26,12 +23,11 @@ public class cookieGameController : MonoBehaviour
 
     [Header("AR生成物控制")]
     //public bool openAR;
-    public bool cookie1;
-    public bool cookie2;
-    public bool cookie3;
-    public int findCookieCount = 0;
-    [Header("遊戲數據")]
-    public PuzzleGameDataSo puzzleGameData;
+    private bool cookie1;
+    private bool cookie2;
+    private bool cookie3;
+    private int findCookieCount = 0;
+
 
 
     [Header("按鈕控制")]
@@ -43,23 +39,47 @@ public class cookieGameController : MonoBehaviour
     [Header("角色生成")]
     public VoidEventSo LiliChangeEventSo;
 
+    [Header("遊戲數據")]
+    public PuzzleGameDataSo puzzleGameData;
+    public CookieGameDataSo cookieGameData;
+    public DialogueDataSo liliDialogueData;
+
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+
+
+    void OnEnable()
+    {
+        ResetDataEventSo.OnEventRaised += ResetCookieGameData;
+    }
+
+    void OnDisable()
+    {
+        ResetDataEventSo.OnEventRaised -= ResetCookieGameData;
+    }
+
+
+
     private void Awake()
     {
         templeGameController = GetComponent<TempleGameController>();
         summerGameController = GetComponent<SummerGameController>();
 
-        findCookieGameDetect();
+        //findCookieGameDetect();
 
-        print(PlayerPrefs.GetInt("startCookieGame"));
-        if (PlayerPrefs.GetInt("startCookieGame") == 1)
+        //將資料都帶入變數中
+        startCookieGame = cookieGameData.startCookieGame;
+        cookieGameOver = cookieGameData.cookieGameOver;
+        findCookieCount = cookieGameData.findCookieCount;
+        cookie1 = cookieGameData.cookie1Field;
+        cookie2 = cookieGameData.cookie2Field;
+        cookie3 = cookieGameData.cookie3Field;
+
+        if (startCookieGame)
         {
-            if (PlayerPrefs.GetInt("finishCookieGame") == 1)
-            {
-                finishCookieGame = true;
-            }
 
             //動畫播放完成後與莉莉絲出現後就出現旁白
-            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3)
+            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3 && !cookieGameOver)
             {
                 //莉莉絲出現
                 LiliChangeEventSo.RaiseEvent();
@@ -68,16 +88,10 @@ public class cookieGameController : MonoBehaviour
                 summerGameController.openNarrationSystem();
                 PlayerPrefs.SetInt("playAnim", 0);
                 PlayerPrefs.Save();
+
             }
 
-            startCookieGame = true;
-            cookieField.SetActive(true);
         }
-        else
-        {
-            startCookieGame = false;
-        }
-
 
     }
 
@@ -89,41 +103,38 @@ public class cookieGameController : MonoBehaviour
         //要做好數據控管，因為是場景切換
         //以及餅乾的數據控管
 
-        if (finishCookieGame)
+        if (cookieGameOver)
         {
             return;
         }
-
         if (startCookieGame != true)
         {
             return;
         }
 
-        if (cookie1 && cookie2 && cookie3 && !finishCookieGame)
+        cookieGameData.startCookieGame = startCookieGame;
+        cookieGameData.cookieGameOver = cookieGameOver;
+        cookieGameData.findCookieCount = findCookieCount;
+        cookieGameData.cookie1Field = cookie1;
+        cookieGameData.cookie2Field = cookie2;
+        cookieGameData.cookie3Field = cookie3;
+
+        if (cookie1 && cookie2 && cookie3 && !cookieGameOver)
         {
 
             // 莉莉絲出現
             // 餅乾遊戲結束，進入下一部分，神殿開啟，找尋樂譜
             // 引導去找莉莉絲對話
-            // if (!lilisi.activeInHierarchy)
-            // {
-            //     //轉換動畫
-            //     //switchAnimScene();
 
-            //     //summerGameController.openNarrationSystem();
-            //     //lilisi.SetActive(true);
-            // }
-            if (dialogueManager.startDialogue)
+            if (liliDialogueData.repeatText)
             {
-                finishCookieGame = true;
-                PlayerPrefs.SetInt("finishCookieGame", 1);
-                PlayerPrefs.Save();
+                cookieGameData.cookieGameOver = true;
                 templeGameController.startGame();
             }
         }
 
 
-        if (startCookieGame && !finishCookieGame)
+        if (startCookieGame && !cookieGameOver)
         {
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
@@ -138,8 +149,8 @@ public class cookieGameController : MonoBehaviour
                 if (collider.gameObject.tag == "cookie1AR" && !cookie1)
                 {
                     DetectObject.SetActive(true);
-                    //DetectBtn.text = "探索區域1";
                     btnImage.sprite = searchImage;
+
                     ARSystem.cookie1Field(collider.gameObject);
                     return;
                 }
@@ -148,7 +159,7 @@ public class cookieGameController : MonoBehaviour
                 {
                     DetectObject.SetActive(true);
                     btnImage.sprite = searchImage;
-                    //DetectBtn.text = "探索區域2";
+
                     ARSystem.cookie2Field(collider.gameObject);
                     return;
                 }
@@ -157,7 +168,7 @@ public class cookieGameController : MonoBehaviour
                 {
                     DetectObject.SetActive(true);
                     btnImage.sprite = searchImage;
-                    //DetectBtn.text = "探索區域3";
+
                     ARSystem.cookie3Field(collider.gameObject);
                     return;
                 }
@@ -180,9 +191,6 @@ public class cookieGameController : MonoBehaviour
         {
             //顯示找餅乾區域
             startCookieGame = true;
-            saveStartCookieGame();
-            cookieField.SetActive(true);
-
         }
     }
 
@@ -219,11 +227,7 @@ public class cookieGameController : MonoBehaviour
         }
     }
 
-    public void saveStartCookieGame()
-    {
-        PlayerPrefs.SetInt("startCookieGame", 1);
-        PlayerPrefs.Save();
-    }
+
 
     public void findCookieGameBtn()
     {
@@ -235,6 +239,16 @@ public class cookieGameController : MonoBehaviour
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+    }
+
+    private void ResetCookieGameData()
+    {
+        cookieGameData.startCookieGame = false;
+        cookieGameData.cookieGameOver = false;
+        cookieGameData.findCookieCount = 0;
+        cookieGameData.cookie1Field = false;
+        cookieGameData.cookie2Field = false;
+        cookieGameData.cookie3Field = false;
     }
 
 }

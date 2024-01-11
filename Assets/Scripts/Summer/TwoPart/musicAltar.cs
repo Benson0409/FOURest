@@ -9,7 +9,7 @@ public class musicAltar : MonoBehaviour
     //音樂祭壇的初始音樂先設置為 Si So Do Do So Si La
     //如果有一個按鍵按錯的話就重新開始
     public TempleGameController templeGameController;
-    public SummerGameController summerGameController;
+    public TempleGameDataSo templeGameData;
 
     public Text musicText;
     public string lastmusicName = "";
@@ -36,7 +36,7 @@ public class musicAltar : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerPrefs.GetInt("templeGameFinish") == 1)
+        if (templeGameData.templeGameOver)
         {
             return;
         }
@@ -53,13 +53,10 @@ public class musicAltar : MonoBehaviour
             //播放影片
             //獲得樂譜
 
-            //寶箱開啟
-            templeGameController.treasure.transform.rotation = Quaternion.Euler(-36.672f, 0, 0);
-
             //任務結束，判斷設置
             print("神廟遊戲結束");
 
-            templeGameController.finishAltarGame = true;
+            templeGameData.finishMusicGame = true;
 
             //lili位置移動
             LiliChangeEventSo.RaiseEvent();
