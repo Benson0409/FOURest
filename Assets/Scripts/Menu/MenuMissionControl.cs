@@ -12,20 +12,20 @@ public class MenuMissionControl : MonoBehaviour
     public PuzzleGameDataSo puzzleGameData;
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
-    public cookieGameController cookieGameController;
+    public ColorGameDataSo colorGameData;
 
 
     private void Update()
     {
         //成功召喚水仙子
-        if (PlayerPrefs.GetInt("finishColorGame") == 1)
+        if (colorGameData.colorGameOver)
         {
             misiionText.text = "尋找水仙子並與它對話";
             return;
         }
 
         //找到水晶球
-        if (PlayerPrefs.GetInt("collectCrystalBall") == 1)
+        if (colorGameData.isFindCrystalBall)
         {
             misiionText.text = "尋找莉莉絲並與它對話";
             return;
@@ -33,14 +33,14 @@ public class MenuMissionControl : MonoBehaviour
         }
 
         //使用調色盤
-        if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
+        if (colorGameData.startFindCrystalBall)
         {
             misiionText.text = "點擊水晶球完成收集";
             return;
         }
 
         //色彩分析器完成
-        if (PlayerPrefs.GetInt("finishRotate") == 1)
+        if (colorGameData.isRotate)
         {
             misiionText.text = "前往色彩分析器，尋找藍色藥水、黃色圓球、紅色火焰";
             return;
@@ -48,7 +48,7 @@ public class MenuMissionControl : MonoBehaviour
         }
 
         //神廟遊戲結束
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (colorGameData.startColorGame)
         {
             misiionText.text = "前往三稜鏡，並將三者都轉於正確位置";
             return;

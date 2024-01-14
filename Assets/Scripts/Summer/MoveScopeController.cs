@@ -8,6 +8,8 @@ public class MoveScopeController : MonoBehaviour
     public PuzzleGameDataSo puzzleGameData;
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
+
     //讓玩家不會到處亂跑
     [Header("餅乾區域")]
     public GameObject startCookieScope;
@@ -24,7 +26,7 @@ public class MoveScopeController : MonoBehaviour
     private void Update()
     {
         //成功召喚水仙子
-        if (PlayerPrefs.GetInt("finishColorGame") == 1)
+        if (colorGameData.colorGameOver)
         {
             colorScope.SetActive(true);
             finalScope.SetActive(false);
@@ -33,7 +35,7 @@ public class MoveScopeController : MonoBehaviour
 
         //神廟遊戲結束
         //開啟色彩區域
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (colorGameData.startColorGame)
         {
             colorScope.SetActive(false);
         }

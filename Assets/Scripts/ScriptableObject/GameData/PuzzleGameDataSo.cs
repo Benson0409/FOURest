@@ -16,4 +16,7 @@ public class PuzzleGameDataSo : ScriptableObject
 
     //拼圖遊戲結束
     public bool puzzleGameOver;
+
+    //看有沒有需要播放影片
+    public bool isPlayAnim;
 }

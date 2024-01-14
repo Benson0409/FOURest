@@ -8,7 +8,7 @@ public class colorFiliter : MonoBehaviour
     //每一個按鈕都呈現不同的內容，玩家需要在每一個按鈕當中去尋找水晶球的碎片
     //收集完三片後關閉色彩分析器，並將色彩分析器消失，水晶球慢慢浮現
     public GameObject touchCanva;
-    public ColorGameController colorGameController;
+    public ColorGameDataSo colorGameData;
 
     [Header("場景轉場物體")]
     public SwitchScenes scenesCanvaPrefabs;
@@ -59,13 +59,6 @@ public class colorFiliter : MonoBehaviour
             //當物品都收集到後 關閉面板 進入動畫 水晶球出現
             //可以開始尋找水晶球
             StartCoroutine(StartCountdown());
-            // PlayerPrefs.SetInt("startFindCrystalBall", 1);
-            // PlayerPrefs.Save();
-            // colorGameController.startFindCrystalBall = true;
-            // colorGameController.crystalBall.SetActive(true);
-            // this.gameObject.SetActive(false);
-            // touchCanva.SetActive(true);
-            // switchAnimScene();
         }
     }
     public void blueBtn()
@@ -124,10 +117,7 @@ public class colorFiliter : MonoBehaviour
     {
         // 每一秒減去時間
         yield return new WaitForSeconds(2f);
-        PlayerPrefs.SetInt("startFindCrystalBall", 1);
-        PlayerPrefs.Save();
-        colorGameController.startFindCrystalBall = true;
-        colorGameController.crystalBall.SetActive(true);
+        colorGameData.startFindCrystalBall = true;
         this.gameObject.SetActive(false);
         touchCanva.SetActive(true);
         switchAnimScene();

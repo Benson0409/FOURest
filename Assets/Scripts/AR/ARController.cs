@@ -12,6 +12,7 @@ public class ARController : MonoBehaviour
     [Header("遊戲數據")]
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
 
     [Header("掃描物體提示")]
     public CanvasGroup hintCanvasGroup;
@@ -52,7 +53,7 @@ public class ARController : MonoBehaviour
     public GameObject musicAltarClue1;
 
     [Header("顏色遊戲三色鏡生成")]
-    public GameObject colorMirror1;
+    public GameObject colorMirror;
 
     //確認三色鏡的旋轉角度是正確
     private bool correctRotate1 = false;
@@ -108,14 +109,14 @@ public class ARController : MonoBehaviour
         mCamera = Camera.main;
 
         //顏色遊戲開啟
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (colorGameData.startColorGame)
         {
             print("平面偵測");
             planeDetect = true;
-            if (PlayerPrefs.GetString("colorMirror") == "colorMirror1")
+            if (PlayerPrefs.GetString("colorMirror") == "colorMirror")
             {
                 print("生成三色鏡");
-                arTospawnObject = colorMirror1;
+                arTospawnObject = colorMirror;
                 colorPanel.SetActive(true);
                 return;
             }
@@ -315,8 +316,7 @@ public class ARController : MonoBehaviour
             //轉場回到主世界
             //看要用btn來達成轉場效果還是要直接轉場
             //紀錄完成的變數因子
-            PlayerPrefs.SetInt("finishRotate", 1);
-            PlayerPrefs.Save();
+            colorGameData.isRotate = true;
             print("完成三色鏡裝置設置");
             hintCanvasGroup.alpha = 1;
             changeToPlayAnimWorld();
@@ -324,7 +324,7 @@ public class ARController : MonoBehaviour
             return;
         }
 
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (colorGameData.startColorGame)
         {
 
             if (Input.touchCount > 0 && spawnObject != null)

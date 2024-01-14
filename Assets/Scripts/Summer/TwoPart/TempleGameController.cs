@@ -59,21 +59,19 @@ public class TempleGameController : MonoBehaviour
     public GameObject inventoryUI;
 
     [Header("關卡變數")]
-    public bool startTempleGame;
-    public static bool templeGameOver;
-    private bool openAR;
+    private bool startTempleGame;
 
 
     [Header("神廟大門控制變數")]
     //神廟大門控制遊戲
-    public bool findDoorClue;
-    public bool startDoorGame;
+    private bool findDoorClue;
+    private bool startDoorGame;
 
     [Header("音樂祭壇變數")]
     //音樂祭壇控制變數
-    public bool findMusicClue;
-    public bool startMusicGame;
-    public bool finishMusicGame;
+    private bool findMusicClue;
+    private bool startMusicGame;
+    private bool finishMusicGame;
 
 
     [Header("遊戲數據")]
@@ -84,6 +82,7 @@ public class TempleGameController : MonoBehaviour
 
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
+    private bool isClear;
 
     //靠近線索的時候用這個來代表
     private bool isClue;
@@ -105,16 +104,9 @@ public class TempleGameController : MonoBehaviour
         summerGameController = GetComponent<SummerGameController>();
         colorGameController = GetComponent<ColorGameController>();
 
-        //讀取資料
-        startTempleGame = templeGameData.startTempleGame;
-        templeGameOver = templeGameData.templeGameOver;
-        startDoorGame = templeGameData.startDoorGame;
-        findDoorClue = templeGameData.findDoorClue;
-        startMusicGame = templeGameData.startMusicGame;
-        finishMusicGame = templeGameData.finishMusicGame;
-        findMusicClue = templeGameData.findMusicClue;
+        ReadTempleGameData();
 
-        if (templeGameOver)
+        if (templeGameData.templeGameOver)
         {
             //寶箱開啟狀態
             openTreasure.SetActive(true);
@@ -152,24 +144,22 @@ public class TempleGameController : MonoBehaviour
         }
     }
 
+
+
     private void Update()
     {
-        if (templeGameOver)
+        if (templeGameData.templeGameOver)
         {
             return;
         }
 
         //餅乾遊戲還未結束，不進行下一關
-        if (!startTempleGame || openAR)
+        if (!startTempleGame)
         {
             return;
         }
 
-        //紀錄資料
-        templeGameData.startDoorGame = startDoorGame;
-        templeGameData.findDoorClue = findDoorClue;
-        templeGameData.startMusicGame = startMusicGame;
-        templeGameData.findMusicClue = findMusicClue;
+        SaveColorGameData();
 
         if (finishMusicGame)
         {
@@ -285,6 +275,8 @@ public class TempleGameController : MonoBehaviour
         DetectObject.SetActive(false);
     }
 
+
+
     public void templeBtnController()
     {
 
@@ -386,8 +378,32 @@ public class TempleGameController : MonoBehaviour
         }
     }
 
+    private void SaveColorGameData()
+    {
+        if (!isClear)
+        {
+            //紀錄資料
+            templeGameData.startDoorGame = startDoorGame;
+            templeGameData.findDoorClue = findDoorClue;
+            templeGameData.startMusicGame = startMusicGame;
+            templeGameData.findMusicClue = findMusicClue;
+        }
+    }
+
+    private void ReadTempleGameData()
+    {
+        //讀取資料
+        startTempleGame = templeGameData.startTempleGame;
+        startDoorGame = templeGameData.startDoorGame;
+        findDoorClue = templeGameData.findDoorClue;
+        startMusicGame = templeGameData.startMusicGame;
+        finishMusicGame = templeGameData.finishMusicGame;
+        findMusicClue = templeGameData.findMusicClue;
+    }
+
     private void ResetTempleGameData()
     {
+        isClear = true;
         //清除資料
         templeGameData.startTempleGame = false;
         templeGameData.templeGameOver = false;

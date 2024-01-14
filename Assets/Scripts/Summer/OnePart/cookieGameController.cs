@@ -14,7 +14,6 @@ public class cookieGameController : MonoBehaviour
     private SummerGameController summerGameController;
 
     [Header("餅乾遊戲變量")]
-    public static bool cookieGameOver;
     public bool startCookieGame;
 
     [Header("偵測物體範圍")]
@@ -22,7 +21,6 @@ public class cookieGameController : MonoBehaviour
     public float radius;
 
     [Header("AR生成物控制")]
-    //public bool openAR;
     private bool cookie1;
     private bool cookie2;
     private bool cookie3;
@@ -46,6 +44,7 @@ public class cookieGameController : MonoBehaviour
 
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
+    private bool isClear;
 
 
     void OnEnable()
@@ -67,19 +66,13 @@ public class cookieGameController : MonoBehaviour
 
         //findCookieGameDetect();
 
-        //將資料都帶入變數中
-        startCookieGame = cookieGameData.startCookieGame;
-        cookieGameOver = cookieGameData.cookieGameOver;
-        findCookieCount = cookieGameData.findCookieCount;
-        cookie1 = cookieGameData.cookie1Field;
-        cookie2 = cookieGameData.cookie2Field;
-        cookie3 = cookieGameData.cookie3Field;
+        ReadCookieGameData();
 
         if (startCookieGame)
         {
 
             //動畫播放完成後與莉莉絲出現後就出現旁白
-            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3 && !cookieGameOver)
+            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3 && !cookieGameData.cookieGameOver)
             {
                 //莉莉絲出現
                 LiliChangeEventSo.RaiseEvent();
@@ -95,6 +88,8 @@ public class cookieGameController : MonoBehaviour
 
     }
 
+
+
     void Update()
     {
         //偵測有沒有靠近餅乾區域
@@ -103,7 +98,7 @@ public class cookieGameController : MonoBehaviour
         //要做好數據控管，因為是場景切換
         //以及餅乾的數據控管
 
-        if (cookieGameOver)
+        if (cookieGameData.cookieGameOver)
         {
             return;
         }
@@ -112,14 +107,9 @@ public class cookieGameController : MonoBehaviour
             return;
         }
 
-        cookieGameData.startCookieGame = startCookieGame;
-        cookieGameData.cookieGameOver = cookieGameOver;
-        cookieGameData.findCookieCount = findCookieCount;
-        cookieGameData.cookie1Field = cookie1;
-        cookieGameData.cookie2Field = cookie2;
-        cookieGameData.cookie3Field = cookie3;
+        SaveCookieGameData();
 
-        if (cookie1 && cookie2 && cookie3 && !cookieGameOver)
+        if (cookie1 && cookie2 && cookie3 && !cookieGameData.cookieGameOver)
         {
 
             // 莉莉絲出現
@@ -134,7 +124,7 @@ public class cookieGameController : MonoBehaviour
         }
 
 
-        if (startCookieGame && !cookieGameOver)
+        if (startCookieGame && !cookieGameData.cookieGameOver)
         {
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
@@ -180,52 +170,49 @@ public class cookieGameController : MonoBehaviour
 
     }
 
+
+
     public void startGame()
     {
-        if (!puzzleGameData.puzzleGameOver)
+        if (puzzleGameData.puzzleGameOver)
         {
-            //代表上一關還沒結束
-            return;
-        }
-        else
-        {
-            //顯示找餅乾區域
             startCookieGame = true;
         }
+
     }
 
-    public void findCookieGameDetect()
-    {
-        if (PlayerPrefs.GetInt("findCookie1") == 1)
-        {
-            cookie1 = true;
-            findCookieCount++;
-        }
-        else
-        {
-            cookie1 = false;
-        }
+    // public void findCookieGameDetect()
+    // {
+    //     if (PlayerPrefs.GetInt("findCookie1") == 1)
+    //     {
+    //         cookie1 = true;
+    //         findCookieCount++;
+    //     }
+    //     else
+    //     {
+    //         cookie1 = false;
+    //     }
 
-        if (PlayerPrefs.GetInt("findCookie2") == 1)
-        {
-            cookie2 = true;
-            findCookieCount++;
-        }
-        else
-        {
-            cookie2 = false;
-        }
+    //     if (PlayerPrefs.GetInt("findCookie2") == 1)
+    //     {
+    //         cookie2 = true;
+    //         findCookieCount++;
+    //     }
+    //     else
+    //     {
+    //         cookie2 = false;
+    //     }
 
-        if (PlayerPrefs.GetInt("findCookie3") == 1)
-        {
-            cookie3 = true;
-            findCookieCount++;
-        }
-        else
-        {
-            cookie3 = false;
-        }
-    }
+    //     if (PlayerPrefs.GetInt("findCookie3") == 1)
+    //     {
+    //         cookie3 = true;
+    //         findCookieCount++;
+    //     }
+    //     else
+    //     {
+    //         cookie3 = false;
+    //     }
+    // }
 
 
 
@@ -241,8 +228,30 @@ public class cookieGameController : MonoBehaviour
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
     }
 
+    private void SaveCookieGameData()
+    {
+        if (!isClear)
+        {
+            cookieGameData.startCookieGame = startCookieGame;
+            cookieGameData.findCookieCount = findCookieCount;
+            cookieGameData.cookie1Field = cookie1;
+            cookieGameData.cookie2Field = cookie2;
+            cookieGameData.cookie3Field = cookie3;
+        }
+    }
+    private void ReadCookieGameData()
+    {
+        //將資料都帶入變數中
+        startCookieGame = cookieGameData.startCookieGame;
+        findCookieCount = cookieGameData.findCookieCount;
+        cookie1 = cookieGameData.cookie1Field;
+        cookie2 = cookieGameData.cookie2Field;
+        cookie3 = cookieGameData.cookie3Field;
+    }
+
     private void ResetCookieGameData()
     {
+        isClear = true;
         cookieGameData.startCookieGame = false;
         cookieGameData.cookieGameOver = false;
         cookieGameData.findCookieCount = 0;

@@ -8,7 +8,7 @@ public class ARSystem : MonoBehaviour
     //負責將要生成的物體傳遞給ＡＲ生成場景
     //故此物體不可破壞，避免資料消失
     public static GameObject arObject;
-    private static float colorMirrorRotate; 
+    private static float colorMirrorRotate;
 
     //當我點擊調查時，會將點擊的物品傳送到ＡＲ場景讓他生成
     //會根據此個關卡的控制器將任務變數+1
@@ -43,19 +43,6 @@ public class ARSystem : MonoBehaviour
         //print(arObject);
     }
 
-    //public static void doorClue2(GameObject doorClue2)
-    //{
-    //    arObject = doorClue2;
-    //    PlayerPrefs.SetString("doorClue", "doorClue2");
-    //    print(arObject);
-    //}
-
-    //public static void doorClue3(GameObject doorClue3)
-    //{
-    //    arObject = doorClue3;
-    //    PlayerPrefs.SetString("doorClue", "doorClue1");
-    //    print(arObject);
-    //}
 
     public static void musicAltarClue(GameObject musicAltarClue1)
     {
@@ -63,11 +50,11 @@ public class ARSystem : MonoBehaviour
         PlayerPrefs.SetString("musicAltarClue", "musicAltarClue1");
         PlayerPrefs.Save();
     }
-    
+
     public static void colorMirror(GameObject colorMirror1)
     {
         arObject = colorMirror1;
-        PlayerPrefs.SetString("colorMirror", "colorMirror1");
+        PlayerPrefs.SetString("colorMirror", "colorMirror");
         PlayerPrefs.Save();
     }
 

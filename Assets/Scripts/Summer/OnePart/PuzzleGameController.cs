@@ -6,22 +6,22 @@ using UnityEngine.UI;
 public class PuzzleGameController : MonoBehaviour
 {
     private SummerGameController summerGameController;
+    private cookieGameController cookieGame;
     //要多少距離才可以發現線索
-    [Header("線索收集")]
-    public RectTransform takeRange;
+    [Header("偵測控制")]
     public GameObject player;
     public float radius;
+
+    [Header("線索收集")]
+    public RectTransform takeRange;
     public GameObject detectObject;
     public Sprite searchImage;
     public Sprite fixImage;
     public Image btnImage;
-    //public Text detectBtn;
 
     [Header("變量控制")]
     public PuzzleGameDataSo puzzleGameData;
     bool findPuzzle = false;
-    //bool collectPuzzleClueMission;
-
     private int targetPuzzleCount = 6;
     public int puzzleCount = 0;
 
@@ -33,7 +33,7 @@ public class PuzzleGameController : MonoBehaviour
 
     [Header("拼圖遊戲開啟")]
     //看我的背包需不需要關閉
-    public bool openPuzzleGame;
+    [HideInInspector] public bool openPuzzleGame;
     public GameObject puzzleGame;
     public GameObject MainCamera;
     public GameObject Player;
@@ -42,12 +42,11 @@ public class PuzzleGameController : MonoBehaviour
 
     [Header("遊戲完成判斷")]
     public GridManager gridManager;
-    private cookieGameController cookieGame;
-    [HideInInspector] public static bool puzzleGameOver;
-    private bool overGame;
+
 
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
+    private bool isClear;
 
     void OnEnable()
     {
@@ -64,31 +63,26 @@ public class PuzzleGameController : MonoBehaviour
         summerGameController = GetComponent<SummerGameController>();
         cookieGame = GetComponent<cookieGameController>();
 
-        findPuzzle = puzzleGameData.isFindPuzzle;
-        puzzleCount = puzzleGameData.puzzleClipCount;
-        puzzleGameOver = puzzleGameData.puzzleGameOver;
+        ReadPuzzleGameData();
 
-        if (puzzleGameOver)
+        if (puzzleGameData.puzzleGameOver)
         {
             //星星拼圖顯示
             puzzleStarPice.SetActive(true);
 
             //動畫觀看完成在進行對話
-            if (PlayerPrefs.GetInt("playAnim") == 1 && !overGame)
+            if (PlayerPrefs.GetInt("playAnim") == 1 && !puzzleGameData.isPlayAnim)
             {
                 //引導去調查草叢
                 summerGameController.openNarrationSystem();
                 PlayerPrefs.SetInt("playAnim", 0);
+                puzzleGameData.isPlayAnim = true;
             }
 
-            //儲存進度,開始下一關遊戲
-            cookieGame.startGame();
-            overGame = true;
+
+
         }
-        else
-        {
-            overGame = false;
-        }
+
 
 
         //開啟找拼圖遊戲
@@ -105,6 +99,7 @@ public class PuzzleGameController : MonoBehaviour
 
     }
 
+
     public void Update()
     {
         //拼圖遊戲完成
@@ -112,15 +107,14 @@ public class PuzzleGameController : MonoBehaviour
         //這邊完成之後拼圖就算完成
         //只執行一次
 
-        if (overGame)
+        if (puzzleGameData.isPlayAnim)
         {
             return;
         }
 
-        puzzleGameData.isFindPuzzle = findPuzzle;
-        puzzleGameData.puzzleClipCount = puzzleCount;
+        SavePuzzleGameData();
 
-        if (puzzleGameOver)
+        if (puzzleGameData.puzzleGameOver)
         {
             puzzleGame.SetActive(false);
             takeRange.transform.gameObject.SetActive(false);
@@ -128,6 +122,9 @@ public class PuzzleGameController : MonoBehaviour
             MainCamera.SetActive(true);
             player.SetActive(true);
             TouchCanves.SetActive(true);
+
+            //儲存進度,開始下一關遊戲
+            cookieGame.startGame();
 
             return;
         }
@@ -257,6 +254,8 @@ public class PuzzleGameController : MonoBehaviour
         detectObject.SetActive(false);
     }
 
+
+
     //Btn 使用
     public void PuzzleGame()
     {
@@ -297,11 +296,28 @@ public class PuzzleGameController : MonoBehaviour
         }
 
     }
+    private void SavePuzzleGameData()
+    {
+        if (!isClear)
+        {
+            puzzleGameData.isFindPuzzle = findPuzzle;
+            puzzleGameData.puzzleClipCount = puzzleCount;
+        }
+    }
+
+
+    private void ReadPuzzleGameData()
+    {
+        findPuzzle = puzzleGameData.isFindPuzzle;
+        puzzleCount = puzzleGameData.puzzleClipCount;
+    }
     private void ResetPuzzleGameData()
     {
-        puzzleGameData.isFindPuzzle = false;
+        isClear = true;
         puzzleGameData.puzzleClipCount = 0;
+        puzzleGameData.isFindPuzzle = false;
         puzzleGameData.puzzleGameOver = false;
+        puzzleGameData.isPlayAnim = false;
         for (int i = 0; i < puzzleGameData.puzzleState.Length; i++)
         {
             puzzleGameData.puzzleState[i] = false;

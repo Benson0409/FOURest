@@ -38,21 +38,22 @@ public class InventoryController : MonoBehaviour
     public PuzzleGameDataSo puzzleGameData;
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
     public PuzzleGameController puzzleGameController;
-    //public cookieGameController cookieGameController;
+
 
 
     private void Update()
     {
         //成功召喚水仙子
-        if (PlayerPrefs.GetInt("finishColorGame") == 1)
+        if (colorGameData.colorGameOver)
         {
             inventoryPanel.SetActive(false);
             return;
         }
 
         //找到水晶球
-        if (PlayerPrefs.GetInt("collectCrystalBall") == 1)
+        if (colorGameData.isFindCrystalBall)
         {
 
             inventoryPanel.SetActive(true);
@@ -70,7 +71,7 @@ public class InventoryController : MonoBehaviour
         }
 
         //使用調色盤
-        if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
+        if (colorGameData.startFindCrystalBall)
         {
             inventoryPanel.SetActive(true);
 
@@ -87,7 +88,7 @@ public class InventoryController : MonoBehaviour
         }
 
         //色彩分析器完成
-        if (PlayerPrefs.GetInt("finishRotate") == 1)
+        if (colorGameData.isRotate)
         {
 
             inventoryPanel.SetActive(true);
@@ -95,7 +96,7 @@ public class InventoryController : MonoBehaviour
             item2.SetActive(true);
             item2Image.sprite = mirrorSprite;
             item2Text.text = "1";
-            informationText2.text = "三稜鏡，用來開啟調色盤";
+            informationText2.text = "利用三稜鏡來開啟調色盤";
 
             item1.SetActive(true);
             item1Image.sprite = mussicSheetSprite;
@@ -105,7 +106,7 @@ public class InventoryController : MonoBehaviour
         }
 
         //神廟遊戲結束
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (colorGameData.startColorGame)
         {
             inventoryPanel.SetActive(true);
 

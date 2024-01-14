@@ -16,3 +16,4 @@ MonoBehaviour:
   puzzleState: 000000000000
   puzzleClipCount: 0
   puzzleGameOver: 0
+  isPlayAnim: 0

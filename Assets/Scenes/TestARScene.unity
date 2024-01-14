@@ -1039,6 +1039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
   templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
+  colorGameData: {fileID: 11400000, guid: 74448b4e53d1d4882819b71540c0451d, type: 2}
   hintCanvasGroup: {fileID: 1698239313}
   hintPanel: {fileID: 1698239311}
   fadeInDuration: 1.5
@@ -1066,8 +1067,7 @@ MonoBehaviour:
     type: 3}
   musicAltarClue1: {fileID: 5247463715212376144, guid: 887b695af95f24cc3a1779698bd5648e,
     type: 3}
-  colorMirror1: {fileID: 4638811684953987855, guid: b257439d9319c4b27b510d9b34cfe957,
-    type: 3}
+  colorMirror: {fileID: 0}
   placementIndicator: {fileID: 799251008}
   rotataSpeed: 3
 --- !u!4 &1264704894

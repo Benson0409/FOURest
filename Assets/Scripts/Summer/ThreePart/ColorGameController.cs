@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class ColorGameController : MonoBehaviour
 {
     //旁白系統
     private SummerGameController summerGameController;
-    public DialogueManager dialogueManager;
-
 
     [Header("場景轉場物體")]
     public SwitchScenes scenesCanvaPrefabs;
@@ -18,23 +15,22 @@ public class ColorGameController : MonoBehaviour
     public GameObject touchCanva;
 
     [Header("顏色關卡設置")]
-    public bool finishColorGame;
+    public bool startColorGame;
 
     [Header("偵測控制")]
     public GameObject player;
     public float radius;
 
     [Header("三色鏡變量控制")]
-    public bool startColorGame;
-    public bool findColorMirror;
+
+    public bool startColorMirrorGame;
 
     [Header("調色盤變量控制")]
     public bool startFilterGame;
-    public bool openColorFiliterCanva;
     //按下按鈕後才可以去尋找水晶球
     public bool startFindCrystalBall;
     //是否收集到水晶球
-    public bool collectCrystalBall;
+    public bool isFindCrystalBall;
 
     [Header("按鈕控制")]
     public GameObject DetectObject;
@@ -66,13 +62,36 @@ public class ColorGameController : MonoBehaviour
     [Header("莉莉絲位置")]
     public VoidEventSo LiliChangeEventSo;
 
+    [Header("莉莉絲對話腳本")]
+    public DialogueDataSo liliDialogueData;
+
+    [Header("遊戲數據")]
+    public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
+
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+    private bool isClear;
+
+    void OnEnable()
+    {
+        ResetDataEventSo.OnEventRaised += ResetColorGameData;
+    }
+
+
+
+    void OnDisable()
+    {
+        ResetDataEventSo.OnEventRaised -= ResetColorGameData;
+    }
+
     private void Awake()
     {
         summerGameController = GetComponent<SummerGameController>();
+        ReadColorGameData();
 
-        if (PlayerPrefs.GetInt("finishColorGame") == 1)
+        if (colorGameData.colorGameOver)
         {
-            finishColorGame = true;
             water.SetActive(true);
             Castle.SetActive(true);
             return;
@@ -80,15 +99,11 @@ public class ColorGameController : MonoBehaviour
 
 
 
-        if (PlayerPrefs.GetInt("startColorGame") == 1)
+        if (startColorGame)
         {
-            startColorGame = true;
-            //colorMirror.SetActive(true);
 
-            if (PlayerPrefs.GetInt("findColorMirror") == 1)
+            if (startColorMirrorGame)
             {
-                findColorMirror = true;
-
                 //代表已經開始進行旋轉三色鏡
                 if (PlayerPrefs.GetInt("firstRotate") == 1)
                 {
@@ -97,56 +112,43 @@ public class ColorGameController : MonoBehaviour
                     loadColorMirrorRotate3();
                 }
             }
-            else
-            {
-                findColorMirror = false;
-            }
-        }
-
-        else
-        {
-            startColorGame = false;
         }
 
         //------------------------------------------------
-        if (PlayerPrefs.GetInt("collectCrystalBall") == 1)
+        //以收集完成水晶球
+        if (isFindCrystalBall)
         {
-            collectCrystalBall = true;
             water.SetActive(true);
-            //Castle.SetActive(true);
             crystalBall.SetActive(false);
             return;
         }
         //------------------------------------------------
-        if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
+
+        //水晶球顯示
+        if (startFindCrystalBall)
         {
-            startFilterGame = true;
-            startFindCrystalBall = true;
-            //開啟調色盤遊戲
             crystalBall1.SetActive(true);
             return;
         }
         //------------------------------------------------
-        //完成三色鏡旋轉獲得道具
-        if (PlayerPrefs.GetInt("finishRotate") == 1 && PlayerPrefs.GetInt("startFindCrystalBall") != 1)
-        {
 
-            startFilterGame = true;
+        //完成三色鏡旋轉獲得道具
+        if (colorGameData.isRotate && startFindCrystalBall)
+        {
+            //調色盤控制器顯示
             colorFiliter.SetActive(true);
 
             //說明調色盤,並請他們根據線索去尋找
             summerGameController.openNarrationSystem();
         }
 
-
-
-
     }
+
 
     private void Update()
     {
         //做最後設定
-        if (finishColorGame)
+        if (colorGameData.colorGameOver)
         {
             // water.SetActive(true);
             // Castle.SetActive(true);
@@ -158,6 +160,8 @@ public class ColorGameController : MonoBehaviour
             return;
         }
 
+        SaveColorGameData();
+
         Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
         //如果player的狀態屬於 false 就不執行偵測的動作
@@ -166,18 +170,15 @@ public class ColorGameController : MonoBehaviour
             return;
         }
 
-        if (collectCrystalBall)
+        if (isFindCrystalBall)
         {
             //要讓結束在讓水仙子出現,並對話就可以結束第一關
             //水仙子要出現，並且要靠近水仙子才能講話
-            if (PlayerPrefs.GetInt("currentState") == 2 && !dialogueManager.startDialogue)
+            if (liliDialogueData.repeatText)
             {
                 print("水仙子出現");
-                PlayerPrefs.SetInt("finishColorGame", 1);
-                PlayerPrefs.Save();
+                colorGameData.colorGameOver = true;
                 PlayAnim();
-
-                finishColorGame = true;
                 return;
             }
         }
@@ -187,7 +188,7 @@ public class ColorGameController : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 //用手指點擊水晶球來收集
-                if (startFindCrystalBall)
+                if (!isFindCrystalBall)
                 {
                     foreach (Touch touch in Input.touches)
                     {
@@ -207,17 +208,12 @@ public class ColorGameController : MonoBehaviour
                                         {
                                             if (collider.gameObject.tag == "crystalBall")
                                             {
-                                                //莉莉絲移動過來
+                                                //莉莉絲出現
                                                 LiliChangeEventSo.RaiseEvent();
 
                                                 //收集水晶球
+                                                isFindCrystalBall = true;
                                                 crystalBall.SetActive(false);
-                                                PlayerPrefs.SetInt("collectCrystalBall", 1);
-
-                                                // //任務完成
-                                                // DialogueData.saveMissionTextState(true);
-
-                                                collectCrystalBall = true;
                                                 return;
                                             }
                                         }
@@ -237,13 +233,11 @@ public class ColorGameController : MonoBehaviour
                 }
 
                 //獲得道具後，靠近colorFiliter使用道具，尋找水晶球的碎片
-                if (collider.tag == "colorFiliter" && !startFindCrystalBall)
+                if (collider.tag == "colorFiliter" && startFindCrystalBall)
                 {
                     //準備開啟顏色濾鏡尋找線索
                     DetectObject.SetActive(true);
-                    //DetectBtn.text = "使用三色鏡";
                     btnImage.sprite = openImage;
-                    openColorFiliterCanva = true;
                     return;
                 }
             }
@@ -256,16 +250,15 @@ public class ColorGameController : MonoBehaviour
 
             foreach (Collider collider in colliders)
             {
-                if (collider.tag == "colorMirror" && findColorMirror)
+                if (collider.tag == "colorMirror" && startColorMirrorGame)
                 {
                     ARSystem.colorMirror(collider.gameObject);
                     DetectObject.SetActive(true);
-                    //DetectBtn.text = "調查三色鏡";
                     btnImage.sprite = searchImage;
                     return;
                 }
 
-                if (collider.tag == "colorPlane" && !findColorMirror)
+                if (collider.tag == "colorPlane" && !startColorMirrorGame)
                 {
                     //靠近直接觸發旁白
                     //不在利用按鈕來運作
@@ -277,28 +270,25 @@ public class ColorGameController : MonoBehaviour
         DetectObject.SetActive(false);
     }
 
+
+
     public void colorGameExplain()
     {
         summerGameController.openNarrationSystem();
-        findColorMirror = true;
-
-        PlayerPrefs.SetInt("findColorMirror", 1);
-        PlayerPrefs.Save();
+        startColorMirrorGame = true;
     }
 
     public void colorGameBtnController()
     {
-        if (openColorFiliterCanva)
+        if (startFindCrystalBall)
         {
             DetectObject.SetActive(false);
             colorFiliterCanva.SetActive(true);
             touchCanva.SetActive(false);
-
-
             return;
         }
 
-        if (findColorMirror)
+        if (startColorMirrorGame)
         {
             //進入AR環境調整三色鏡的旋轉角度
             //思考如何兩者連動
@@ -312,26 +302,13 @@ public class ColorGameController : MonoBehaviour
     public void startGame()
     {
 
-        if (PlayerPrefs.GetInt("templeGameFinish") == 1)
+        if (templeGameData.templeGameOver)
         {
+            colorGameData.startColorGame = true;
 
-            startColorGame = true;
-            //儲存設定
-            saveColorGame();
-
-            //開啟三色鏡
-            //colorMirror.SetActive(true);
-
-            //重置任務狀態
-            // DialogueData.saveMissionTextState(false);
         }
     }
 
-    public void saveColorGame()
-    {
-        PlayerPrefs.SetInt("startColorGame", 1);
-        PlayerPrefs.Save();
-    }
 
     //紀錄三色鏡角度旋轉
     public void loadColorMirrorRotate1()
@@ -368,5 +345,40 @@ public class ColorGameController : MonoBehaviour
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+    }
+
+    private void ReadColorGameData()
+    {
+        //讀取資料
+        startColorGame = colorGameData.startColorGame;
+        startColorMirrorGame = colorGameData.startColorMirrorGame;
+        startFilterGame = colorGameData.startFilterGame;
+        startFindCrystalBall = colorGameData.startFindCrystalBall;
+        isFindCrystalBall = colorGameData.isFindCrystalBall;
+    }
+
+    private void SaveColorGameData()
+    {
+        if (!isClear)
+        {
+            //存取資料
+            colorGameData.startColorGame = startColorGame;
+            colorGameData.startColorMirrorGame = startColorMirrorGame;
+            colorGameData.startFilterGame = startFilterGame;
+            colorGameData.startFindCrystalBall = startFindCrystalBall;
+            colorGameData.isFindCrystalBall = isFindCrystalBall;
+        }
+    }
+
+    private void ResetColorGameData()
+    {
+        isClear = true;
+        colorGameData.startColorGame = false;
+        colorGameData.colorGameOver = false;
+        colorGameData.startColorMirrorGame = false;
+        colorGameData.isRotate = false;
+        colorGameData.startFilterGame = false;
+        colorGameData.startFindCrystalBall = false;
+        colorGameData.isFindCrystalBall = false;
     }
 }
