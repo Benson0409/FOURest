@@ -37,10 +37,8 @@ public class ColorGameController : MonoBehaviour
     public Image btnImage;
     public Sprite openImage;
     public Sprite searchImage;
-    //public Text DetectBtn;
 
     [Header("顏色關卡物體")]
-    //public GameObject colorMirror;
     public GameObject colorFiliter;
     public GameObject colorFiliterCanva;
     //水晶球架子
@@ -64,6 +62,7 @@ public class ColorGameController : MonoBehaviour
 
     [Header("莉莉絲對話腳本")]
     public DialogueDataSo liliDialogueData;
+    public GameObject dialoguePanel;
 
     [Header("遊戲數據")]
     public TempleGameDataSo templeGameData;
@@ -127,19 +126,29 @@ public class ColorGameController : MonoBehaviour
         //水晶球顯示
         if (startFindCrystalBall)
         {
+            if (!colorGameData.isPlayCrystalBallAnim)
+            {
+                //說明點擊收集水晶球
+                summerGameController.openNarrationSystem();
+                colorGameData.isPlayCrystalBallAnim = true;
+            }
             crystalBall1.SetActive(true);
             return;
         }
         //------------------------------------------------
 
         //完成三色鏡旋轉獲得道具
-        if (colorGameData.isRotate && startFindCrystalBall)
+        if (colorGameData.isRotate && startFilterGame)
         {
             //調色盤控制器顯示
             colorFiliter.SetActive(true);
+            if (!colorGameData.isPlayFiliterAnim)
+            {
 
-            //說明調色盤,並請他們根據線索去尋找
-            summerGameController.openNarrationSystem();
+                //說明調色盤,並請他們根據線索去尋找
+                summerGameController.openNarrationSystem();
+                colorGameData.isPlayFiliterAnim = true;
+            }
         }
 
     }
@@ -150,8 +159,6 @@ public class ColorGameController : MonoBehaviour
         //做最後設定
         if (colorGameData.colorGameOver)
         {
-            // water.SetActive(true);
-            // Castle.SetActive(true);
             return;
         }
 
@@ -174,7 +181,7 @@ public class ColorGameController : MonoBehaviour
         {
             //要讓結束在讓水仙子出現,並對話就可以結束第一關
             //水仙子要出現，並且要靠近水仙子才能講話
-            if (liliDialogueData.repeatText)
+            if (liliDialogueData.repeatText && !dialoguePanel.activeInHierarchy)
             {
                 print("水仙子出現");
                 colorGameData.colorGameOver = true;
@@ -188,7 +195,7 @@ public class ColorGameController : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 //用手指點擊水晶球來收集
-                if (!isFindCrystalBall)
+                if (startFindCrystalBall)
                 {
                     foreach (Touch touch in Input.touches)
                     {
@@ -233,7 +240,7 @@ public class ColorGameController : MonoBehaviour
                 }
 
                 //獲得道具後，靠近colorFiliter使用道具，尋找水晶球的碎片
-                if (collider.tag == "colorFiliter" && startFindCrystalBall)
+                if (collider.tag == "colorFiliter")
                 {
                     //準備開啟顏色濾鏡尋找線索
                     DetectObject.SetActive(true);
@@ -245,7 +252,7 @@ public class ColorGameController : MonoBehaviour
             return;
         }
 
-        if (startColorGame)
+        if (startColorGame && !startFilterGame)
         {
 
             foreach (Collider collider in colliders)
@@ -280,7 +287,7 @@ public class ColorGameController : MonoBehaviour
 
     public void colorGameBtnController()
     {
-        if (startFindCrystalBall)
+        if (startFilterGame)
         {
             DetectObject.SetActive(false);
             colorFiliterCanva.SetActive(true);
@@ -305,6 +312,7 @@ public class ColorGameController : MonoBehaviour
         if (templeGameData.templeGameOver)
         {
             colorGameData.startColorGame = true;
+            startColorGame = true;
 
         }
     }
@@ -365,7 +373,6 @@ public class ColorGameController : MonoBehaviour
             colorGameData.startColorGame = startColorGame;
             colorGameData.startColorMirrorGame = startColorMirrorGame;
             colorGameData.startFilterGame = startFilterGame;
-            colorGameData.startFindCrystalBall = startFindCrystalBall;
             colorGameData.isFindCrystalBall = isFindCrystalBall;
         }
     }
@@ -378,7 +385,9 @@ public class ColorGameController : MonoBehaviour
         colorGameData.startColorMirrorGame = false;
         colorGameData.isRotate = false;
         colorGameData.startFilterGame = false;
+        colorGameData.isPlayFiliterAnim = false;
         colorGameData.startFindCrystalBall = false;
         colorGameData.isFindCrystalBall = false;
+        colorGameData.isPlayCrystalBallAnim = false;
     }
 }

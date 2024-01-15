@@ -31,13 +31,14 @@ public class TempleGameController : MonoBehaviour
     [Header("操作控制")]
     public GameObject touchCanva;
 
-    [Header("場景物件")]
+    [Header("遊戲介面")]
     //開啟神廟大門
     public GameObject DoorCanva;
 
     //開啟音樂祭壇
     public GameObject MusicAltarCanva;
 
+    [Header("場景物件變化")]
     //開啟神廟線索探索
     public GameObject templeDoor;
     public GameObject openTempleDoor;
@@ -54,13 +55,12 @@ public class TempleGameController : MonoBehaviour
     public Image btnImage;
     public Sprite searchImage;
     public Sprite openImage;
-    //public Text DetectBtn;
+
     [Header("背包控制")]
     public GameObject inventoryUI;
 
     [Header("關卡變數")]
     private bool startTempleGame;
-
 
     [Header("神廟大門控制變數")]
     //神廟大門控制遊戲
@@ -79,6 +79,10 @@ public class TempleGameController : MonoBehaviour
     public TempleGameDataSo templeGameData;
     //偵測看有沒有對話
     public DialogueDataSo liliDialogue;
+
+
+    [Header("莉莉絲位置")]
+    public VoidEventSo LiliChangeEventSo;
 
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
@@ -121,18 +125,20 @@ public class TempleGameController : MonoBehaviour
             if (finishMusicGame)
             {
 
-                if (PlayerPrefs.GetInt("playAnim") == 1)
+                if (!templeGameData.isPlayMusicAnim)
                 {
                     //旁白開啟
                     summerGameController.openNarrationSystem();
-                    PlayerPrefs.SetInt("playAnim", 0);
-                    PlayerPrefs.Save();
+                    //lili位置移動
+                    LiliChangeEventSo.RaiseEvent();
+                    templeGameData.isPlayMusicAnim = true;
                 }
             }
 
             if (startMusicGame)
             {
-
+                //代表門的動畫已經播放完畢
+                templeGameData.isPlayDoorAnim = true;
                 openTempleDoor.SetActive(true);
                 templeDoor.SetActive(false);
                 return;
@@ -165,7 +171,6 @@ public class TempleGameController : MonoBehaviour
         {
             if (liliDialogue.repeatText)
             {
-                print("123");
                 DetectObject.SetActive(false);
 
                 templeGameData.templeGameOver = true;
@@ -351,11 +356,9 @@ public class TempleGameController : MonoBehaviour
         if (cookieGameData.cookieGameOver)
         {
             templeGameData.startTempleGame = true;
+            startTempleGame = true;
             templeGameData.startDoorGame = true;
-        }
-        else
-        {
-            startTempleGame = false;
+            startDoorGame = true;
         }
     }
 
@@ -409,8 +412,10 @@ public class TempleGameController : MonoBehaviour
         templeGameData.templeGameOver = false;
         templeGameData.startDoorGame = false;
         templeGameData.findDoorClue = false;
+        templeGameData.isPlayDoorAnim = false;
         templeGameData.startMusicGame = false;
         templeGameData.finishMusicGame = false;
+        templeGameData.isPlayMusicAnim = false;
         templeGameData.findMusicClue = false;
     }
 }

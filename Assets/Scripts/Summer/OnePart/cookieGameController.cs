@@ -34,7 +34,7 @@ public class cookieGameController : MonoBehaviour
     public Image btnImage;
     public Sprite searchImage;
 
-    [Header("角色生成")]
+    [Header("莉莉絲位置")]
     public VoidEventSo LiliChangeEventSo;
 
     [Header("遊戲數據")]
@@ -72,15 +72,12 @@ public class cookieGameController : MonoBehaviour
         {
 
             //動畫播放完成後與莉莉絲出現後就出現旁白
-            if (PlayerPrefs.GetInt("playAnim") == 1 && cookie1 && cookie2 && cookie3 && !cookieGameData.cookieGameOver)
+            if (!cookieGameData.isPlayAnim && cookieGameData.isFindCookie)
             {
                 //莉莉絲出現
                 LiliChangeEventSo.RaiseEvent();
-
-
                 summerGameController.openNarrationSystem();
-                PlayerPrefs.SetInt("playAnim", 0);
-                PlayerPrefs.Save();
+                cookieGameData.isPlayAnim = true;
 
             }
 
@@ -109,7 +106,7 @@ public class cookieGameController : MonoBehaviour
 
         SaveCookieGameData();
 
-        if (cookie1 && cookie2 && cookie3 && !cookieGameData.cookieGameOver)
+        if (cookieGameData.isFindCookie && !cookieGameData.cookieGameOver)
         {
 
             // 莉莉絲出現
@@ -121,10 +118,11 @@ public class cookieGameController : MonoBehaviour
                 cookieGameData.cookieGameOver = true;
                 templeGameController.startGame();
             }
+            return;
         }
 
 
-        if (startCookieGame && !cookieGameData.cookieGameOver)
+        if (startCookieGame)
         {
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
@@ -181,40 +179,6 @@ public class cookieGameController : MonoBehaviour
 
     }
 
-    // public void findCookieGameDetect()
-    // {
-    //     if (PlayerPrefs.GetInt("findCookie1") == 1)
-    //     {
-    //         cookie1 = true;
-    //         findCookieCount++;
-    //     }
-    //     else
-    //     {
-    //         cookie1 = false;
-    //     }
-
-    //     if (PlayerPrefs.GetInt("findCookie2") == 1)
-    //     {
-    //         cookie2 = true;
-    //         findCookieCount++;
-    //     }
-    //     else
-    //     {
-    //         cookie2 = false;
-    //     }
-
-    //     if (PlayerPrefs.GetInt("findCookie3") == 1)
-    //     {
-    //         cookie3 = true;
-    //         findCookieCount++;
-    //     }
-    //     else
-    //     {
-    //         cookie3 = false;
-    //     }
-    // }
-
-
 
     public void findCookieGameBtn()
     {
@@ -247,6 +211,11 @@ public class cookieGameController : MonoBehaviour
         cookie1 = cookieGameData.cookie1Field;
         cookie2 = cookieGameData.cookie2Field;
         cookie3 = cookieGameData.cookie3Field;
+
+        if (cookie1 && cookie2 && cookie3)
+        {
+            cookieGameData.isFindCookie = true;
+        }
     }
 
     private void ResetCookieGameData()
@@ -254,7 +223,9 @@ public class cookieGameController : MonoBehaviour
         isClear = true;
         cookieGameData.startCookieGame = false;
         cookieGameData.cookieGameOver = false;
+        cookieGameData.isPlayAnim = false;
         cookieGameData.findCookieCount = 0;
+        cookieGameData.isFindCookie = false;
         cookieGameData.cookie1Field = false;
         cookieGameData.cookie2Field = false;
         cookieGameData.cookie3Field = false;

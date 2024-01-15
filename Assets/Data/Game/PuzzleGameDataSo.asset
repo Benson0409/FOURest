@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c865759c5b46451980c6775a5b9385f, type: 3}
   m_Name: PuzzleGameDataSo
   m_EditorClassIdentifier: 
-  isFindPuzzle: 0
-  puzzleState: 000000000000
-  puzzleClipCount: 0
-  puzzleGameOver: 0
-  isPlayAnim: 0
+  isFindPuzzle: 1
+  puzzleState: 010101010101
+  puzzleClipCount: 6
+  puzzleGameOver: 1
+  isPlayAnim: 1

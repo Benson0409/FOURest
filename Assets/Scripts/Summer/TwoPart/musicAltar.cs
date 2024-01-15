@@ -31,9 +31,6 @@ public class musicAltar : MonoBehaviour
     public bool music7 = false;
 
 
-    [Header("莉莉絲位置")]
-    public VoidEventSo LiliChangeEventSo;
-
     private void Update()
     {
         if (templeGameData.templeGameOver)
@@ -57,12 +54,6 @@ public class musicAltar : MonoBehaviour
             print("神廟遊戲結束");
 
             templeGameData.finishMusicGame = true;
-
-            //lili位置移動
-            LiliChangeEventSo.RaiseEvent();
-
-            PlayerPrefs.SetInt("finishAltarGame", 1);
-            PlayerPrefs.Save();
 
             //關閉此頁面
             templeGameController.closeGameCanva();

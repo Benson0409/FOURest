@@ -22,67 +22,77 @@ public class TimeLineController : MonoBehaviour
     [Header("目前播放的動畫片段")]
     public int animationClip = 0;
 
+    //用來判斷要播放哪一個對應的動畫
+    [Header("遊戲數據")]
+    public PuzzleGameDataSo puzzleGameData;
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
+
     [Header("變量控制")]
     public bool isPlay;
     public bool swichScene;
-    public bool over = false;
+    private bool isPlayOver;
 
     void Awake()
     {
         isPlay = true;
-        if (PlayerPrefs.GetInt("animSave") == 1)
+        if (!puzzleGameData.isPlayAnim)
         {
-            animationClip = PlayerPrefs.GetInt("animationClip");
+            animationClip = 0;
+            playableDirector.playableAsset = puzzle;
         }
-        switch (animationClip)
+        else if (!cookieGameData.isPlayAnim)
         {
-            case 0:
-                // 設定要播放的 Timeline
-                playableDirector.playableAsset = puzzle;
-                break;
-            case 1:
-                playableDirector.playableAsset = cookie;
-                break;
-            case 2:
-                playableDirector.playableAsset = templeDoor;
-                break;
-            case 3:
-                playableDirector.playableAsset = treasure;
-                break;
-            case 4:
-                playableDirector.playableAsset = color;
-                break;
-            case 5:
-                playableDirector.playableAsset = crystalBall;
-                break;
-            case 6:
-                playableDirector.playableAsset = water;
-                break;
+            animationClip = 1;
+            playableDirector.playableAsset = cookie;
+        }
+        else if (!templeGameData.isPlayDoorAnim)
+        {
+            animationClip = 2;
+            playableDirector.playableAsset = templeDoor;
+        }
+        else if (!templeGameData.isPlayMusicAnim)
+        {
+            animationClip = 3;
+            playableDirector.playableAsset = treasure;
+        }
+        else if (!colorGameData.isPlayFiliterAnim)
+        {
+            animationClip = 4;
+            playableDirector.playableAsset = color;
+        }
+        else if (!colorGameData.isPlayCrystalBallAnim)
+        {
+            animationClip = 5;
+            playableDirector.playableAsset = crystalBall;
+        }
+        else
+        {
+            animationClip = 6;
+            playableDirector.playableAsset = water;
         }
     }
     void Update()
     {
-        if (over)
+        //避免重複進行場景切換
+        if (isPlayOver)
         {
             return;
         }
+
         if (swichScene)
         {
-            over = true;
-            animationClip++;
-
-            PlayerPrefs.SetInt("playAnim", 1);
-            PlayerPrefs.Save();
-
             //進行轉場
             SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
             switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+            isPlayOver = true;
         }
 
         // 在場景中尋找名為 "SceneCanvas" 的物體
         GameObject targetObject = GameObject.Find("SceneCanvas");
 
-        //物體消失
+        //淡入淡出結束後再進行動畫播放
         if (targetObject == null)
         {
             print("播放");

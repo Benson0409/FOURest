@@ -28,17 +28,17 @@ public class DetectController : MonoBehaviour
             {
                 if (collider != null)
                 {
-                    //最後一章,只能跟水仙子對話
-                    if (colorGameData.colorGameOver && collider.gameObject.tag == "water")
+                    if (!colorGameData.colorGameOver)
                     {
                         print("可以開啟對話");
+                        DialogueDataSo currentData = collider.GetComponent<DialogueSetting>().dialogueData;
                         dialogueBtn.SetActive(true);
+                        dialogueManager.ReadTextAsset(currentData);
                         return;
                     }
-
-                    if (PlayerPrefs.GetInt("finishColorGame") != 1)
+                    else if (collider.gameObject.tag == "water")
                     {
-                        print("可以開啟對話");
+                        print("水仙子對話");
                         DialogueDataSo currentData = collider.GetComponent<DialogueSetting>().dialogueData;
                         dialogueBtn.SetActive(true);
                         dialogueManager.ReadTextAsset(currentData);

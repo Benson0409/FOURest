@@ -14,6 +14,11 @@ public class LiLiController : MonoBehaviour
     public LiLiDataSo liLiData;
     private int currentPositionIndex;
 
+    // [Header("遊戲數據")]
+    public CookieGameDataSo cookieGameData;
+    public TempleGameDataSo templeGameData;
+    public ColorGameDataSo colorGameData;
+
     [Header("事件監聽")]
     public VoidEventSo LiliChangeEventSo;
     public VoidEventSo ResetDataEventSo;
@@ -40,6 +45,7 @@ public class LiLiController : MonoBehaviour
 
     private void LiliPositionChange()
     {
+        print(123);
         currentPositionIndex++;
         liLiData.liliPositionIndex = currentPositionIndex;
         LiliPos();

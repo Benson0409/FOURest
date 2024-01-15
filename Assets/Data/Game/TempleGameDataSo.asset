@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c14f73d4184c493faa019b8436f79a0, type: 3}
   m_Name: TempleGameDataSo
   m_EditorClassIdentifier: 
-  startTempleGame: 0
-  templeGameOver: 0
-  startDoorGame: 0
-  findDoorClue: 0
-  startMusicGame: 0
-  finishMusicGame: 0
-  findMusicClue: 0
+  startTempleGame: 1
+  templeGameOver: 1
+  isPlayMusicAnim: 1
+  startDoorGame: 1
+  isPlayDoorAnim: 1
+  findDoorClue: 1
+  startMusicGame: 1
+  finishMusicGame: 1
+  findMusicClue: 1

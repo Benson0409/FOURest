@@ -6,9 +6,11 @@ public class TempleGameDataSo : ScriptableObject
     //神廟區域的關卡控制
     public bool startTempleGame;
     public bool templeGameOver;
+    public bool isPlayMusicAnim;
 
     //大門關卡判斷
     public bool startDoorGame;
+    public bool isPlayDoorAnim;
 
     //大門進入AR的判斷
     public bool findDoorClue;
