@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 4507744582480449393}
   - component: {fileID: 513024727823891703}
   - component: {fileID: 6729600239570587865}
+  - component: {fileID: 1405517062442582481}
   m_Layer: 5
   m_Name: pointer
   m_TagString: Untagged
@@ -441,6 +442,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1405517062442582481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445793122772159804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 5
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4536658760363973142}
+          m_TargetAssemblyTypeName: doorSlider, Assembly-CSharp
+          m_MethodName: OnDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4536658760363973142}
+          m_TargetAssemblyTypeName: doorSlider, Assembly-CSharp
+          m_MethodName: OnDrop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1696122426979200296
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   templeGameController: {fileID: 0}
-  summerGameController: {fileID: 0}
+  templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
   musicText: {fileID: 2522247462030238819}
   lastmusicName: 
   currentName: 
@@ -676,8 +722,6 @@ MonoBehaviour:
   music5: 0
   music6: 0
   music7: 0
-  liliPosition: {fileID: 0}
-  targetPosition: {fileID: 0}
 --- !u!1 &2806211669303855672
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +1018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1694,7 +1738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2116,7 +2160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2191,7 +2235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2469,7 +2513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   templeGameController: {fileID: 0}
   touchCanva: {fileID: 0}
-  summerGameController: {fileID: 0}
+  canvas: {fileID: 174847290004510076}
   scenesCanvaPrefabs: {fileID: 7549067117288491870, guid: 428d78df39c0d4f6a880b9e5fb26c39f,
     type: 3}
   secretImage: {fileID: 1445793122772159804}

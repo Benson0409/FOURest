@@ -6,7 +6,9 @@ public class SummerGameController : MonoBehaviour
 {
     //開啟旁白
     //控制遊戲進行
+    [Header("旁白系統")]
     public narrationSystem narration;
+    public NarrationDataSo narrationData;
     public GameObject narrationPanel;
     public GameObject narrationSystem;
 
@@ -20,36 +22,25 @@ public class SummerGameController : MonoBehaviour
     public GameObject player;
     public Transform initialPlayerLocate;
 
-    //在遊戲一開始得時候啟動旁白
     private void Start()
     {
-
-        if (PlayerPrefs.GetInt("narrationFirstSave") == 0)
+        //遊戲一開始時啟動旁白
+        if (!narrationData.isPlayAwake)
         {
-
-            saveSummerGamestart();
+            narrationData.isPlayAwake = true;
             //開啟對話
-            openNarrationSystem();
+            openNarrationSystem(0);
         }
-    }
-
-    private void saveSummerGamestart()
-    {
-        //startNarration = true;
-        PlayerPrefs.SetInt("narrationFirstSave", 1);
-        PlayerPrefs.Save();
-
     }
 
     //開啟旁白
-    public void openNarrationSystem()
+    /// <summary>
+    /// 用來顯示旁白系統
+    /// </summary>
+    /// <param name="playNarrationIndex">根據傳進來的值，來判斷要顯示哪一段旁白</param>
+    public void openNarrationSystem(int playNarrationIndex)
     {
-        //避免有多餘的旁白出現
-        if (PlayerPrefs.GetInt("startFindCrystalBall") == 1)
-        {
-            return;
-        }
-
+        narration.narrationTextAsset = narrationData.narrationTextAsset[playNarrationIndex];
         narration.openNarration = true;
         narration.startDialogue = true;
         narrationSystem.SetActive(true);
@@ -59,8 +50,11 @@ public class SummerGameController : MonoBehaviour
     //將資料清除，並將人物移動到最初始的位置
     public void clearGameInformation()
     {
+
         //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
         ResetDataEventSo.RaiseEvent();
+
+        narrationData.isPlayAwake = false;
 
         player.transform.position = initialPlayerLocate.position;
         player.transform.rotation = initialPlayerLocate.rotation;

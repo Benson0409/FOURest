@@ -74,7 +74,7 @@ public class PuzzleGameController : MonoBehaviour
             if (PlayerPrefs.GetInt("playAnim") == 1 && !puzzleGameData.isPlayAnim)
             {
                 //引導去調查草叢
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(2);
                 PlayerPrefs.SetInt("playAnim", 0);
                 puzzleGameData.isPlayAnim = true;
             }
@@ -264,7 +264,7 @@ public class PuzzleGameController : MonoBehaviour
         //紀錄狀態避免旁白系統會一直往後進行
         if (!findPuzzle)
         {
-            summerGameController.openNarrationSystem();
+            summerGameController.openNarrationSystem(1);
             //變數控制
             findPuzzle = true;
 

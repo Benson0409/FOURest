@@ -6,19 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class cookieGameController : MonoBehaviour
 {
-    public DialogueManager dialogueManager;
-    [Header("場景轉場物體")]
-    public SwitchScenes scenesCanvaPrefabs;
-
     private TempleGameController templeGameController;
     private SummerGameController summerGameController;
-
-    [Header("餅乾遊戲變量")]
-    public bool startCookieGame;
-
+    public DialogueManager dialogueManager;
     [Header("偵測物體範圍")]
     public GameObject player;
     public float radius;
+
+    [Header("場景轉場物體")]
+    public SwitchScenes scenesCanvaPrefabs;
+
+    [Header("餅乾遊戲變量")]
+    private bool startCookieGame;
+
 
     [Header("AR生成物控制")]
     private bool cookie1;
@@ -64,8 +64,6 @@ public class cookieGameController : MonoBehaviour
         templeGameController = GetComponent<TempleGameController>();
         summerGameController = GetComponent<SummerGameController>();
 
-        //findCookieGameDetect();
-
         ReadCookieGameData();
 
         if (startCookieGame)
@@ -76,7 +74,7 @@ public class cookieGameController : MonoBehaviour
             {
                 //莉莉絲出現
                 LiliChangeEventSo.RaiseEvent();
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(3);
                 cookieGameData.isPlayAnim = true;
 
             }

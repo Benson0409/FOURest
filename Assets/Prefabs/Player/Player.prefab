@@ -1307,7 +1307,7 @@ Transform:
   m_GameObject: {fileID: 1394989817773593640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.691, z: 0.308}
+  m_LocalPosition: {x: 0, y: -0.691, z: 0.68}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2337,8 +2337,8 @@ MonoBehaviour:
   narrationSystem: {fileID: 0}
   move: {x: 0, y: 0, z: 0}
   playerSpeed: 20
-  rotationSpeed: 20
-  climbStairForce: 6
+  rotationSpeed: 8
+  climbStairForce: 20
   gravityValue: -9.81
   gravityMultiple: 10
   lowDetect: {fileID: 9072199722507718190}
@@ -2361,6 +2361,7 @@ MonoBehaviour:
     m_Bits: 128
   dialogueBtn: {fileID: 0}
   dialogueManager: {fileID: 0}
+  colorGameData: {fileID: 11400000, guid: 74448b4e53d1d4882819b71540c0451d, type: 2}
 --- !u!114 &6634466758122563471
 MonoBehaviour:
   m_ObjectHideFlags: 0

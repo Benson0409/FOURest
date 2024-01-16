@@ -12,21 +12,16 @@ public class TempleGameController : MonoBehaviour
     //密碼的配置也在這裡判斷
 
     [Header("對話系統判斷")]
-    public DialogueManager dialogueManager;
-    public GameObject dialogueCanva;
 
     private SummerGameController summerGameController;
     private ColorGameController colorGameController;
 
+    [Header("偵測控制")]
+    public GameObject player;
+    public float radius;
+
     [Header("場景轉場物體")]
     public SwitchScenes scenesCanvaPrefabs;
-
-    [Header("腳本控制")]
-    //大門滑動控制
-    public doorSlider doorSliderGame;
-
-    //音樂祭壇控制
-    public musicAltar musicAltarGame;
 
     [Header("操作控制")]
     public GameObject touchCanva;
@@ -46,9 +41,6 @@ public class TempleGameController : MonoBehaviour
     public GameObject openTreasure;
 
 
-    [Header("偵測控制")]
-    public GameObject player;
-    public float radius;
 
     [Header("按鈕控制")]
     public GameObject DetectObject;
@@ -128,7 +120,7 @@ public class TempleGameController : MonoBehaviour
                 if (!templeGameData.isPlayMusicAnim)
                 {
                     //旁白開啟
-                    summerGameController.openNarrationSystem();
+                    summerGameController.openNarrationSystem(7);
                     //lili位置移動
                     LiliChangeEventSo.RaiseEvent();
                     templeGameData.isPlayMusicAnim = true;
@@ -137,16 +129,16 @@ public class TempleGameController : MonoBehaviour
 
             if (startMusicGame)
             {
-                //代表門的動畫已經播放完畢
-                templeGameData.isPlayDoorAnim = true;
+                if (!templeGameData.isPlayDoorAnim)
+                {
+                    summerGameController.openNarrationSystem(5);
+                    //代表門的動畫已經播放完畢
+                    templeGameData.isPlayDoorAnim = true;
+                }
                 openTempleDoor.SetActive(true);
                 templeDoor.SetActive(false);
                 return;
             }
-        }
-        else
-        {
-            startTempleGame = false;
         }
     }
 
@@ -292,7 +284,7 @@ public class TempleGameController : MonoBehaviour
             {
                 //跳出旁白
                 findMusicClue = true;
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(6);
                 DetectObject.SetActive(false);
                 //顯示線索調查
                 return;
@@ -324,7 +316,7 @@ public class TempleGameController : MonoBehaviour
             {
                 //開啟提示對話，跟他們説要去尋找線索
                 print("旁白提示");
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(4);
                 findDoorClue = true;
                 DetectObject.SetActive(false);
                 return;

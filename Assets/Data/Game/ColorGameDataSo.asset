@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5199e0091af5c4a84ad7375aac8041f1, type: 3}
   m_Name: ColorGameDataSo
   m_EditorClassIdentifier: 
-  startColorGame: 1
-  colorGameOver: 1
-  startColorMirrorGame: 1
-  isRotate: 1
-  startFilterGame: 1
-  isPlayFiliterAnim: 1
-  startFindCrystalBall: 1
-  isFindCrystalBall: 1
-  isPlayCrystalBallAnim: 1
+  startColorGame: 0
+  colorGameOver: 0
+  startColorMirrorGame: 0
+  isRotate: 0
+  startFilterGame: 0
+  isPlayFiliterAnim: 0
+  startFindCrystalBall: 0
+  isFindCrystalBall: 0
+  isPlayCrystalBallAnim: 0

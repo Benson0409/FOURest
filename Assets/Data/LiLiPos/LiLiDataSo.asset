@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792d7386e7e3847ebb0af9e951d51310, type: 3}
   m_Name: LiLiDataSo
   m_EditorClassIdentifier: 
-  liliPositionIndex: 2
+  liliPositionIndex: 1

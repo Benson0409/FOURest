@@ -436,13 +436,14 @@ GameObject:
   - component: {fileID: 6881598237081127619}
   - component: {fileID: 3088797895789071103}
   - component: {fileID: 7849577043218659639}
+  - component: {fileID: 3304241296392656921}
   m_Layer: 7
   m_Name: 'water '
   m_TagString: water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &448268063323043593
 Transform:
   m_ObjectHideFlags: 0
@@ -534,6 +535,20 @@ CapsuleCollider:
   m_Height: 2.15
   m_Direction: 1
   m_Center: {x: 0, y: -0.22, z: 0}
+--- !u!114 &3304241296392656921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589749155767714562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08ed992bf2eb4b59b57abe90577c81f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueData: {fileID: 11400000, guid: db5a42c6542d54832b0d786a18988b71, type: 2}
+  ResetDataEventSo: {fileID: 11400000, guid: d537f124a774f4f2ab7e46b948d572b9, type: 2}
 --- !u!1 &1770080757503774775
 GameObject:
   m_ObjectHideFlags: 0

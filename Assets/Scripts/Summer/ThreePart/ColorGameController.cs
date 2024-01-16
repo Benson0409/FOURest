@@ -8,6 +8,10 @@ public class ColorGameController : MonoBehaviour
     //旁白系統
     private SummerGameController summerGameController;
 
+    [Header("偵測控制")]
+    public GameObject player;
+    public float radius;
+
     [Header("場景轉場物體")]
     public SwitchScenes scenesCanvaPrefabs;
 
@@ -15,22 +19,18 @@ public class ColorGameController : MonoBehaviour
     public GameObject touchCanva;
 
     [Header("顏色關卡設置")]
-    public bool startColorGame;
-
-    [Header("偵測控制")]
-    public GameObject player;
-    public float radius;
+    private bool startColorGame;
 
     [Header("三色鏡變量控制")]
-
-    public bool startColorMirrorGame;
+    private bool startColorMirrorGame;
 
     [Header("調色盤變量控制")]
-    public bool startFilterGame;
-    //按下按鈕後才可以去尋找水晶球
-    public bool startFindCrystalBall;
+    private bool startFilterGame;
+
+    //判斷是否開始尋找水晶球
+    private bool startFindCrystalBall;
     //是否收集到水晶球
-    public bool isFindCrystalBall;
+    private bool isFindCrystalBall;
 
     [Header("按鈕控制")]
     public GameObject DetectObject;
@@ -76,8 +76,6 @@ public class ColorGameController : MonoBehaviour
     {
         ResetDataEventSo.OnEventRaised += ResetColorGameData;
     }
-
-
 
     void OnDisable()
     {
@@ -129,7 +127,7 @@ public class ColorGameController : MonoBehaviour
             if (!colorGameData.isPlayCrystalBallAnim)
             {
                 //說明點擊收集水晶球
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(10);
                 colorGameData.isPlayCrystalBallAnim = true;
             }
             crystalBall1.SetActive(true);
@@ -146,7 +144,7 @@ public class ColorGameController : MonoBehaviour
             {
 
                 //說明調色盤,並請他們根據線索去尋找
-                summerGameController.openNarrationSystem();
+                summerGameController.openNarrationSystem(9);
                 colorGameData.isPlayFiliterAnim = true;
             }
         }
@@ -189,99 +187,93 @@ public class ColorGameController : MonoBehaviour
                 return;
             }
         }
-
-        if (startFilterGame)
+        if (startColorGame)
         {
             foreach (Collider collider in colliders)
             {
-                //用手指點擊水晶球來收集
-                if (startFindCrystalBall)
+                if (startFilterGame)
                 {
-                    foreach (Touch touch in Input.touches)
+                    if (startFindCrystalBall)
                     {
-                        Vector2 touchPosition = touch.position;
-                        if (!colorFiliterCanva.activeInHierarchy)
+                        foreach (Touch touch in Input.touches)
                         {
-                            if (RectTransformUtility.RectangleContainsScreenPoint(takeRange, touchPosition))
+                            Vector2 touchPosition = touch.position;
+                            if (!colorFiliterCanva.activeInHierarchy)
                             {
-                                switch (touch.phase)
+                                if (RectTransformUtility.RectangleContainsScreenPoint(takeRange, touchPosition))
                                 {
-                                    case TouchPhase.Began:
+                                    switch (touch.phase)
+                                    {
+                                        case TouchPhase.Began:
 
-                                        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
-                                        RaycastHit hit;
+                                            Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+                                            RaycastHit hit;
 
-                                        if (Physics.Raycast(ray, out hit))
-                                        {
-                                            if (collider.gameObject.tag == "crystalBall")
+                                            if (Physics.Raycast(ray, out hit))
                                             {
-                                                //莉莉絲出現
-                                                LiliChangeEventSo.RaiseEvent();
+                                                if (collider.gameObject.tag == "crystalBall")
+                                                {
+                                                    //莉莉絲出現
+                                                    LiliChangeEventSo.RaiseEvent();
 
-                                                //收集水晶球
-                                                isFindCrystalBall = true;
-                                                crystalBall.SetActive(false);
-                                                return;
+                                                    //收集水晶球
+                                                    isFindCrystalBall = true;
+                                                    crystalBall.SetActive(false);
+                                                    return;
+                                                }
                                             }
-                                        }
 
-                                        break;
+                                            break;
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                //色彩分析器開啟時將Btn關閉
-                if (colorFiliterCanva.activeInHierarchy)
-                {
-                    DetectObject.SetActive(false);
-                    return;
-                }
+                    //色彩分析器開啟時將Btn關閉
+                    if (colorFiliterCanva.activeInHierarchy)
+                    {
+                        DetectObject.SetActive(false);
+                        return;
+                    }
 
-                //獲得道具後，靠近colorFiliter使用道具，尋找水晶球的碎片
-                if (collider.tag == "colorFiliter")
+                    //獲得道具後，靠近colorFiliter使用道具，尋找水晶球的碎片
+                    if (collider.tag == "colorFiliter")
+                    {
+                        //準備開啟顏色濾鏡尋找線索
+                        DetectObject.SetActive(true);
+                        btnImage.sprite = openImage;
+                        return;
+                    }
+                }
+                else
                 {
-                    //準備開啟顏色濾鏡尋找線索
-                    DetectObject.SetActive(true);
-                    btnImage.sprite = openImage;
-                    return;
+                    if (collider.tag == "colorMirror" && startColorMirrorGame)
+                    {
+                        ARSystem.colorMirror(collider.gameObject);
+                        DetectObject.SetActive(true);
+                        btnImage.sprite = searchImage;
+                        return;
+                    }
+
+                    if (collider.tag == "colorPlane" && !startColorMirrorGame)
+                    {
+                        //靠近直接觸發旁白
+                        //不在利用按鈕來運作
+                        colorGameExplain();
+                        return;
+                    }
                 }
             }
             DetectObject.SetActive(false);
-            return;
         }
-
-        if (startColorGame && !startFilterGame)
-        {
-
-            foreach (Collider collider in colliders)
-            {
-                if (collider.tag == "colorMirror" && startColorMirrorGame)
-                {
-                    ARSystem.colorMirror(collider.gameObject);
-                    DetectObject.SetActive(true);
-                    btnImage.sprite = searchImage;
-                    return;
-                }
-
-                if (collider.tag == "colorPlane" && !startColorMirrorGame)
-                {
-                    //靠近直接觸發旁白
-                    //不在利用按鈕來運作
-                    colorGameExplain();
-                    return;
-                }
-            }
-        }
-        DetectObject.SetActive(false);
     }
 
 
 
     public void colorGameExplain()
     {
-        summerGameController.openNarrationSystem();
+        summerGameController.openNarrationSystem(8);
         startColorMirrorGame = true;
     }
 

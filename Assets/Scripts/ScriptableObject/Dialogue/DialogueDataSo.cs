@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FOURest/DialogueDataSo")]
+[CreateAssetMenu(menuName = "Dialogue/DialogueDataSo")]
 public class DialogueDataSo : ScriptableObject
 {
     public TextAsset[] textAsset;

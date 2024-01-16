@@ -1,12 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using Unity.Entities.UniversalDelegates;
-using System;
-using System.Runtime.InteropServices;
+
 public class doorSlider : MonoBehaviour
 {
     //滑動指定區塊->讓上方箭頭轉動->當密碼正確後開啟大門
@@ -14,9 +7,6 @@ public class doorSlider : MonoBehaviour
     public TempleGameController templeGameController;
     public GameObject touchCanva;
     public Canvas canvas;
-
-    //播放旁白
-    public SummerGameController summerGameController;
 
     [Header("動畫轉場")]
     public SwitchScenes scenesCanvaPrefabs;
@@ -123,7 +113,6 @@ public class doorSlider : MonoBehaviour
             print("開啟神廟大門");
             openDoorGame = true;
             templeGameController.startMusicAltar();
-            summerGameController.openNarrationSystem();
             templeGameController.closeGameCanva();
             PlayAnim();
         }

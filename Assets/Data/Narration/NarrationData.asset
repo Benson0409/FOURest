@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b59aaacdd05f4692ba7fef2053d90b5, type: 3}
+  m_Name: NarrationData
+  m_EditorClassIdentifier: 
+  isPlayAwake: 0
+  narrationTextAsset:
+  - {fileID: 4900000, guid: 58d85509cd32a4c11ad3abc52347dd65, type: 3}
+  - {fileID: 4900000, guid: 259f27cae7ad041ef84029e7f7494902, type: 3}
+  - {fileID: 4900000, guid: 42e08914ada224364a796592017111f7, type: 3}
+  - {fileID: 4900000, guid: 0f24bf857c59f45ba9920b5c12563d3a, type: 3}
+  - {fileID: 4900000, guid: 72a01c44b5f0343ed9c9cff17c9ecb7a, type: 3}
+  - {fileID: 4900000, guid: 011957b3978eb4931b2d2ccfb85a594a, type: 3}
+  - {fileID: 4900000, guid: 31f81826fa6e94dc493e714af9c658d1, type: 3}
+  - {fileID: 4900000, guid: 798b56498bbb5496dbdd93ae6ef98214, type: 3}
+  - {fileID: 4900000, guid: f54833aa3a03b40cbb17b41b9f687003, type: 3}
+  - {fileID: 4900000, guid: 831379e30e6db4e09bed6847cb44cb04, type: 3}
+  - {fileID: 4900000, guid: 2bea48645bfb24da79543af3b19b42ca, type: 3}
