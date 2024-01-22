@@ -14,7 +14,7 @@ public class LiLiController : MonoBehaviour
     public LiLiDataSo liLiData;
     private int currentPositionIndex;
 
-    // [Header("遊戲數據")]
+    [Header("遊戲數據")]
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
     public ColorGameDataSo colorGameData;
@@ -46,7 +46,19 @@ public class LiLiController : MonoBehaviour
     private void LiliPositionChange()
     {
         print(123);
-        currentPositionIndex++;
+        //currentPositionIndex++;
+        if (cookieGameData.isFindCookie && !templeGameData.startTempleGame)
+        {
+            currentPositionIndex = 1;
+        }
+        else if (templeGameData.finishMusicGame && !colorGameData.startColorGame)
+        {
+            currentPositionIndex = 2;
+        }
+        else
+        {
+            currentPositionIndex = 3;
+        }
         liLiData.liliPositionIndex = currentPositionIndex;
         LiliPos();
     }

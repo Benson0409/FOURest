@@ -8,12 +8,18 @@ public class MenuMissionControl : MonoBehaviour
     //來顯示當前的任務目標是什麼 讓他們沒有看的對話也可以知道
     [Header("任務文字")]
     public Text misiionText;
+
     [Header("關卡判斷")]
     public PuzzleGameDataSo puzzleGameData;
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
     public ColorGameDataSo colorGameData;
 
+    [Header("事件監聽")]
+    public VoidEventSo ResetDataEventSo;
+
+    [Header("場景淡入淡出")]
+    public SwitchScenes scenesCanvaPrefabs;
 
     private void Update()
     {
@@ -102,5 +108,45 @@ public class MenuMissionControl : MonoBehaviour
         {
             misiionText.text = "前往告示牌接下第一個任務";
         }
+    }
+
+    public void GoToCookieGame()
+    {
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+        //拼圖遊戲結束
+        puzzleGameData.isPlayAnim = true;
+        puzzleGameData.puzzleGameOver = true;
+        //開始餅乾遊戲
+        cookieGameData.startCookieGame = true;
+        ReLoadGame();
+    }
+    public void GoToTempleGame()
+    {
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+        GoToCookieGame();
+        //餅乾遊戲結束
+        cookieGameData.isFindCookie = true;
+        cookieGameData.findCookieCount = 3;
+        cookieGameData.cookie1Field = true;
+        cookieGameData.cookie2Field = true;
+        cookieGameData.cookie3Field = true;
+        ReLoadGame();
+    }
+    public void GoToColorGame()
+    {
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+        GoToTempleGame();
+        templeGameData.finishMusicGame = true;
+        templeGameData.startMusicGame = true;
+        templeGameData.startTempleGame = true;
+        ReLoadGame();
+    }
+    public void ReLoadGame()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
     }
 }
