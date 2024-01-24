@@ -1067,7 +1067,8 @@ MonoBehaviour:
     type: 3}
   musicAltarClue1: {fileID: 5247463715212376144, guid: 887b695af95f24cc3a1779698bd5648e,
     type: 3}
-  colorMirror: {fileID: 0}
+  colorMirror: {fileID: 4638811684953987855, guid: b257439d9319c4b27b510d9b34cfe957,
+    type: 3}
   placementIndicator: {fileID: 799251008}
   rotataSpeed: 3
 --- !u!4 &1264704894

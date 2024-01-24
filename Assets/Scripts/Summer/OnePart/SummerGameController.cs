@@ -11,7 +11,8 @@ public class SummerGameController : MonoBehaviour
     public NarrationDataSo narrationData;
     public GameObject narrationPanel;
     public GameObject narrationSystem;
-
+    [Header("遊戲資訊")]
+    public PuzzleGameDataSo puzzleGameData;
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
 
@@ -25,7 +26,7 @@ public class SummerGameController : MonoBehaviour
     private void Start()
     {
         //遊戲一開始時啟動旁白
-        if (!narrationData.isPlayAwake)
+        if (!narrationData.isPlayAwake && !puzzleGameData.isFindPuzzle)
         {
             narrationData.isPlayAwake = true;
             //開啟對話

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CookieGameDataSo
   m_EditorClassIdentifier: 
   startCookieGame: 1
-  cookieGameOver: 0
+  cookieGameOver: 1
   isPlayAnim: 1
   findCookieCount: 3
   isFindCookie: 1

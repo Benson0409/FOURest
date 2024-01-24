@@ -46,8 +46,6 @@ public class ARController : MonoBehaviour
 
     [Header("神廟遊戲生成物體")]
     public GameObject doorClueObject1;
-    //public GameObject doorClueObject2;
-    //public GameObject doorClueObject3;
 
     [Header("音樂祭壇生成物體")]
     public GameObject musicAltarClue1;
@@ -123,6 +121,7 @@ public class ARController : MonoBehaviour
             //開啟旋轉功能
             //記錄旋轉角度
             //讓三個柱體的光柱可以聚再一起並將遊戲場景內的光柱調整
+            return;
         }
         //新增一個音符的AR生成
 
@@ -219,16 +218,19 @@ public class ARController : MonoBehaviour
                             case "field1":
                                 arTospawnObject = cookieObject1;
                                 cookieGameData.cookie1Field = true;
+                                cookieGameData.findCookieCount++;
                                 break;
 
                             case "field2":
                                 arTospawnObject = cookieObject2;
                                 cookieGameData.cookie2Field = true;
+                                cookieGameData.findCookieCount++;
                                 break;
 
                             case "field3":
                                 arTospawnObject = cookieObject3;
                                 cookieGameData.cookie3Field = true;
+                                cookieGameData.findCookieCount++;
                                 break;
                         }
 
@@ -317,6 +319,7 @@ public class ARController : MonoBehaviour
             //看要用btn來達成轉場效果還是要直接轉場
             //紀錄完成的變數因子
             colorGameData.isRotate = true;
+            colorGameData.startFilterGame = true;
             print("完成三色鏡裝置設置");
             hintCanvasGroup.alpha = 1;
             changeToPlayAnimWorld();

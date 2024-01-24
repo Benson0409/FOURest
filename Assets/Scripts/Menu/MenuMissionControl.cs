@@ -117,6 +117,7 @@ public class MenuMissionControl : MonoBehaviour
         //拼圖遊戲結束
         puzzleGameData.isPlayAnim = true;
         puzzleGameData.puzzleGameOver = true;
+        puzzleGameData.isFindPuzzle = true;
         //開始餅乾遊戲
         cookieGameData.startCookieGame = true;
         ReLoadGame();
@@ -138,6 +139,7 @@ public class MenuMissionControl : MonoBehaviour
     {
         //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
         ResetDataEventSo.RaiseEvent();
+        cookieGameData.cookieGameOver = true;
         GoToTempleGame();
         templeGameData.finishMusicGame = true;
         templeGameData.startMusicGame = true;
@@ -146,6 +148,7 @@ public class MenuMissionControl : MonoBehaviour
     }
     public void ReLoadGame()
     {
+        this.gameObject.SetActive(false);
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
     }

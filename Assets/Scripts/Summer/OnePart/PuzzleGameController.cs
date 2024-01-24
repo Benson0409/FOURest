@@ -39,6 +39,8 @@ public class PuzzleGameController : MonoBehaviour
     public GameObject Player;
     public GameObject TouchCanves;
     public GameObject puzzleStarPice;
+    //menu關閉
+    public GameObject menu;
 
     [Header("遊戲完成判斷")]
     public GridManager gridManager;
@@ -71,11 +73,10 @@ public class PuzzleGameController : MonoBehaviour
             puzzleStarPice.SetActive(true);
 
             //動畫觀看完成在進行對話
-            if (PlayerPrefs.GetInt("playAnim") == 1 && !puzzleGameData.isPlayAnim)
+            if (!puzzleGameData.isPlayAnim)
             {
                 //引導去調查草叢
                 summerGameController.openNarrationSystem(2);
-                PlayerPrefs.SetInt("playAnim", 0);
                 puzzleGameData.isPlayAnim = true;
             }
 
@@ -123,6 +124,8 @@ public class PuzzleGameController : MonoBehaviour
             player.SetActive(true);
             TouchCanves.SetActive(true);
 
+            //背包開啟
+            menu.SetActive(true);
             //儲存進度,開始下一關遊戲
             cookieGame.startGame();
 
@@ -291,7 +294,8 @@ public class PuzzleGameController : MonoBehaviour
             player.SetActive(false);
             TouchCanves.SetActive(false);
             detectObject.SetActive(false);
-
+            //將menu關閉
+            menu.SetActive(false);
             return;
         }
 
