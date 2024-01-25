@@ -6,16 +6,14 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     //文本資訊紀錄，讓每個文本的資訊都獨立
-    public DialogueDataSo dialogueData;
+    [HideInInspector] public DialogueDataSo dialogueData;
     //紀錄當前圖標設定
     private int icon;
-    [Header("水仙子動畫設定")]
-    public Animator waterAnim;
 
     [Header("結束遊戲設定")]
     public bool finishGame = false;
-    public GameObject gameOverCanva;
-    public SwitchScenes scenesCanvaPrefabs;
+    public static bool openGameOverCanva;
+
     [Header("UI 物件")]
     //停只顯示開啟對話之按鈕
     public bool btnClose;
@@ -366,9 +364,7 @@ public class DialogueManager : MonoBehaviour
         //遊戲結束
         if (finishGame)
         {
-            SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-            switchScenes.StartCoroutine(switchScenes.FadeOutInScenes());
-            gameOverCanva.SetActive(true);
+            openGameOverCanva = true;
         }
     }
 
@@ -510,12 +506,6 @@ public class DialogueManager : MonoBehaviour
 
     public void startTextBtn()
     {
-        //如果顏色關卡結束下次對話就把水仙子的動畫驅動
-        //讓對話開始後再開始水仙子的動畫
-        if (PlayerPrefs.GetInt("finishColorGame") == 1)
-        {
-            waterAnim.SetTrigger("Idle");
-        }
 
         startDialogue = true;
         btnClose = true;

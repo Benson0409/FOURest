@@ -727,6 +727,7 @@ MonoBehaviour:
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
   templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
   colorGameData: {fileID: 11400000, guid: 74448b4e53d1d4882819b71540c0451d, type: 2}
+  ResetDataEventSo: {fileID: 11400000, guid: d537f124a774f4f2ab7e46b948d572b9, type: 2}
   scenesCanvaPrefabs: {fileID: 7549067117288491870, guid: 428d78df39c0d4f6a880b9e5fb26c39f,
     type: 3}
 --- !u!1 &1447713073639617841

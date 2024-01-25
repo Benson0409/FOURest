@@ -23,6 +23,11 @@ public class MenuMissionControl : MonoBehaviour
 
     private void Update()
     {
+        SummerGameMissionTip();
+    }
+
+    private void SummerGameMissionTip()
+    {
         //成功召喚水仙子
         if (colorGameData.colorGameOver)
         {
@@ -152,4 +157,6 @@ public class MenuMissionControl : MonoBehaviour
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
     }
+
+
 }

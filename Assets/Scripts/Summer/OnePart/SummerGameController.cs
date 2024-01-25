@@ -22,7 +22,11 @@ public class SummerGameController : MonoBehaviour
     [Header("玩家初始位置")]
     public GameObject player;
     public Transform initialPlayerLocate;
-
+    [Header("水仙子動畫設定")]
+    public Animator waterAnim;
+    public DialogueDataSo waterDialogue;
+    [Header("結束遊戲設定")]
+    public GameObject gameOverCanva;
     private void Start()
     {
         //遊戲一開始時啟動旁白
@@ -33,7 +37,21 @@ public class SummerGameController : MonoBehaviour
             openNarrationSystem(0);
         }
     }
-
+    void Update()
+    {
+        //水仙子動畫播放
+        if (waterDialogue.currentIndex != 0)
+        {
+            waterAnim.SetTrigger("Idle");
+        }
+        //開啟結束結算畫面
+        if (DialogueManager.openGameOverCanva)
+        {
+            SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+            switchScenes.StartCoroutine(switchScenes.FadeOutInScenes());
+            gameOverCanva.SetActive(true);
+        }
+    }
     //開啟旁白
     /// <summary>
     /// 用來顯示旁白系統
