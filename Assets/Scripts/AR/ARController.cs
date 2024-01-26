@@ -9,6 +9,13 @@ using UnityEngine.SceneManagement;
 public class ARController : MonoBehaviour
 {
     private Camera mCamera;
+    [Header("新手關卡")]
+    public TeachingGameDataSo teachingGameData;
+    [Header("新手關卡物件")]
+    public GameObject TeachingPanel;
+    public Text TeachingTitle;
+    public GameObject teachingDoor;
+
     [Header("遊戲數據")]
     public CookieGameDataSo cookieGameData;
     public TempleGameDataSo templeGameData;
@@ -144,6 +151,7 @@ public class ARController : MonoBehaviour
                 switch (PlayerPrefs.GetString("doorClue"))
                 {
                     case "doorClue1":
+
                         arTospawnObject = doorClueObject1;
                         break;
                 }
@@ -174,6 +182,14 @@ public class ARController : MonoBehaviour
             }
             return;
         }
+        if (teachingGameData.isARPick)
+        {
+            print("牆壁偵測");
+            wallDetect = true;
+            TeachingPanel.SetActive(true);
+            TeachingTitle.text = "AR控制介紹,生成後點擊目標";
+            arTospawnObject = teachingDoor;
+        }
 
     }
 
@@ -183,7 +199,7 @@ public class ARController : MonoBehaviour
     {
 
         //如果條件都符合就生成物體
-        if (placementPoseValid && spawnObject == null && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (placementPoseValid && spawnObject == null && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TeachingPanel.activeInHierarchy)
         {
             arSpawnObject();
             print("生成");
@@ -243,6 +259,12 @@ public class ARController : MonoBehaviour
 
                         // 開啟任務完成的面板，並按下BTN回到主世界
                         findClueUI.SetActive(true);
+                    }
+                    if (hit.transform.gameObject.tag == "door")
+                    {
+                        teachingGameData.isTeachingGameOver = true;
+                        //前進夏天關卡
+                        backToWorld();
                     }
 
                 }
@@ -587,6 +609,12 @@ public class ARController : MonoBehaviour
         {
 
             switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
+            return;
+        }
+        //代表是從練習關卡來的
+        if (!teachingGameData.isTeachingGameOver && !cookieGameData.startCookieGame)
+        {
+            switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TeachingGame"));
             return;
         }
 

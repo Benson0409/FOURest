@@ -25,6 +25,8 @@ TagManager:
   - crystalBall
   - stair
   - water
+  - doorKey
+  - isMoveTarget
   layers:
   - Default
   - TransparentFX

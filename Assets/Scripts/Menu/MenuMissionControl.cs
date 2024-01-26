@@ -7,7 +7,7 @@ public class MenuMissionControl : MonoBehaviour
 {
     //來顯示當前的任務目標是什麼 讓他們沒有看的對話也可以知道
     [Header("任務文字")]
-    public Text misiionText;
+    public Text missionText;
 
     [Header("關卡判斷")]
     public PuzzleGameDataSo puzzleGameData;
@@ -31,14 +31,14 @@ public class MenuMissionControl : MonoBehaviour
         //成功召喚水仙子
         if (colorGameData.colorGameOver)
         {
-            misiionText.text = "尋找水仙子並與它對話";
+            missionText.text = "尋找水仙子並與它對話";
             return;
         }
 
         //找到水晶球
         if (colorGameData.isFindCrystalBall)
         {
-            misiionText.text = "尋找莉莉絲並與它對話";
+            missionText.text = "尋找莉莉絲並與它對話";
             return;
 
         }
@@ -46,14 +46,14 @@ public class MenuMissionControl : MonoBehaviour
         //使用調色盤
         if (colorGameData.startFindCrystalBall)
         {
-            misiionText.text = "點擊水晶球完成收集";
+            missionText.text = "點擊水晶球完成收集";
             return;
         }
 
         //色彩分析器完成
         if (colorGameData.isRotate)
         {
-            misiionText.text = "前往色彩分析器，尋找藍色藥水、黃色圓球、紅色火焰";
+            missionText.text = "前往色彩分析器，尋找藍色藥水、黃色圓球、紅色火焰";
             return;
 
         }
@@ -61,32 +61,32 @@ public class MenuMissionControl : MonoBehaviour
         //神廟遊戲結束
         if (colorGameData.startColorGame)
         {
-            misiionText.text = "前往三稜鏡，並將三者都轉於正確位置";
+            missionText.text = "前往三稜鏡，並將三者都轉於正確位置";
             return;
         }
 
         if (templeGameData.finishMusicGame)
         {
-            misiionText.text = "到音樂神殿外尋找莉莉絲";
+            missionText.text = "到音樂神殿外尋找莉莉絲";
             return;
         }
 
         if (templeGameData.startMusicGame)
         {
-            misiionText.text = "找尋牆壁附近線索，開啟音樂寶箱";
+            missionText.text = "找尋牆壁附近線索，開啟音樂寶箱";
             return;
         }
 
         if (templeGameData.startDoorGame)
         {
-            misiionText.text = "找尋附近線索，破解大門密碼";
+            missionText.text = "找尋附近線索，破解大門密碼";
             return;
         }
 
         //餅乾遊戲結束
         if (cookieGameData.cookieGameOver)
         {
-            misiionText.text = "走上樓梯到達神廟，找尋音樂樂譜";
+            missionText.text = "走上樓梯到達神廟，找尋音樂樂譜";
             return;
         }
 
@@ -96,10 +96,10 @@ public class MenuMissionControl : MonoBehaviour
             //代表餅乾已經找齊，已經用餅乾呼喚出莉莉絲，這時候可以將背包系統關閉
             if (cookieGameData.findCookieCount == 3)
             {
-                misiionText.text = "找尋莉莉絲，與他進行對話";
+                missionText.text = "找尋莉莉絲，與他進行對話";
                 return;
             }
-            misiionText.text = "前往告示牌指引方向，找尋草叢中餅乾碎片";
+            missionText.text = "前往告示牌指引方向，找尋草叢中餅乾碎片";
             return;
         }
 
@@ -107,11 +107,11 @@ public class MenuMissionControl : MonoBehaviour
         //並紀錄拼圖碎片數量
         if (puzzleGameData.isFindPuzzle)
         {
-            misiionText.text = "收集告示牌拼圖碎片，收集完成回到告示牌進行修復";
+            missionText.text = "收集告示牌拼圖碎片，收集完成回到告示牌進行修復";
         }
         else
         {
-            misiionText.text = "前往告示牌接下第一個任務";
+            missionText.text = "前往告示牌接下第一個任務";
         }
     }
 

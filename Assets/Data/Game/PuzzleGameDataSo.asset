@@ -15,5 +15,5 @@ MonoBehaviour:
   isFindPuzzle: 0
   puzzleState: 000000000000
   puzzleClipCount: 0
-  puzzleGameOver: 1
-  isPlayAnim: 1
+  puzzleGameOver: 0
+  isPlayAnim: 0

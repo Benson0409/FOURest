@@ -218,7 +218,15 @@ public class DialogueManager : MonoBehaviour
                 nameText.text = "Season";
                 index++;
                 break;
+            case 'D':
+                nameBg.SetActive(true);
+                nameImage.sprite = seasonSprite;
 
+                icon = 4;
+                dialogueData.icon = icon;
+                nameText.text = "OldMan";
+                index++;
+                break;
 
 
             //判斷任務目前執行狀況，如果任務完成我們才把繼續進行對話，如果沒有的話我們就重複說這句話
@@ -497,6 +505,11 @@ public class DialogueManager : MonoBehaviour
 
             case 3:
                 nameText.text = "Season";
+                nameBg.SetActive(true);
+                nameImage.sprite = seasonSprite;
+                break;
+            case 4:
+                nameText.text = "OldMan";
                 nameBg.SetActive(true);
                 nameImage.sprite = seasonSprite;
                 break;

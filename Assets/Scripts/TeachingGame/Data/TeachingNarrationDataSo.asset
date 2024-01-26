@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TeachingNarrationDataSo
   m_EditorClassIdentifier: 
   isPlayAwake: 0
-  narrationTextAsset: []
+  narrationTextAsset:
+  - {fileID: 4900000, guid: 6a454060d4f9f48f584f65adbd6f7a2f, type: 3}

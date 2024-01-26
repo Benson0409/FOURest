@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFirst: 0
   isMove: 0
+  isMoveTip: 0
   isView: 0
+  isViewTip: 0
   isBtnActive: 0
+  isBtnTip: 0
   isPick: 0
+  isDetect: 0
+  isARPick: 0
   isTeachingGameOver: 0
