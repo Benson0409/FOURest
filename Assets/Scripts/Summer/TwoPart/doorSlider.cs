@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class doorSlider : MonoBehaviour
@@ -13,7 +14,6 @@ public class doorSlider : MonoBehaviour
 
     [Header("旋轉圖片")]
     public GameObject secretImage;
-
     [Header("旋轉控制")]
     public float rotationSpeed;
 
@@ -39,15 +39,45 @@ public class doorSlider : MonoBehaviour
     public bool onScreen = false;
 
     public static bool openDoorGame = false;
-
-
-
+    Vector3 touchPos;
+    float angleOffest;
     //判斷大門的密碼
     //可以設定多組密碼
     //用secretImage的rotation.z 來判斷是否指導正確的密碼
     //先假設密碼為MUSE 0 270 90 270
     //D B A C
     //ADCD
+    void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+
+            Touch touch = Input.GetTouch(0);
+            touchPos = Input.GetTouch(0).position;
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    onScreen = true;
+                    Vector3 dir = touchPos - secretImage.transform.position;
+                    angleOffest = (Mathf.Atan2(secretImage.transform.right.y, secretImage.transform.right.x) - Mathf.Atan2(dir.y, dir.x)) * Mathf.Rad2Deg;
+                    break;
+
+                case TouchPhase.Moved:
+                    Vector3 vec = touchPos - secretImage.transform.position;
+                    float angle = Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg;
+                    secretImage.transform.eulerAngles = new Vector3(0, 0, angle + angleOffest);
+                    break;
+
+                case TouchPhase.Ended:
+                    onScreen = false;
+                    break;
+            }
+        }
+        if (!onScreen)
+        {
+            doorSecret();
+        }
+    }
     public void doorSecret()
     {
         //((secretRotation <= 5 && secretRotation >= 0) || (secretRotation - 360 >= -5 && secretRotation - 360 <= 0)) && !onScreen
@@ -57,11 +87,8 @@ public class doorSlider : MonoBehaviour
 
         if (secretRotation <= 95 && secretRotation >= 85 && !onScreen || secret1)
         {
-
-
             secret1 = true;
             MImage.SetActive(true);
-
         }
         else
         {
@@ -123,25 +150,26 @@ public class doorSlider : MonoBehaviour
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
     }
+    // public void OnDrag()
+    // {
 
-    public void OnDrag()
-    {
-        if (Input.touchCount > 0)
-        {
-            Vector3 touchPos;
-            onScreen = true;
+    //     if (Input.touchCount > 0)
+    //     {
 
-            touchPos = Input.GetTouch(0).position; // 使用第一個觸控點的位置
-            Vector2 dir = touchPos - secretImage.transform.position;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            angle = (angle < 0) ? (angle + 360) : angle;
-            Quaternion r = Quaternion.AngleAxis(angle, Vector3.forward);
-            secretImage.transform.rotation = r;
-        }
-    }
-    public void OnDrop()
-    {
-        onScreen = false;
-        doorSecret();
-    }
+    //         Vector3 touchPos;
+    //         onScreen = true;
+    //         touchPos = Input.GetTouch(0).position; // 使用第一個觸控點的位置
+    //         Vector2 dir = touchPos - secretImage.transform.position;
+    //         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    //         // 计算当前旋转角度和初始触摸时的角度差
+    //         //angle = (angle < 0) ? (angle + 360) : angle;
+    //         Quaternion r = Quaternion.AngleAxis(angle, Vector3.forward);
+    //         secretImage.transform.rotation = r;
+    //     }
+    // }
+    // public void OnDrop()
+    // {
+    //     onScreen = false;
+    //     doorSecret();
+    // }
 }
