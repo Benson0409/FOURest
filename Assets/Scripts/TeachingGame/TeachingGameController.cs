@@ -129,14 +129,6 @@ public class TeachingGameController : MonoBehaviour
             missionText.text = "靠近並點擊物品即可收集";
             if (collider.gameObject.name == "Key")
             {
-                if (!teachingGameData.isDetect)
-                {
-                    teachingPanel.SetActive(true);
-                    teachingTitle.text = "物品收集介紹";
-                    teachingGameData.isDetect = true;
-                    doorKey.tag = "doorKey";
-                    return;
-                }
                 //手指觸控
                 foreach (Touch touch in Input.touches)
                 {

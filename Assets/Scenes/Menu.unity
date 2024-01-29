@@ -1914,7 +1914,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 615897952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1246926027}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: TeachingGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &595681803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,7 +2181,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 615897952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1246926027}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &629092180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2760,7 +2784,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 615897952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1246926027}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: StartNewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &888418385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3621,6 +3657,7 @@ GameObject:
   - component: {fileID: 1246926024}
   - component: {fileID: 1246926023}
   - component: {fileID: 1246926022}
+  - component: {fileID: 1246926027}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -3728,6 +3765,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1246926027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246926021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9d5ce88d3b64b1da32698e4c1ab8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenesCanvaPrefabs: {fileID: 7549067117288491870, guid: 428d78df39c0d4f6a880b9e5fb26c39f,
+    type: 3}
+  teachingGameData: {fileID: 11400000, guid: d132349b0508246fb95b09bda9a2d422, type: 2}
+  mainMenuGameData: {fileID: 11400000, guid: 184478e759a754d388e7cae57045f790, type: 2}
 --- !u!1 &1252479363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5178,7 +5231,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 615897952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1246926027}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1615573232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6191,7 +6256,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 11
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1787234405}
   m_Follow: {fileID: 0}
@@ -6345,7 +6410,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 0.5
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []

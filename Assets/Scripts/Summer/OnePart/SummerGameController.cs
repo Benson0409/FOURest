@@ -12,6 +12,7 @@ public class SummerGameController : MonoBehaviour
     public GameObject narrationPanel;
     public GameObject narrationSystem;
     [Header("遊戲資訊")]
+    public MainMenuGameDataSo mainMenuGameData;
     public PuzzleGameDataSo puzzleGameData;
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
@@ -27,10 +28,17 @@ public class SummerGameController : MonoBehaviour
     public DialogueDataSo waterDialogue;
     [Header("結束遊戲設定")]
     public GameObject gameOverCanva;
+    void Awake()
+    {
+        if (mainMenuGameData.creatNewGame)
+        {
+            clearGameInformation();
+        }
+    }
     private void Start()
     {
         //遊戲一開始時啟動旁白
-        if (!narrationData.isPlayAwake && !puzzleGameData.isFindPuzzle)
+        if (!narrationData.isPlayAwake && !puzzleGameData.isFindPuzzle && !mainMenuGameData.creatNewGame)
         {
             narrationData.isPlayAwake = true;
             //開啟對話
@@ -69,7 +77,7 @@ public class SummerGameController : MonoBehaviour
     //將資料清除，並將人物移動到最初始的位置
     public void clearGameInformation()
     {
-
+        mainMenuGameData.creatNewGame = false;
         //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
         ResetDataEventSo.RaiseEvent();
 
