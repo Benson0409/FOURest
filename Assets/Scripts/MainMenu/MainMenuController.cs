@@ -11,35 +11,50 @@ public class MainMenuController : MonoBehaviour
     public TeachingGameDataSo teachingGameData;
     [Header("遊戲數據")]
     public MainMenuGameDataSo mainMenuGameData;
+
     //創建新遊戲
     public void StartNewGame()
     {
-        mainMenuGameData.creatNewGame = true;
-        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
-    }
-    //直接進入遊戲
-    public void StartGame()
-    {
-        print("開始遊戲");
-        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+        SettingGameData();
+        LoadGameScene("TestScene");
     }
 
     //進入新手訓練關卡
     public void TeachingGame()
     {
         print("開始教學關卡");
-        mainMenuGameData.creatNewGame = true;
+        SettingGameData();
         ClearTeachingGameData();
-        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TeachingGame"));
+        LoadGameScene("TeachingGame");
     }
+
+    //遊玩先前的遊戲紀錄
+    public void StartGame()
+    {
+        print("開始遊戲");
+        LoadGameScene("TestScene");
+    }
+
+    //離開遊戲
     public void ExitGame()
     {
         print("退出遊戲");
         Application.Quit();
     }
+
+    private void SettingGameData()
+    {
+        mainMenuGameData.creatNewGame = true;
+        mainMenuGameData.isPlaySave = true;
+        PlayerPrefs.DeleteAll();
+    }
+
+    private void LoadGameScene(string Scene)
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes(Scene));
+    }
+
     private void ClearTeachingGameData()
     {
         teachingGameData.isFirst = false;
@@ -55,6 +70,5 @@ public class MainMenuController : MonoBehaviour
         teachingGameData.isTeachingGameOver = false;
     }
 
-    //離開遊戲
 
 }

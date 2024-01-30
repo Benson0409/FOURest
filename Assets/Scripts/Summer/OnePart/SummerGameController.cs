@@ -32,7 +32,7 @@ public class SummerGameController : MonoBehaviour
     {
         if (mainMenuGameData.creatNewGame)
         {
-            clearGameInformation();
+            CreatNewGame();
         }
     }
     private void Start()
@@ -74,10 +74,15 @@ public class SummerGameController : MonoBehaviour
         narrationPanel.SetActive(true);
     }
 
+    public void BackToMainMenu()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("MainMenu"));
+    }
+
     //將資料清除，並將人物移動到最初始的位置
     public void clearGameInformation()
     {
-        mainMenuGameData.creatNewGame = false;
         //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
         ResetDataEventSo.RaiseEvent();
 
@@ -93,5 +98,16 @@ public class SummerGameController : MonoBehaviour
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
         //print("資料重開");
     }
+    public void CreatNewGame()
+    {
+        mainMenuGameData.creatNewGame = false;
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
 
+        narrationData.isPlayAwake = false;
+
+        player.transform.position = initialPlayerLocate.position;
+        player.transform.rotation = initialPlayerLocate.rotation;
+
+    }
 }

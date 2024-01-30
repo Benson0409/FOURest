@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public narrationSystem narrationSystem;
     private float speed;
 
+    //如果教學關卡提示出現後玩家不能移動
+    [HideInInspector] public static bool uiDisplay;
 
     //----------Input system---------
     //input system 的利用
@@ -103,7 +105,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (dialogueManager.startDialogue || narrationSystem.startDialogue)
+        if (dialogueManager.startDialogue || narrationSystem.startDialogue || uiDisplay)
         {
             playerSpeed = 0;
         }

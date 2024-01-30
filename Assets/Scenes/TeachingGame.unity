@@ -3652,13 +3652,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4103267423849703784}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 943891119}
+        m_TargetAssemblyTypeName: TeachingGameController, Assembly-CSharp
+        m_MethodName: BackMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6362,7 +6362,7 @@ PrefabInstance:
     - target: {fileID: 1620487819163246950, guid: 37e1dcf452dad4485b1480a421dca238,
         type: 3}
       propertyPath: m_Name
-      value: TeachingCanvas
+      value: TeachingPanelCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 2110599043517733838, guid: 37e1dcf452dad4485b1480a421dca238,
         type: 3}

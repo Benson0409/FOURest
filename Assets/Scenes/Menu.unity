@@ -3595,7 +3595,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1246926022}
         m_TargetAssemblyTypeName: CameraTransController, Assembly-CSharp
-        m_MethodName: UpdateCamera
+        m_MethodName: CameraChoese
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1797109931}
@@ -3678,6 +3678,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: {fileID: 1889329968}
+  mainMenuGameData: {fileID: 11400000, guid: 184478e759a754d388e7cae57045f790, type: 2}
+  creatGameCamera: {fileID: 1759552100}
 --- !u!114 &1246926023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4624,7 +4626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410176359}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.089131676, y: -0.1841413, z: 0.01676991, w: 0.9787065}
+  m_LocalRotation: {x: 0.08913168, y: -0.18414125, z: 0.016769908, w: 0.9787065}
   m_LocalPosition: {x: -1.39, y: 7.17, z: 2.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -21,7 +21,7 @@ public class PuzzleGameController : MonoBehaviour
 
     [Header("變量控制")]
     public PuzzleGameDataSo puzzleGameData;
-    bool findPuzzle = false;
+    private bool findPuzzle;
     private int targetPuzzleCount = 6;
     public int puzzleCount = 0;
 
@@ -65,8 +65,6 @@ public class PuzzleGameController : MonoBehaviour
         summerGameController = GetComponent<SummerGameController>();
         cookieGame = GetComponent<cookieGameController>();
 
-        ReadPuzzleGameData();
-
         if (puzzleGameData.puzzleGameOver)
         {
             //星星拼圖顯示
@@ -79,9 +77,6 @@ public class PuzzleGameController : MonoBehaviour
                 summerGameController.openNarrationSystem(2);
                 puzzleGameData.isPlayAnim = true;
             }
-
-
-
         }
 
 
@@ -217,6 +212,7 @@ public class PuzzleGameController : MonoBehaviour
                                             puzzleObject = collider.gameObject;
                                             puzzleObject.SetActive(false);
                                             puzzleCount++;
+                                            puzzleGameData.puzzleClipCount++;
                                             return;
                                         }
                                     }
@@ -270,7 +266,7 @@ public class PuzzleGameController : MonoBehaviour
             summerGameController.openNarrationSystem(1);
             //變數控制
             findPuzzle = true;
-
+            puzzleGameData.isFindPuzzle = findPuzzle;
 
             //將拼圖碎片顯示
             for (int i = 0; i < puzzleClue.Length; i++)
@@ -310,11 +306,7 @@ public class PuzzleGameController : MonoBehaviour
     }
 
 
-    private void ReadPuzzleGameData()
-    {
-        findPuzzle = puzzleGameData.isFindPuzzle;
-        puzzleCount = puzzleGameData.puzzleClipCount;
-    }
+
     private void ResetPuzzleGameData()
     {
         isClear = true;

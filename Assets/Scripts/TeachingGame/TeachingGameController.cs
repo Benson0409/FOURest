@@ -82,6 +82,14 @@ public class TeachingGameController : MonoBehaviour
 
     void Update()
     {
+        if (teachingPanel.activeInHierarchy)
+        {
+            PlayerController.uiDisplay = true;
+        }
+        else
+        {
+            PlayerController.uiDisplay = false;
+        }
         if (teachingGameData.isPick && !teachingGameData.isTeachingGameOver)
         {
             missionText.text = "前去解鎖大門";
@@ -251,6 +259,12 @@ public class TeachingGameController : MonoBehaviour
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+    }
+
+    public void BackMainMenu()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("MainMenu"));
     }
 
 }
