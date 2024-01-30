@@ -30,6 +30,7 @@ public class SummerGameController : MonoBehaviour
     public GameObject gameOverCanva;
     void Awake()
     {
+        Application.targetFrameRate = 300;
         if (mainMenuGameData.creatNewGame)
         {
             CreatNewGame();
@@ -77,7 +78,7 @@ public class SummerGameController : MonoBehaviour
     public void BackToMainMenu()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("MainMenu"));
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Menu"));
     }
 
     //將資料清除，並將人物移動到最初始的位置

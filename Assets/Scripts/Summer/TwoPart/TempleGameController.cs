@@ -226,7 +226,7 @@ public class TempleGameController : MonoBehaviour
                         }
                     }
                 }
-                if (startDoorGame)
+                else if (startDoorGame)
                 {
                     //開啟第一部分任務 -> 開啟神廟大門
                     if (collider.transform.tag == "door")
