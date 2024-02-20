@@ -225,6 +225,11 @@ public class TempleGameController : MonoBehaviour
                             return;
                         }
                     }
+                    else
+                    {
+                        //遠離調查物後,將他變成false,靠近在變為true
+                        isClue = false;
+                    }
                 }
                 else if (startDoorGame)
                 {
@@ -264,11 +269,15 @@ public class TempleGameController : MonoBehaviour
                             return;
                         }
                     }
+                    else
+                    {
+                        //遠離調查物後,將他變成false,靠近在變為true
+                        isClue = false;
+                    }
                 }
             }
         }
-        //遠離調查物後,將他變成false,靠近在變為true
-        isClue = false;
+
         DetectObject.SetActive(false);
     }
 
