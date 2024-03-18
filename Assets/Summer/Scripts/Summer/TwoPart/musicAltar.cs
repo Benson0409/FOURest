@@ -109,8 +109,111 @@ public class musicAltar : MonoBehaviour
         musicName = "Do";
         //播放Fa的聲音
         print("Do");
+    }
+    public void playRe()
+    {
 
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
 
+        if (lastmusicName == "")
+        {
+            currentName = "Re";
+            lastmusicName = "Re";
+        }
+        else
+        {
+            currentName = lastmusicName + " Re";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "Re";
+        //播放Fa的聲音
+        print("Re");
+    }
+    public void playMi()
+    {
+
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "Mi";
+            lastmusicName = "Mi";
+        }
+        else
+        {
+            currentName = lastmusicName + " Mi";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "Mi";
+        //播放Fa的聲音
+        print("Mi");
+    }
+    public void playFa()
+    {
+
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "Fa";
+            lastmusicName = "Fa";
+        }
+        else
+        {
+            currentName = lastmusicName + " Fa";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "Fa";
+        //播放Fa的聲音
+        print("Fa");
     }
     public void playSo()
     {
@@ -253,7 +356,146 @@ public class musicAltar : MonoBehaviour
 
 
     }
+    public void play_Do()
+    {
 
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "_Do";
+            lastmusicName = "_Do";
+        }
+        else
+        {
+            currentName = lastmusicName + " _Do";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "_Do";
+        //播放Fa的聲音
+        print("_Do");
+    }
+    public void play__Do()
+    {
+
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "#Do";
+            lastmusicName = "#Do";
+        }
+        else
+        {
+            currentName = lastmusicName + " #Do";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "#Do";
+        //播放Fa的聲音
+        print("#Do");
+    }
+    public void play__Fa()
+    {
+
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "#Fa";
+            lastmusicName = "#Fa";
+        }
+        else
+        {
+            currentName = lastmusicName + " #Fa";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "#Fa";
+        //播放Fa的聲音
+        print("#Fa");
+    }
+    public void play__Si()
+    {
+
+        musicInt++;
+        if (musicInt > 7)
+        {
+            musicInt = 1;
+            lastmusicName = "";
+            musicText.text = "";
+        }
+
+        if (lastmusicName == "")
+        {
+            currentName = "bSi";
+            lastmusicName = "bSi";
+        }
+        else
+        {
+            currentName = lastmusicName + " bSi";
+            lastmusicName = currentName;
+        }
+
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
+
+        musicName = "bSi";
+        //播放Fa的聲音
+        print("bSi");
+    }
     private void PlayAnim()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
