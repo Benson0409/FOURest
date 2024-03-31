@@ -22,7 +22,7 @@ public class MoveScopeController : MonoBehaviour
     public GameObject colorScope;
     [Header("最終區域")]
     public GameObject finalScope;
-    public GameObject finalScope1;
+
     private void Update()
     {
         //成功召喚水仙子
@@ -30,7 +30,6 @@ public class MoveScopeController : MonoBehaviour
         {
             colorScope.SetActive(true);
             finalScope.SetActive(false);
-            finalScope1.SetActive(false);
         }
 
         //神廟遊戲結束

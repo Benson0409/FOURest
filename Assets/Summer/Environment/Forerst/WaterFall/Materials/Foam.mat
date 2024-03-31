@@ -83,7 +83,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.5
+    - _Alpha: 0.66
     - _AlphaClip: 0
     - _Blend: 0
     - _BottomBrightness: 0.2
@@ -108,7 +108,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RippleAmount: 2.8
+    - _RippleAmount: 1.82
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -117,7 +117,7 @@ Material:
     - _Test: 0
     - _VertexOffsetAmount: -0.15
     - _VoroniSpeed: 3.5
-    - _VoronoiScale: 11
+    - _VoronoiScale: 7.05
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
