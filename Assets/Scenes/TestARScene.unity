@@ -1265,17 +1265,17 @@ MonoBehaviour:
   squareImage: {fileID: 21300000, guid: 1e70b158c1c464dfabcf697a0131ccaa, type: 3}
   circleImage: {fileID: 21300000, guid: bfa6ec02536514967ae231f217273059, type: 3}
   triangleImage: {fileID: 21300000, guid: 3a64f2d6bf47c4ed69df153ae32713df, type: 3}
-  cookieObject1: {fileID: 2795295407185289372, guid: 0ae3e450d43304e7eaf9465fb006de50,
+  cookieObject1: {fileID: 7932711546803070916, guid: fde62b384174b4e4697621a31664a254,
     type: 3}
-  cookieObject2: {fileID: 4403743149061787990, guid: f29811b8b5805458e95941ab1a3b30d9,
+  cookieObject2: {fileID: 2606142918528152054, guid: f33e9007c2b884a53a217c4c72a2b630,
     type: 3}
-  cookieObject3: {fileID: 621354750043305121, guid: a5f5d23e18c9343f3826ab55e6c0a158,
+  cookieObject3: {fileID: 1977417836299153002, guid: 44441079457404d9b9d0e1b0887989f3,
     type: 3}
   doorClueObject1: {fileID: 5117386988676614414, guid: 8f6ef29b91a3b41bc86475245dba4aa0,
     type: 3}
   musicAltarClue1: {fileID: 5247463715212376144, guid: 887b695af95f24cc3a1779698bd5648e,
     type: 3}
-  colorMirror: {fileID: 4638811684953987855, guid: b257439d9319c4b27b510d9b34cfe957,
+  colorMirror: {fileID: 7180619167204470546, guid: 401b29b9b259640fba77873550481fc9,
     type: 3}
   placementIndicator: {fileID: 799251008}
   rotataSpeed: 3

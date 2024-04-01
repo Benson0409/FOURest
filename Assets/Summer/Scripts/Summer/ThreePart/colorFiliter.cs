@@ -116,7 +116,7 @@ public class colorFiliter : MonoBehaviour
     IEnumerator StartCountdown()
     {
         // 每一秒減去時間
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         colorGameData.startFindCrystalBall = true;
         this.gameObject.SetActive(false);
         touchCanva.SetActive(true);
