@@ -14,7 +14,7 @@ public class ARController : MonoBehaviour
     [Header("新手關卡物件")]
     public GameObject TeachingPanel;
     public Text TeachingTitle;
-    public GameObject teachingDoor;
+    public GameObject teachingCrystal;
 
     [Header("遊戲數據")]
     public CookieGameDataSo cookieGameData;
@@ -185,10 +185,10 @@ public class ARController : MonoBehaviour
         if (teachingGameData.isARPick)
         {
             print("牆壁偵測");
-            wallDetect = true;
+            planeDetect = true;
             TeachingPanel.SetActive(true);
             TeachingTitle.text = "AR控制介紹,生成後點擊目標";
-            arTospawnObject = teachingDoor;
+            arTospawnObject = teachingCrystal;
         }
 
     }
@@ -262,7 +262,7 @@ public class ARController : MonoBehaviour
                     }
                     if (hit.transform.gameObject.tag == "door")
                     {
-                        teachingGameData.isTeachingGameOver = true;
+                        //teachingGameData.isTeachingGameOver = true;
                         //前進夏天關卡
                         backToWorld();
                     }

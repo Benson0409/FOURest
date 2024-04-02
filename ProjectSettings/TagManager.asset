@@ -27,6 +27,8 @@ TagManager:
   - water
   - doorKey
   - isMoveTarget
+  - magnifier
+  - crystal
   layers:
   - Default
   - TransparentFX

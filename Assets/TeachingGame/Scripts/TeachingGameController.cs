@@ -30,8 +30,9 @@ public class TeachingGameController : MonoBehaviour
     public GameObject dialogueBtn;
     //利用新手訓練的按鈕來觸發
     [HideInInspector] public bool isStartDialogue;
+    public GameObject findCrystalBtn;
+    public GameObject magnifier;
     public GameObject openDoorBtn;
-    public GameObject doorKey;
 
     [Header("旁白系統")]
     public narrationSystem narration;
@@ -60,7 +61,7 @@ public class TeachingGameController : MonoBehaviour
         }
         if (teachingGameData.isPick)
         {
-            doorKey.SetActive(false);
+            magnifier.SetActive(false);
         }
         if (teachingGameData.isViewTip)
         {
@@ -94,16 +95,42 @@ public class TeachingGameController : MonoBehaviour
         // {
         //     missionText.text = "前去解鎖大門";
         // }
+        GoToNewWorld();
         //偵測物體
-        DetectObject();
+        FindCrystalAR();
         //教學關卡
         TeachingBtn();
         TeachingView();
         TeachingMove();
     }
-
-    private void DetectObject()
+    private void GoToNewWorld()
     {
+        //查看完水晶要在回到世界來讓玩家前往開啟大門
+        Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
+
+        //如果player的狀態屬於 false 就不執行偵測的動作 
+        if (player.activeInHierarchy == false)
+        {
+            return;
+        }
+
+        foreach (Collider collider in colliders)
+        {
+            if (teachingGameData.isARPick)
+            {
+                if (collider.gameObject.tag == "door")
+                {
+                    openDoorBtn.SetActive(true);
+                    return;
+                }
+
+            }
+            openDoorBtn.SetActive(false);
+        }
+    }
+    private void FindCrystalAR()
+    {
+        //查看完水晶要在回到世界來讓玩家前往開啟大門
         Collider[] colliders = Physics.OverlapSphere(player.transform.position, radius);
 
         //如果player的狀態屬於 false 就不執行偵測的動作 
@@ -117,15 +144,14 @@ public class TeachingGameController : MonoBehaviour
             TeachingPick(collider);
             if (teachingGameData.isPick)
             {
-
-                if (collider.gameObject.tag == "door")
+                if (collider.gameObject.tag == "crystal")
                 {
-                    openDoorBtn.SetActive(true);
+                    findCrystalBtn.SetActive(true);
                     return;
                 }
 
             }
-            openDoorBtn.SetActive(false);
+            findCrystalBtn.SetActive(false);
         }
     }
 
@@ -135,7 +161,7 @@ public class TeachingGameController : MonoBehaviour
         if (teachingGameData.isBtnActive && !teachingGameData.isPick)
         {
             // missionText.text = "靠近並點擊物品即可收集";
-            if (collider.gameObject.name == "Key")
+            if (collider.gameObject.name == "magnifier")
             {
                 //手指觸控
                 foreach (Touch touch in Input.touches)
@@ -153,7 +179,7 @@ public class TeachingGameController : MonoBehaviour
 
                                 if (Physics.Raycast(ray, out hit))
                                 {
-                                    if (collider.gameObject.tag == "doorKey")
+                                    if (collider.gameObject.tag == "magnifier")
                                     {
                                         GameObject doorKey = collider.gameObject;
                                         doorKey.SetActive(false);
@@ -247,8 +273,16 @@ public class TeachingGameController : MonoBehaviour
     {
         isStartDialogue = true;
     }
+
+    public void OpenDoorBtn()
+    {
+        //開啟AR生成大門
+        teachingGameData.isTeachingGameOver = true;
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+    }
     //去開啟AR大門
-    public void openARDoor()
+    public void FindCrystalBtn()
     {
         //開啟AR生成大門
         teachingGameData.isARPick = true;

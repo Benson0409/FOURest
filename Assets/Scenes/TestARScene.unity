@@ -1243,7 +1243,7 @@ MonoBehaviour:
   teachingGameData: {fileID: 11400000, guid: d132349b0508246fb95b09bda9a2d422, type: 2}
   TeachingPanel: {fileID: 362808547}
   TeachingTitle: {fileID: 362808548}
-  teachingDoor: {fileID: 1173732309061458148, guid: 9f80bd7c0b0764229827869d4c0efc53,
+  teachingCrystal: {fileID: 5159029144943198063, guid: 45bb6e7f38c9247218ec1e63aff80597,
     type: 3}
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
   templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
