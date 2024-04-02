@@ -10,7 +10,7 @@ public class PlayerPositionController : MonoBehaviour
 
     private void Awake()
     {
-        
+
         if (PlayerPrefs.GetInt("PlayerIsSave") == 1)
         {
             LoadPlayerPos();
@@ -66,40 +66,4 @@ public class PlayerPositionController : MonoBehaviour
         );
     }
 
-    //public void SaveCamPos()
-    //{
-    //    isSave = true;
-    //    //紀錄移動過後的位置
-    //    PlayerPrefs.SetFloat("camPosX", cam.transform.position.x);
-    //    PlayerPrefs.SetFloat("camPosY", cam.transform.position.y);
-    //    PlayerPrefs.SetFloat("camPosZ", cam.transform.position.z);
-
-    //    //紀錄旋轉的角度
-    //    PlayerPrefs.SetFloat("camRotaX", cam.transform.rotation.x);
-    //    PlayerPrefs.SetFloat("camRotaY", cam.transform.rotation.y);
-    //    PlayerPrefs.SetFloat("camRotaZ", cam.transform.rotation.z);
-
-    //    PlayerPrefs.Save();
-
-    //}
-
-    //public void LoadCamPos()
-    //{
-    //    //讀取player位置
-    //    cam.transform.position =
-    //        new Vector3(
-    //            PlayerPrefs.GetFloat("camPosX"),
-    //            PlayerPrefs.GetFloat("camPosY"),
-    //            PlayerPrefs.GetFloat("camPosZ")
-    //        );
-
-    //    //讀取player旋轉角度
-    //    cam.transform.rotation = Quaternion.Euler(
-    //        new Vector3(
-    //           PlayerPrefs.GetFloat("camRotaX"),
-    //           PlayerPrefs.GetFloat("camRotaY"), 
-    //           PlayerPrefs.GetFloat("camRotaZ")
-    //        )
-    //    );
-    //}
 }
