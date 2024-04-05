@@ -370,6 +370,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5370290666083132446, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370290666083132446, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370290666083132446, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7319668222070048190, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966989174641589076, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1271,7 +1296,7 @@ MonoBehaviour:
     type: 3}
   cookieObject3: {fileID: 1977417836299153002, guid: 44441079457404d9b9d0e1b0887989f3,
     type: 3}
-  doorClueObject1: {fileID: 5117386988676614414, guid: 8f6ef29b91a3b41bc86475245dba4aa0,
+  doorClueObject1: {fileID: 7916330588256267800, guid: ab7a82c0e9deb497fb7acb976cec3efd,
     type: 3}
   musicAltarClue1: {fileID: 5247463715212376144, guid: 887b695af95f24cc3a1779698bd5648e,
     type: 3}
