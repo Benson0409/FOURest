@@ -659,7 +659,7 @@ public class ARController : MonoBehaviour
     {
         if (correctRotate1)
         {
-            rotate1Image.color = Color.yellow;
+            rotate1Image.color = Color.green;
         }
         else
         {
@@ -669,7 +669,7 @@ public class ARController : MonoBehaviour
 
         if (correctRotate2)
         {
-            rotate2Image.color = Color.yellow;
+            rotate2Image.color = Color.green;
         }
         else
         {
@@ -678,7 +678,7 @@ public class ARController : MonoBehaviour
 
         if (correctRotate3)
         {
-            rotate3Image.color = Color.yellow;
+            rotate3Image.color = Color.green;
         }
         else
         {

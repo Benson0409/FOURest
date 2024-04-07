@@ -33,6 +33,7 @@ public class TeachingGameController : MonoBehaviour
     public GameObject findCrystalBtn;
     public GameObject magnifier;
     public GameObject openDoorBtn;
+    public GameObject patrolDoor;
 
     [Header("旁白系統")]
     public narrationSystem narration;
@@ -66,6 +67,10 @@ public class TeachingGameController : MonoBehaviour
         if (teachingGameData.isViewTip)
         {
             viewController.SetActive(true);
+        }
+        if (teachingGameData.isARPick)
+        {
+            patrolDoor.SetActive(true);
         }
     }
     //腳本啟用的時候，接受玩家的輸入

@@ -1290,11 +1290,11 @@ MonoBehaviour:
   squareImage: {fileID: 21300000, guid: 1e70b158c1c464dfabcf697a0131ccaa, type: 3}
   circleImage: {fileID: 21300000, guid: bfa6ec02536514967ae231f217273059, type: 3}
   triangleImage: {fileID: 21300000, guid: 3a64f2d6bf47c4ed69df153ae32713df, type: 3}
-  cookieObject1: {fileID: 7932711546803070916, guid: fde62b384174b4e4697621a31664a254,
+  cookieObject1: {fileID: 8299357719336354202, guid: 0ae3e450d43304e7eaf9465fb006de50,
     type: 3}
-  cookieObject2: {fileID: 2606142918528152054, guid: f33e9007c2b884a53a217c4c72a2b630,
+  cookieObject2: {fileID: 3885204065259135596, guid: f29811b8b5805458e95941ab1a3b30d9,
     type: 3}
-  cookieObject3: {fileID: 1977417836299153002, guid: 44441079457404d9b9d0e1b0887989f3,
+  cookieObject3: {fileID: 3427077673551375322, guid: a5f5d23e18c9343f3826ab55e6c0a158,
     type: 3}
   doorClueObject1: {fileID: 7916330588256267800, guid: ab7a82c0e9deb497fb7acb976cec3efd,
     type: 3}
