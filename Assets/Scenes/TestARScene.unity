@@ -1290,13 +1290,13 @@ MonoBehaviour:
   squareImage: {fileID: 21300000, guid: 1e70b158c1c464dfabcf697a0131ccaa, type: 3}
   circleImage: {fileID: 21300000, guid: bfa6ec02536514967ae231f217273059, type: 3}
   triangleImage: {fileID: 21300000, guid: 3a64f2d6bf47c4ed69df153ae32713df, type: 3}
-  cookieObject1: {fileID: 8299357719336354202, guid: 0ae3e450d43304e7eaf9465fb006de50,
+  cookieObject1: {fileID: 430519883406980935, guid: 44f1fdbf6bce34948b635d5a58a0ce8a,
     type: 3}
-  cookieObject2: {fileID: 3885204065259135596, guid: f29811b8b5805458e95941ab1a3b30d9,
+  cookieObject2: {fileID: 6894569620325796938, guid: f436dc3913e974441ac61d5d046eacbd,
     type: 3}
-  cookieObject3: {fileID: 3427077673551375322, guid: a5f5d23e18c9343f3826ab55e6c0a158,
+  cookieObject3: {fileID: 3358900807331718279, guid: 356edd4d69563465bae349b1e49f4089,
     type: 3}
-  doorClueObject1: {fileID: 7916330588256267800, guid: ab7a82c0e9deb497fb7acb976cec3efd,
+  doorClueObject1: {fileID: 6714420900171179871, guid: fcaa6a148628b4b0ba9b61a2b62fef85,
     type: 3}
   musicAltarClue1: {fileID: 5247463715212376144, guid: 887b695af95f24cc3a1779698bd5648e,
     type: 3}
