@@ -113,6 +113,10 @@ public class ARController : MonoBehaviour
         aRPlaneManager = FindObjectOfType<ARPlaneManager>();
         mCamera = Camera.main;
 
+        if (teachingGameData.isTeachingGameOver)
+        {
+            TeachingPanel.SetActive(false);
+        }
         //顏色遊戲開啟
         if (colorGameData.startColorGame)
         {

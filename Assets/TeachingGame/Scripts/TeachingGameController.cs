@@ -281,7 +281,7 @@ public class TeachingGameController : MonoBehaviour
 
     public void OpenDoorBtn()
     {
-        //開啟AR生成大門
+        //結束新手教學
         teachingGameData.isTeachingGameOver = true;
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
