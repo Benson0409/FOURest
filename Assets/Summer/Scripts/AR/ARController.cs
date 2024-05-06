@@ -12,8 +12,8 @@ public class ARController : MonoBehaviour
     [Header("新手關卡")]
     public TeachingGameDataSo teachingGameData;
     [Header("新手關卡物件")]
-    public GameObject TeachingPanel;
-    public Text TeachingTitle;
+    // public GameObject TeachingPanel;
+    // public Text TeachingTitle;
     public GameObject teachingCrystal;
 
     [Header("遊戲數據")]
@@ -113,10 +113,10 @@ public class ARController : MonoBehaviour
         aRPlaneManager = FindObjectOfType<ARPlaneManager>();
         mCamera = Camera.main;
 
-        if (teachingGameData.isTeachingGameOver)
-        {
-            TeachingPanel.SetActive(false);
-        }
+        // if (teachingGameData.isTeachingGameOver)
+        // {
+        //     TeachingPanel.SetActive(false);
+        // }
         //顏色遊戲開啟
         if (colorGameData.startColorGame)
         {
@@ -190,8 +190,8 @@ public class ARController : MonoBehaviour
         {
             print("牆壁偵測");
             planeDetect = true;
-            TeachingPanel.SetActive(true);
-            TeachingTitle.text = "AR控制介紹,生成後點擊目標";
+            // TeachingPanel.SetActive(true);
+            // TeachingTitle.text = "AR控制介紹,生成後點擊目標";
             arTospawnObject = teachingCrystal;
         }
 
@@ -203,7 +203,7 @@ public class ARController : MonoBehaviour
     {
 
         //如果條件都符合就生成物體
-        if (placementPoseValid && spawnObject == null && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TeachingPanel.activeInHierarchy)
+        if (placementPoseValid && spawnObject == null && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             arSpawnObject();
             print("生成");

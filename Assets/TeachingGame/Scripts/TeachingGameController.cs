@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 public class TeachingGameController : MonoBehaviour
 {
     //任務流程
@@ -23,7 +24,14 @@ public class TeachingGameController : MonoBehaviour
     // public Text missionText;
     [Header("教學通知")]
     public GameObject teachingPanel;
-    public Text teachingTitle;
+    //public Text teachingTitle;
+
+    [Header("教學影片")]
+    public VideoPlayer videoPlayer;
+    public VideoClip moveClip;
+    public VideoClip viewClip;
+
+
     [Header("教學變量")]
     public Transform target;
     public GameObject viewController;
@@ -219,7 +227,7 @@ public class TeachingGameController : MonoBehaviour
         {
             teachingPanel.SetActive(true);
             teachingGameData.isBtnTip = true;
-            teachingTitle.text = "人物互動介紹";
+            //teachingTitle.text = "人物互動介紹";
         }
     }
 
@@ -238,16 +246,18 @@ public class TeachingGameController : MonoBehaviour
 
         if (teachingGameData.isMove && !teachingGameData.isViewTip)
         {
+            videoPlayer.clip = viewClip;
             teachingPanel.SetActive(true);
             teachingGameData.isViewTip = true;
             viewController.SetActive(true);
 
-            teachingTitle.text = "讓人物的視角轉動";
+            //teachingTitle.text = "讓人物的視角轉動";
         }
     }
 
     private void TeachingMove()
     {
+
         //第一次嘗試移動人物時候跳出介紹資訊
         Vector3 moveInput = playerInput.PlayerMain.Move.ReadValue<Vector2>();
         // if (!teachingGameData.isMove)
@@ -259,8 +269,8 @@ public class TeachingGameController : MonoBehaviour
         if (moveInput.magnitude > 0.1f && !teachingGameData.isMoveTip)
         {
             teachingPanel.SetActive(true);
-
-            teachingTitle.text = "移動方向鍵讓人物移動";
+            videoPlayer.clip = moveClip;
+            //teachingTitle.text = "移動方向鍵讓人物移動";
             teachingGameData.isMoveTip = true;
         }
     }

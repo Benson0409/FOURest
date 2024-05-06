@@ -265,6 +265,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TeachingCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1620487819163246950, guid: 37e1dcf452dad4485b1480a421dca238,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2110599043517733838, guid: 37e1dcf452dad4485b1480a421dca238,
         type: 3}
       propertyPath: m_IsActive
@@ -400,24 +405,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37e1dcf452dad4485b1480a421dca238, type: 3}
---- !u!1 &362808547 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2110599043517733838, guid: 37e1dcf452dad4485b1480a421dca238,
-    type: 3}
-  m_PrefabInstance: {fileID: 362808546}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &362808548 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5858849661421527050, guid: 37e1dcf452dad4485b1480a421dca238,
-    type: 3}
-  m_PrefabInstance: {fileID: 362808546}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &509271291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,8 +1253,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teachingGameData: {fileID: 11400000, guid: d132349b0508246fb95b09bda9a2d422, type: 2}
-  TeachingPanel: {fileID: 362808547}
-  TeachingTitle: {fileID: 362808548}
   teachingCrystal: {fileID: 5159029144943198063, guid: 45bb6e7f38c9247218ec1e63aff80597,
     type: 3}
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
