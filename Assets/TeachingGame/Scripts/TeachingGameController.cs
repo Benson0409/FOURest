@@ -30,6 +30,7 @@ public class TeachingGameController : MonoBehaviour
     public VideoPlayer videoPlayer;
     public VideoClip moveClip;
     public VideoClip viewClip;
+    public VideoClip btnClip;
 
 
     [Header("教學變量")]
@@ -225,6 +226,7 @@ public class TeachingGameController : MonoBehaviour
         //對話按鈕出來後，教學說如果有可互動之物件可以點擊右下方BTN來互動
         if (teachingGameData.isView && dialogueBtn.activeInHierarchy && !teachingGameData.isBtnTip)
         {
+            videoPlayer.clip = btnClip;
             teachingPanel.SetActive(true);
             teachingGameData.isBtnTip = true;
             //teachingTitle.text = "人物互動介紹";
@@ -294,7 +296,7 @@ public class TeachingGameController : MonoBehaviour
         //結束新手教學
         teachingGameData.isTeachingGameOver = true;
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Video"));
     }
     //去開啟AR大門
     public void FindCrystalBtn()
@@ -307,7 +309,7 @@ public class TeachingGameController : MonoBehaviour
     public void StartSummerGame()
     {
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Video"));
     }
 
     public void BackMainMenu()

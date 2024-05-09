@@ -4359,7 +4359,7 @@ MonoBehaviour:
     type: 3}
   DetectObject: {fileID: 200701994}
   btnImage: {fileID: 200701997}
-  searchImage: {fileID: 21300000, guid: 27b06eb36aae24387aa40f2a9ce92c41, type: 3}
+  searchImage: {fileID: 21300000, guid: aac0cb69fac24461c9ec6a6ee4661888, type: 3}
   LiliChangeEventSo: {fileID: 11400000, guid: 5e880a63888134a3695137606bb6e501, type: 2}
   puzzleGameData: {fileID: 11400000, guid: 258599765044a4516a52f7553ae1d1be, type: 2}
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
@@ -4381,8 +4381,8 @@ MonoBehaviour:
   radius: 10
   takeRange: {fileID: 890244032}
   detectObject: {fileID: 2029807839}
-  searchImage: {fileID: 21300000, guid: 27b06eb36aae24387aa40f2a9ce92c41, type: 3}
-  fixImage: {fileID: 21300000, guid: 51dad60ff404c4b5db4a011d6b621a8a, type: 3}
+  searchImage: {fileID: 21300000, guid: aac0cb69fac24461c9ec6a6ee4661888, type: 3}
+  fixImage: {fileID: 21300000, guid: ff1d285431f144eafb30f2f11c547948, type: 3}
   btnImage: {fileID: 2029807842}
   puzzleGameData: {fileID: 11400000, guid: 258599765044a4516a52f7553ae1d1be, type: 2}
   puzzleCount: 0
@@ -4468,8 +4468,8 @@ MonoBehaviour:
   openTreasure: {fileID: 8886343448586852852}
   DetectObject: {fileID: 1825382616}
   btnImage: {fileID: 1825382619}
-  searchImage: {fileID: 21300000, guid: 27b06eb36aae24387aa40f2a9ce92c41, type: 3}
-  openImage: {fileID: 21300000, guid: 56245d7dd17db48f7bf4ef37e9beb24c, type: 3}
+  searchImage: {fileID: 21300000, guid: aac0cb69fac24461c9ec6a6ee4661888, type: 3}
+  openImage: {fileID: 21300000, guid: 5c4397f2a43754fe2956d77df51af499, type: 3}
   inventoryUI: {fileID: 11011683}
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
   templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
@@ -4495,8 +4495,8 @@ MonoBehaviour:
   touchCanva: {fileID: 2032695431}
   DetectObject: {fileID: 570887662}
   btnImage: {fileID: 570887665}
-  openImage: {fileID: 21300000, guid: 56245d7dd17db48f7bf4ef37e9beb24c, type: 3}
-  searchImage: {fileID: 21300000, guid: 27b06eb36aae24387aa40f2a9ce92c41, type: 3}
+  openImage: {fileID: 21300000, guid: 5c4397f2a43754fe2956d77df51af499, type: 3}
+  searchImage: {fileID: 21300000, guid: aac0cb69fac24461c9ec6a6ee4661888, type: 3}
   colorFiliter: {fileID: 1794101719167841845}
   colorFiliterCanva: {fileID: 1074734270}
   crystalBall1: {fileID: 8444453097797193128}
@@ -70629,12 +70629,12 @@ PrefabInstance:
     - target: {fileID: 681808538039885266, guid: 426631397ab304faba517072f15706cc,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.051804215
+      value: -0.05180421
       objectReference: {fileID: 0}
     - target: {fileID: 681808538039885266, guid: 426631397ab304faba517072f15706cc,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.93234104
+      value: 0.932341
       objectReference: {fileID: 0}
     - target: {fileID: 681808538039885266, guid: 426631397ab304faba517072f15706cc,
         type: 3}
@@ -153797,6 +153797,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2065461250}
+    - target: {fileID: 7299845087288468362, guid: a0129e939ad6c4257b3edcd9d2ae1e41,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e305401cc6b34f4093287946304e3a7,
+        type: 3}
     - target: {fileID: 7936123225060835829, guid: a0129e939ad6c4257b3edcd9d2ae1e41,
         type: 3}
       propertyPath: m_Name
