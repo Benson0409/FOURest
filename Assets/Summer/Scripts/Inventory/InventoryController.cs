@@ -58,15 +58,12 @@ public class InventoryController : MonoBehaviour
 
             inventoryPanel.SetActive(true);
 
-            item2.SetActive(true);
-            item2Image.sprite = crystalBallSprite;
-            item2Text.text = "1";
-            informationText1.text = "水晶球";
+            item2.SetActive(false);
 
             item1.SetActive(true);
-            item1Image.sprite = mussicSheetSprite;
+            item1Image.sprite = crystalBallSprite;
             item1Text.text = "1";
-            informationText1.text = "音樂樂譜";
+            informationText1.text = "水晶球";
             return;
         }
 
@@ -75,15 +72,12 @@ public class InventoryController : MonoBehaviour
         {
             inventoryPanel.SetActive(true);
 
-            item2.SetActive(true);
-            item2Image.sprite = crystalBallSprite;
-            item2Text.text = "0";
-            informationText2.text = "根據線索找到水晶球";
+            item2.SetActive(false);
 
             item1.SetActive(true);
-            item1Image.sprite = mussicSheetSprite;
+            item1Image.sprite = crystalBallSprite;
             item1Text.text = "1";
-            informationText1.text = "音樂樂譜";
+            informationText1.text = "根據線索找到水晶球";
             return;
         }
 

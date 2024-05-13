@@ -21,6 +21,7 @@ public class MainMenuController : MonoBehaviour
     public void StartNewGame()
     {
         SettingGameData();
+        SkipTeachingGameData();
         LoadGameScene("TestScene");
     }
 
@@ -73,6 +74,21 @@ public class MainMenuController : MonoBehaviour
         teachingGameData.isDetect = false;
         teachingGameData.isARPick = false;
         teachingGameData.isTeachingGameOver = false;
+    }
+
+    private void SkipTeachingGameData()
+    {
+        teachingGameData.isFirst = true;
+        teachingGameData.isMove = true;
+        teachingGameData.isMoveTip = true;
+        teachingGameData.isView = true;
+        teachingGameData.isViewTip = true;
+        teachingGameData.isBtnActive = true;
+        teachingGameData.isBtnTip = true;
+        teachingGameData.isPick = true;
+        teachingGameData.isDetect = true;
+        teachingGameData.isARPick = true;
+        teachingGameData.isTeachingGameOver = true;
     }
 
 

@@ -4872,7 +4872,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410176359}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06668628, y: 0.08929175, z: -0.0059919697, w: 0.99375254}
+  m_LocalRotation: {x: 0.06668626, y: 0.08929172, z: -0.005991965, w: 0.99375254}
   m_LocalPosition: {x: -45.3, y: 65.09, z: 107.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5938,7 +5938,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759552098}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.113702536, y: -0.012919084, z: 0.0014786478, w: 0.9934298}
+  m_LocalRotation: {x: 0.113702536, y: -0.01291912, z: 0.0014786517, w: 0.9934298}
   m_LocalPosition: {x: 57.218006, y: 41.55, z: 98.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6693,7 +6693,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 1.5
+    m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -7218,7 +7218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137130218}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13411179, y: -0.16218375, z: 0.0222548, w: 0.9773511}
+  m_LocalRotation: {x: 0.13411176, y: -0.1621837, z: 0.02225479, w: 0.9773511}
   m_LocalPosition: {x: 39.94, y: -4.42, z: 10.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Main Menu Game Data So
   m_EditorClassIdentifier: 
   creatNewGame: 0
+  isPlaySave: 0
