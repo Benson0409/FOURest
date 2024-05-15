@@ -23,6 +23,7 @@ public class ColorGameController : MonoBehaviour
 
     [Header("三色鏡變量控制")]
     private bool startColorMirrorGame;
+    public GameObject laserEffect;
 
     [Header("調色盤變量控制")]
     private bool startFilterGame;
@@ -173,6 +174,11 @@ public class ColorGameController : MonoBehaviour
         if (player.activeInHierarchy == false)
         {
             return;
+        }
+
+        if (colorGameData.isRotate)
+        {
+            laserEffect.SetActive(true);
         }
 
         if (isFindCrystalBall)

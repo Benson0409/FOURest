@@ -176,7 +176,7 @@ public class InventoryController : MonoBehaviour
 
             item1.SetActive(true);
             item1Image.sprite = puzzleSprite;
-            item1Text.text = puzzleGameData.puzzleClipCount.ToString();
+            item1Text.text = puzzleGameData.puzzleClipCount.ToString() + "/6";
             informationText1.text = "收集告示牌碎片，修補告示牌";
             return;
         }

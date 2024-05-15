@@ -224,29 +224,30 @@ public class DialogueManager : MonoBehaviour
 
                 icon = 4;
                 dialogueData.icon = icon;
-                nameText.text = "OldMan";
+                nameText.text = "Cronus";
                 index++;
                 break;
 
 
-            //判斷任務目前執行狀況，如果任務完成我們才把繼續進行對話，如果沒有的話我們就重複說這句話
-            //update 裏面判斷，如果repeatText==true 我們就一直跑這行
-            //反之就進行下一句
-            //一定要在update 裏面完成
-            //遇到段落切換時，就去尋找我要移動到的地方
-            //判斷可能要想辦法放在update裏面，不能放在協程裡面，因為這樣就不能及時判斷，但也要看要如何讓我按下R鍵後在將文字做更換
-            case '>':
-                for (int i = index; i < textList.Count; i++)
-                {
-                    //代表第二分支，選項後面的對應話句
-                    //因為我們是每按一次R鍵才會執行一次，所以我+1會直接等於把人名給顯示出來
-                    //但這樣假如我們要和人說的話，就要先在>的前面打上下一個人要說話的名字，讓圖片可以先換
-                    if (textList[i][0] == '<')
-                    {
-                        index = i + 2;
-                    }
-                }
-                break;
+                //判斷任務目前執行狀況，如果任務完成我們才把繼續進行對話，如果沒有的話我們就重複說這句話
+                //update 裏面判斷，如果repeatText==true 我們就一直跑這行
+                //反之就進行下一句
+                //一定要在update 裏面完成
+                //遇到段落切換時，就去尋找我要移動到的地方
+                //判斷可能要想辦法放在update裏面，不能放在協程裡面，因為這樣就不能及時判斷，但也要看要如何讓我按下R鍵後在將文字做更換
+
+                // case '>':
+                //     for (int i = index; i < textList.Count; i++)
+                //     {
+                //         //代表第二分支，選項後面的對應話句
+                //         //因為我們是每按一次R鍵才會執行一次，所以我+1會直接等於把人名給顯示出來
+                //         //但這樣假如我們要和人說的話，就要先在>的前面打上下一個人要說話的名字，讓圖片可以先換
+                //         if (textList[i][0] == '<')
+                //         {
+                //             index = i + 2;
+                //         }
+                //     }
+                //     break;
         }
 
         //判斷需不需要直接完成文字內容，跳過顯示動畫
@@ -509,7 +510,7 @@ public class DialogueManager : MonoBehaviour
                 nameImage.sprite = seasonSprite;
                 break;
             case 4:
-                nameText.text = "OldMan";
+                nameText.text = "Cronus";
                 nameBg.SetActive(true);
                 nameImage.sprite = seasonSprite;
                 break;

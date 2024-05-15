@@ -1288,7 +1288,7 @@ MonoBehaviour:
   colorMirror: {fileID: 7180619167204470546, guid: 401b29b9b259640fba77873550481fc9,
     type: 3}
   placementIndicator: {fileID: 799251008}
-  rotataSpeed: 3
+  rotataSpeed: 5
 --- !u!4 &1264704894
 Transform:
   m_ObjectHideFlags: 0

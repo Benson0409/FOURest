@@ -43,6 +43,13 @@ public class musicAltar : MonoBehaviour
     }
 
 
+    public void ClearMusic()
+    {
+        musicInt = 0;
+        lastmusicName = "";
+        musicText.text = "";
+    }
+
     public void musicCorrect()
     {
         if (music1 && music2 && music3 && music4 && music5 && music6 && music7)

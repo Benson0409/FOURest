@@ -396,7 +396,7 @@ public class ARController : MonoBehaviour
                         //確認每一個的旋轉角度
                         print("Rotata1 :" + hit.transform.eulerAngles.y);
 
-                        if (hit.transform.eulerAngles.y < 21 && hit.transform.eulerAngles.y > 19)
+                        if (hit.transform.eulerAngles.y < 22.5f && hit.transform.eulerAngles.y > 17.5f)
                         {
                             //位置正確 紀錄狀況
                             correctRotate1 = true;
@@ -436,7 +436,7 @@ public class ARController : MonoBehaviour
                         //確認每一個的旋轉角度
                         print("Rotata2 :" + hit.transform.eulerAngles.y);
 
-                        if (hit.transform.eulerAngles.y < 146 && hit.transform.eulerAngles.y > 144)
+                        if (hit.transform.eulerAngles.y < 147.5f && hit.transform.eulerAngles.y > 142.5f)
                         {
                             //位置正確 紀錄狀況
                             correctRotate2 = true;
@@ -476,7 +476,7 @@ public class ARController : MonoBehaviour
                         //確認每一個的旋轉角度
                         print("Rotata3 :" + hit.transform.eulerAngles.y);
 
-                        if (hit.transform.eulerAngles.y < 277 && hit.transform.eulerAngles.y > 275)
+                        if (hit.transform.eulerAngles.y < 278.5f && hit.transform.eulerAngles.y > 273.5f)
                         {
                             //位置正確 紀錄狀況
                             correctRotate3 = true;

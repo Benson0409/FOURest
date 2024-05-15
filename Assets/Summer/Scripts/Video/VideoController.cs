@@ -32,9 +32,7 @@ public class VideoController : MonoBehaviour
         if (swichScene)
         {
             //進行轉場
-            SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
-            switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
-            isPlayOver = true;
+            GoToSummer();
         }
 
         // 在場景中尋找名為 "SceneCanvas" 的物體
@@ -48,6 +46,13 @@ public class VideoController : MonoBehaviour
         }
         // 播放 Timeline
         playableDirector.stopped += OnTimelineStopped;
+    }
+
+    public void GoToSummer()
+    {
+        SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
+        switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("TestScene"));
+        isPlayOver = true;
     }
 
     // 在 Timeline 播放停止後觸發的事件
