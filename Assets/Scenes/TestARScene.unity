@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teachingGameData: {fileID: 11400000, guid: d132349b0508246fb95b09bda9a2d422, type: 2}
-  teachingCrystal: {fileID: 5159029144943198063, guid: 45bb6e7f38c9247218ec1e63aff80597,
+  teachingCrystal: {fileID: 3911115096189895221, guid: 17f7f441b8823452880e720642ad9687,
     type: 3}
   cookieGameData: {fileID: 11400000, guid: b38c6dd574478445cb25879a90fbb48f, type: 2}
   templeGameData: {fileID: 11400000, guid: f91054bf0ce814c428668a628829740d, type: 2}
