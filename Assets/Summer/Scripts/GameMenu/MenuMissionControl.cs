@@ -15,6 +15,12 @@ public class MenuMissionControl : MonoBehaviour
     public TempleGameDataSo templeGameData;
     public ColorGameDataSo colorGameData;
 
+    [Header("人物位置")]
+    public Transform player;
+    public Transform cookieTransform;
+    public Transform templeTransform;
+    public Transform colorTransform;
+
     [Header("事件監聽")]
     public VoidEventSo ResetDataEventSo;
 
@@ -53,7 +59,7 @@ public class MenuMissionControl : MonoBehaviour
         //色彩分析器完成
         if (colorGameData.isRotate)
         {
-            missionText.text = "前往色彩分析器，尋找藍色藥水、黃色圓球、紅色火焰";
+            missionText.text = "前往色彩分析器，尋找藍色鑽石、灰色石頭、粉色藥水";
             return;
 
         }
@@ -118,39 +124,65 @@ public class MenuMissionControl : MonoBehaviour
     public void GoToCookieGame()
     {
         //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        player.position = cookieTransform.position;
         ResetDataEventSo.RaiseEvent();
+        CookieSetting();
+        ReLoadGame();
+    }
+
+
+
+    public void GoToTempleGame()
+    {
+        player.position = templeTransform.position;
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+        TempleSettimg();
+        ReLoadGame();
+    }
+
+
+    public void GoToColorGame()
+    {
+        player.position = colorTransform.position;
+        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
+        ResetDataEventSo.RaiseEvent();
+        ColorSetting();
+        ReLoadGame();
+    }
+    private void CookieSetting()
+    {
         //拼圖遊戲結束
         puzzleGameData.isPlayAnim = true;
         puzzleGameData.puzzleGameOver = true;
         puzzleGameData.isFindPuzzle = true;
         //開始餅乾遊戲
         cookieGameData.startCookieGame = true;
-        ReLoadGame();
     }
-    public void GoToTempleGame()
+    private void TempleSettimg()
     {
-        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
-        ResetDataEventSo.RaiseEvent();
-        GoToCookieGame();
+        CookieSetting();
         //餅乾遊戲結束
         cookieGameData.isFindCookie = true;
         cookieGameData.findCookieCount = 3;
         cookieGameData.cookie1Field = true;
         cookieGameData.cookie2Field = true;
         cookieGameData.cookie3Field = true;
-        ReLoadGame();
     }
-    public void GoToColorGame()
+    private void ColorSetting()
     {
-        //要優先執行 因為要物體在enable狀態下才可以進行狀態的監聽
-        ResetDataEventSo.RaiseEvent();
+        TempleSettimg();
         cookieGameData.cookieGameOver = true;
-        GoToTempleGame();
         templeGameData.finishMusicGame = true;
         templeGameData.startMusicGame = true;
         templeGameData.startTempleGame = true;
-        ReLoadGame();
+        templeGameData.isPlayDoorAnim = true;
+        templeGameData.isPlayMusicAnim = true;
+        templeGameData.startDoorGame = true;
+        templeGameData.findDoorClue = true;
+        templeGameData.findMusicClue = true;
     }
+
     public void ReLoadGame()
     {
         this.gameObject.SetActive(false);
