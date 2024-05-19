@@ -59,7 +59,7 @@ public class MenuMissionControl : MonoBehaviour
         //色彩分析器完成
         if (colorGameData.isRotate)
         {
-            missionText.text = "前往色彩分析器，尋找藍色鑽石、灰色石頭、粉色藥水";
+            missionText.text = "前往色彩分析器，尋找五角鑽石、橢圓石碑、愛情魔藥";
             return;
 
         }

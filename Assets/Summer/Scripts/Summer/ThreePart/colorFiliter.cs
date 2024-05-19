@@ -16,6 +16,7 @@ public class colorFiliter : MonoBehaviour
     // [Header("顏色遮罩")]
     // public Image colorFiliterPanel;
 
+
     [Header("各區塊顯示圖片")]
     public GameObject block1;
     public GameObject block2;
@@ -38,12 +39,9 @@ public class colorFiliter : MonoBehaviour
 
     [Header("收集區域圖片")]
     private int count = 0;
-    public Image blueBlock;
-    public Image yellowBlock;
-    public Image redBlock;
-    public Sprite blueImage;
-    public Sprite yellowImage;
-    public Sprite redImage;
+    public GameObject crystalBlock1;
+    public GameObject crystalBlock2;
+    public GameObject crystalBlock3;
 
     private void Awake()
     {
@@ -72,7 +70,7 @@ public class colorFiliter : MonoBehaviour
     {
         findCrystalBallChip1.interactable = false;
         block1.GetComponent<Image>().sprite = block1Image;
-        blueBlock.sprite = blueImage;
+        crystalBlock1.SetActive(true);
         count++;
     }
 
@@ -88,7 +86,7 @@ public class colorFiliter : MonoBehaviour
     {
         findCrystalBallChip2.interactable = false;
         block2.GetComponent<Image>().sprite = block2Image;
-        yellowBlock.sprite = yellowImage;
+        crystalBlock2.SetActive(true);
         count++;
     }
     public void redBtn()
@@ -103,7 +101,7 @@ public class colorFiliter : MonoBehaviour
     {
         findCrystalBallChip3.interactable = false;
         block3.GetComponent<Image>().sprite = block3Image;
-        redBlock.sprite = redImage;
+        crystalBlock3.SetActive(true);
         count++;
     }
 
@@ -116,7 +114,7 @@ public class colorFiliter : MonoBehaviour
     IEnumerator StartCountdown()
     {
         // 每一秒減去時間
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         colorGameData.startFindCrystalBall = true;
         this.gameObject.SetActive(false);
         touchCanva.SetActive(true);
