@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class doorSlider : MonoBehaviour
@@ -49,6 +50,10 @@ public class doorSlider : MonoBehaviour
     //ADCD
     void Update()
     {
+        if (secret1 && secret2 && secret3 && secret4)
+        {
+            StartCoroutine(StartCountdown());
+        }
         if (Input.touchCount > 0)
         {
 
@@ -150,26 +155,14 @@ public class doorSlider : MonoBehaviour
         SwitchScenes switchScenes = Instantiate(scenesCanvaPrefabs);
         switchScenes.StartCoroutine(switchScenes.loadFadeOutInScenes("Environment"));
     }
-    // public void OnDrag()
-    // {
-
-    //     if (Input.touchCount > 0)
-    //     {
-
-    //         Vector3 touchPos;
-    //         onScreen = true;
-    //         touchPos = Input.GetTouch(0).position; // 使用第一個觸控點的位置
-    //         Vector2 dir = touchPos - secretImage.transform.position;
-    //         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-    //         // 计算当前旋转角度和初始触摸时的角度差
-    //         //angle = (angle < 0) ? (angle + 360) : angle;
-    //         Quaternion r = Quaternion.AngleAxis(angle, Vector3.forward);
-    //         secretImage.transform.rotation = r;
-    //     }
-    // }
-    // public void OnDrop()
-    // {
-    //     onScreen = false;
-    //     doorSecret();
-    // }
+    IEnumerator StartCountdown()
+    {
+        // 每一秒減去時間
+        yield return new WaitForSeconds(0.8f);
+        print("開啟神廟大門");
+        openDoorGame = true;
+        templeGameController.startMusicAltar();
+        templeGameController.closeGameCanva();
+        PlayAnim();
+    }
 }

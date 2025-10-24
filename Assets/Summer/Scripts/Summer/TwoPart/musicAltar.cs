@@ -48,6 +48,13 @@ public class musicAltar : MonoBehaviour
         musicInt = 0;
         lastmusicName = "";
         musicText.text = "";
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
     }
 
     public void musicCorrect()
@@ -94,11 +101,11 @@ public class musicAltar : MonoBehaviour
         }
 
         /////////
-        if (music3 && !music5)
-        {
-            music4 = true;
-        }
-        else if (music2 && !music4)
+        // if (music3 && !music5)
+        // {
+        //     music4 = true;
+        // }
+        if (music2 && !music4)
         {
             music3 = true;
         }
@@ -335,32 +342,18 @@ public class musicAltar : MonoBehaviour
             lastmusicName = currentName;
         }
 
-        ////////////////
-        if (music5 && !music7)
-        {
-            music6 = true;
-        }
-
-        else if (!music1)
-        {
-            music1 = true;
-        }
-
-        else
-        {
-            music1 = false;
-            music2 = false;
-            music3 = false;
-            music4 = false;
-            music5 = false;
-            music6 = false;
-            music7 = false;
-        }
+        /////////
+        music1 = false;
+        music2 = false;
+        music3 = false;
+        music4 = false;
+        music5 = false;
+        music6 = false;
+        music7 = false;
 
         musicName = "Si";
-        //播放Si的聲音
+        //播放Fa的聲音
         print("Si");
-
 
     }
     public void play_Do()
@@ -386,13 +379,21 @@ public class musicAltar : MonoBehaviour
         }
 
         /////////
-        music1 = false;
-        music2 = false;
-        music3 = false;
-        music4 = false;
-        music5 = false;
-        music6 = false;
-        music7 = false;
+        if (music3 && !music5)
+        {
+            music4 = true;
+        }
+        else
+        {
+
+            music1 = false;
+            music2 = false;
+            music3 = false;
+            music4 = false;
+            music5 = false;
+            music6 = false;
+            music7 = false;
+        }
 
         musicName = "_Do";
         //播放Fa的聲音
@@ -471,6 +472,9 @@ public class musicAltar : MonoBehaviour
     public void play__Si()
     {
 
+
+
+        ///////////////
         musicInt++;
         if (musicInt > 7)
         {
@@ -490,18 +494,32 @@ public class musicAltar : MonoBehaviour
             lastmusicName = currentName;
         }
 
-        /////////
-        music1 = false;
-        music2 = false;
-        music3 = false;
-        music4 = false;
-        music5 = false;
-        music6 = false;
-        music7 = false;
+        ////////////////
+        if (music5 && !music7)
+        {
+            music6 = true;
+        }
+
+        else if (!music1)
+        {
+            music1 = true;
+        }
+
+        else
+        {
+            music1 = false;
+            music2 = false;
+            music3 = false;
+            music4 = false;
+            music5 = false;
+            music6 = false;
+            music7 = false;
+        }
 
         musicName = "bSi";
-        //播放Fa的聲音
+        //播放Si的聲音
         print("bSi");
+
     }
     private void PlayAnim()
     {

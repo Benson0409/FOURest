@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e9e5a3724e8410a9fd4b8bb0893716, type: 3}
   m_Name: CookieGameDataSo
   m_EditorClassIdentifier: 
-  startCookieGame: 1
-  cookieGameOver: 1
-  isPlayAnim: 1
-  findCookieCount: 3
-  isFindCookie: 1
-  cookie1Field: 1
-  cookie2Field: 1
-  cookie3Field: 1
+  startCookieGame: 0
+  cookieGameOver: 0
+  isPlayAnim: 0
+  findCookieCount: 0
+  isFindCookie: 0
+  cookie1Field: 0
+  cookie2Field: 0
+  cookie3Field: 0

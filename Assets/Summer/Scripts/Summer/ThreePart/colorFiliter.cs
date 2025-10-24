@@ -45,9 +45,7 @@ public class colorFiliter : MonoBehaviour
 
     private void Awake()
     {
-        block1.SetActive(false);
-        block2.SetActive(false);
-        block3.SetActive(false);
+        blueBtn();
     }
 
     void Update()

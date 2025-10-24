@@ -80,14 +80,14 @@ public class CameraController : MonoBehaviour
 
                                     // float rotationAmount = inputLimit.x * lookSpeed * Time.deltaTime * 10;
                                     // cinemachine.m_XAxis.Value += rotationAmount;
-                                    if ((touchDeltaPos.x < lastPos.x && touchDeltaPos.x > 0) || (touchDeltaPos.x > lastPos.x && touchDeltaPos.x < 0))
+                                    if ((touchDeltaPos.x < lastPos.x && touchDeltaPos.x > 0.1f) || (touchDeltaPos.x > lastPos.x && touchDeltaPos.x < 0.1f))
                                     {
-                                        float targetValue = cinemachine.m_XAxis.Value + touchDeltaPos.x * lookSpeed * Time.deltaTime * 5;
+                                        float targetValue = cinemachine.m_XAxis.Value + touchDeltaPos.x * lookSpeed * Time.deltaTime * 3.5f;
                                         cinemachine.m_XAxis.Value -= Mathf.Lerp(cinemachine.m_XAxis.Value, targetValue, lookSpeed * Time.deltaTime);
                                     }
                                     else
                                     {
-                                        float targetValue = cinemachine.m_XAxis.Value + touchDeltaPos.x * lookSpeed * Time.deltaTime * 5;
+                                        float targetValue = cinemachine.m_XAxis.Value + touchDeltaPos.x * lookSpeed * Time.deltaTime * 3.5f;
                                         cinemachine.m_XAxis.Value += Mathf.Lerp(cinemachine.m_XAxis.Value, targetValue, lookSpeed * Time.deltaTime);
                                     }
 

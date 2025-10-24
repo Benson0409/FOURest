@@ -1654,6 +1654,11 @@ PrefabInstance:
       objectReference: {fileID: 284616403}
     - target: {fileID: 2853919636967839151, guid: 6d837eb057eb7446ba8c524bc204f98f,
         type: 3}
+      propertyPath: radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853919636967839151, guid: 6d837eb057eb7446ba8c524bc204f98f,
+        type: 3}
       propertyPath: dialogueBtn
       value: 
       objectReference: {fileID: 1868089168200641264}
